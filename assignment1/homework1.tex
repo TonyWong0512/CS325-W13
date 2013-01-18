@@ -44,6 +44,21 @@ strictly decreasing, the last term if the series is strictly increasing,
 or the number of terms if the
 series is unchanging.
 
+$g(n)$ can be rewritten as \frac{1-c^n}{1-c}.
+
+If $c < 1$ as $n$ approaches $\infty, \lim_{n \to \infty} c^n = 0$ leaving us
+$\frac{1-0}{1-c}$ which reduces to a constant $\frac{1}{1-c}$ which will always
+be greater than 1. It is therefore $\BigO{1}$ since c is a constant. $g(n)$ is also
+$\Omega(1)$ since $\frac{1}{1-c}*k$ is a lower bound when k is sufficiently small.
+Since $\frac{1}{1-c}$ is both $\BigO{1}$ and \Omega(1) it is by definition \Theta(1).
+
+\begin{align*}
+    g(n) &= 1 + c + c^2 + \dots + c^{n} \\
+    cg(n) &= c + c^2 + \dots + c^{n+1} \\
+    g(n) - cg(n) &= 1 - c^{n+1} \\
+    g(n)(1 - c) &= 1 - c^{n+1} \\
+    g(n) &= \frac{1 - c^{n+1}}{1 - c}
+\end{align*}
 
 \section*{0.3(a)}
 \paragraph{Problem:}
