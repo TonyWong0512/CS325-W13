@@ -62,7 +62,31 @@ bounds on its growth.
 \begin{enumerate}
 \item Use induction to prove that $F_n \geq 2^{0.5n}$ for $n \geq 6$.
 \end{enumerate}
+Proof by induction:
+	Base cases: $n=6$,$n=7$.
+	$F_6 = F_5 + F_4 = 8$
+	$F_7 = F_6 + F_5 = 13$
+	$2^{0.5(6)} = 8$
+	$2^{0.5(7)} \aprox 11.314$
+	Since both cases hold, our base case is established.
+Inductive step:
+	Assume: $F_k \geq 2^{0.5k}$ for $6 \geq k \geq n$
+	Prove: $F_k+1 \geq 2^{0.5(k+1)}$
 
+	$F_k \geq 2^{0.5k}$
+	$F_k + F_k-1 \geq 2^{0.5k} + 2^{0.5(k-1)}$
+		In the above step we added to both sides the base case where k is replaced by k-1.
+	$F_k+1 \geq 2^{0.5k} + 2^{0.5(k-1)}$
+		A Simplification from the definition of the Fibonacci numbers.
+	$F_k+1 \geq 2^{0.5k} + 2^{0.5k}2^{-.5}$
+		Expansion of terms.
+	$F_k+1 \geq 2^{0.5k}(1 + 2^{-.5})$
+		Factoring like terms.
+	$F_K+1 \geq 2^{0.5(k+1)}$
+		Here we reduce the left hand side term to $2^{0.5(k+1)}$ because $2^{0.5(k+1)} \gt 2^{0.5k}+2^{0.5k}2^{-.5}$ 
+	Thus, by the principle of mathematical induction we have shown that $F_n \geq 2^{0.5n}$ for $n \geq 6$ 
+	
+	
 % 83
 \section*{2.3 from text book}
 Section 2.2 describes a method for solving recurrence relations which is
@@ -109,7 +133,7 @@ of half the size, recursively solving each subproblem, and then
 combining the solutions in linear time.
 
 \item Algorithm B solves problems of size $n$ by recursively solving two
-subproblems of size $n − 1$ and then combining the solutions in constant
+subproblems of size $n−1$ and then combining the solutions in constant
 time.
 
 \item Algorithm C solves problems of size $n$ by dividing them into nine
@@ -117,6 +141,14 @@ subproblems of size $n/3$, recursively solving each subproblem, and then
 combining the solutions in $\BigO{n^2}$ time.
 \end{enumerate}
 
+A) $T(n) = 5T(n/2) + \BigO{n}$
+	From the master theorem we know that the complexity case is determined by $a/b^{d}$.  Since $a/b^{d}$ is $2.5$ in algorithm A, the complexity is $\BigO{n^{log_2 5}}$
+B) $T(n) = 2T(n-1) + c$
+	This case does not fall under the master theorem.  In each level of the	recursive tree there are $2^{i}(n-(i-1)) +c$ operations to perform.  Simplifying for the dominant term we find that the complexity is $\BigO{2^{n}}$.
+c) $T(n) = 9T(n/3) + \BigO{n^2}$
+	From the master theorem we know that the complexity case is determined by $a/b^{d}$.  Since $a/b^{d}$ is $1$ in algorithm C, the complexity is $\BigO{n^{2}log_3 n}$
+
+Given the choice between the three algorithms, A has the best asymptotic complexity because $\BigO{n^{log_2 5}} \lt \BigO{n^{2}} \lt \BigO{n^{2}log_3 n}$.
 \noindent What are the running times of each of these algorithms (in big-O
 notation), and which would you choose?
 
@@ -125,5 +157,20 @@ notation), and which would you choose?
 Given a sorted array of distinct integers $A[1, \dots , n]$, you want to
 find out whether there is an index $i$ for which $A[i] = i$. Give a
 divide-and-conquer algorithm that runs in time $\BigO{log n}$.
+
+This can be accomplished with binary search.
+Pseudo code:
+\begin{verbatim}
+	search(A,min, max, i)
+		while (max >= min )
+			mid = midpoint of min and max
+			if A[mid] < i
+				min = mid + 1
+			else if A[mid] > i
+				max = mid - 1
+			else //this means that A[i] == i
+				return "found A[i] == i"
+		return "A[i] never equals i"
+\end{verbatim}
 
 \end{document}
