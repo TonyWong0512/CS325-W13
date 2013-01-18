@@ -44,7 +44,7 @@ strictly decreasing, the last term if the series is strictly increasing,
 or the number of terms if the
 series is unchanging.
 
-\paragraph{Solution:}
+\paragraph{Solution part A:}
 $g(n)$ can be rewritten as $\frac{1-c^n}{1-c}$.
 
 If $c < 1$ as $n$ approaches $\infty, \lim_{n \to \infty} c^n = 0$ leaving us
@@ -53,6 +53,14 @@ be greater than 1. It is therefore $\BigO{1}$ since c is a constant. $g(n)$ is a
 $\Omega(1)$ since $\frac{1}{1-c}*k$ is a lower bound when k is sufficiently small.
 Since $\frac{1}{1-c}$ is both $\BigO{1}$ and $\Omega(1)$ it is by
 definition $\Theta(1)$.
+
+\paragraph{Solution part B:}
+If $g(n)=1+1^1+1^2+\cdots+1^n$, then we can use the fact that $1^n=1$ if $n$ is an
+element of the natural numbers. This allows us to simplify the equation to
+$\sum_{i=1}{n}1$ which equals n. The equation is therefore $\Theta(n)$ since it is
+the only term in the equation and is both the upper and lower bound.
+
+
 
 \begin{align*}
     g(n) &= 1 + c + c^2 + \dots + c^{n} \\
