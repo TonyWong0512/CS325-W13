@@ -36,6 +36,25 @@ algorithm to find the median of their combined $2n$ elements. (Hint: use
 divide and conquer).
 
 \paragraph{Solution:}
+\begin{verbatim}
+med_a = a[n / 2]
+med_b = b[n / 2]
+i = 4
+while (i < n)
+    if (med_a > med_b)
+        med_a = a[((i - 1) * n) / 2]
+        med_b = b[n / i]
+    else (med_a < med_b)
+        med_a = a[n / i]
+        med_b = b[((i - 1) * n) / 2]
+    i = 2 * i
+    if (i >= n)
+        median = (med_a + med_b) / 2
+        return median    
+\end{verbatim}
+
+
+\paragraph{Solution:}
 
 \section*{2}
 \paragraph{Problem:}
