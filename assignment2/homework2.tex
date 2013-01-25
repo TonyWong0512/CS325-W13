@@ -77,7 +77,7 @@ statement $L = I+1$, and proves our base case.
 By the definition of a full binary tree we know that any internal node
 may be cut such that the remaining two branches are also full binary
 trees.  This allows us to express any full binary tree as a set of
-recurisively defined full binary trees.
+recursively defined full binary trees.
 
 \Tree [.$I_1$ [.$I_2$ [.L ]
                [.L ] ]
@@ -93,11 +93,20 @@ created tree is still a full binary tree.
         [.$I_4$ [.L ]
            [.L ] ] ]
 
+Further, if the internal node $I_4$ is cut away from the tree, the newly
+created full binary tree conforms to the base case.
+
+\Tree [.$I_4$ [.L ]
+        [.L ] ]
+
+Thus, by induction, in any full binary tree, the number of leaves is
+exactly one more than the number of internal nodes. \qed
+
 \section*{3}
 \paragraph{Problem:}
 Interval scheduling. We are given a set of requests for using a
-resource.  Each request i specifies a starting time s(i) and an end time
-f (i). The resource can only accommodate one request at a time. If two
+resource.  Each request $i$ specifies a starting time $s(i)$ and an end time
+$f(i)$. The resource can only accommodate one request at a time. If two
 requests overlap in time, they are incompatible and cannot be both
 fulfilled. The goal is to identify a maximum subset of compatible
 requests. One possible greedy strategy is to select at each step the
@@ -124,35 +133,52 @@ has a total of eight remaining requests.  Because interval 6 has the
 highest number of requests remaining, it would be selected first.  This
 first choice conflicts with intervals 2 and 3.  Thus only allowing a
 solution with a total of three intervals.  Thus, proof by contradiction.
+\qed
 
 \section*{4}
 \paragraph{Problem:}
-You and your friends are taking a long hiking trip of L miles, along
-which there are n camping sites located at distances x1 , x2 , ..., xn
-respectively from the start of the trip. You can hike at most d miles
+You and your friends are taking a long hiking trip of $L$ miles, along
+which there are $n$ camping sites located at distances $x_1, x_2, \dots,
+x_n$
+respectively from the start of the trip. You can hike at most $d$ miles
 per day, by the end of which you must stop and camp for the night. You
 need make a valid trip plan that takes the minimum number of camping
 stops. The plan should specify which camping sites to use, and it is
-only valid if any two consecutive stops are no more than d miles apart.
+only valid if any two consecutive stops are no more than $d$ miles apart.
 Your friend proposed the following strategy: each time you come to a
 camp site, check whether you can make it to the next site before the end
-of the day (i.e., before finishing the d miles quota for the day. We
+of the day (i.e., before finishing the $d$ miles quota for the day. We
 assume this can always be determined correctly), if so, keep hiking. If
 not, stop for the night.  This is in fact a greedy algorithm, which
 simply choose to hike as long as possible each day. Prove that this
-greedy algorithm achieves the optimal solution, i.e, it uses the minimum
+greedy algorithm achieves the optimal solution, i.e., it uses the minimum
 number of stops. (Hint: construct a proof that is similar to the
 interval scheduling proof, which shows that the greedy algorithm stays
 ahead.)
 
 \paragraph{Solution:}
-\begin{proof}[Proof by contradiction.]
+\begin{proof}[Proof by Induction.]
 
-Let $O$ be the set of outcome from the algoritm that gives the optimum solution $O =
-\{j_1,\dots,j_n\}$, and $A$ be the set of outcome of an algoritm that
-gives the stops choosen by travelling the maximum distance each day $A =
+Let $O$ be the set of outcomes from the algorithm that gives the optimum solution $O =
+\{j_1,\dots,j_n\}$, and $A$ be the set of outcomes of an algorithm that
+gives the stops chosen by travelling the maximum distance each day $A =
 \{i_1,\dots,i_k\}$. We will prove that A is the optimum solution by
-proving k = n.
+proving $k = n$.
+
+Assume that for $f(i_r) \le f(j_r)$ for any arbitrary positive integer
+$r$ such
+that $1 \le r < k $, where $f(\cdot)$ is the function that chooses when
+to stop.
+
+\subparagraph{Base case:}
+Let $r = 1$. Since $f(\cdot)$ chooses to stop at the campsite that
+maximizes $d$ travelled, then $i = j$ and $f(i_1) = f(j_1)$.
+
+\subparagraph{Inductive step:}
+Assume $1 \le l < r$ is true. For any $r > 1$ the inductive assumption
+implies that $f(i_{r-1}) \le f(j_{r-1})$. Thus $j_r$ is compatible with
+$i_1,\dots,i_{r-1}$, but since the algorithm selected $i_r$ over $j_r$,
+this implies that $f(i_r) \le f(j_r)$.
 
 
 
