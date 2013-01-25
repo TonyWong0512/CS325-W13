@@ -5,7 +5,7 @@
 \usepackage{enumerate}
 \usepackage{changepage}
 
-\title{CS325 Winter 2013: HW 1}
+\title{CS325 Winter 2013: HW 2}
 \author{
     Daniel Reichert \\
     Trevor Bramwell \\
@@ -29,220 +29,20 @@
 \begin{document}
 \maketitle
 
-\section*{0.2}
+\section*{1}
 \paragraph{Problem:}
-Show that, if $c$ is a positive real number, then $g(n)=1+c+c^2+\cdots+c^n$ is:
-
-\begin{enumerate}[(a)]
-\item $\Theta(1) \text{ if } c < 1$.
-\item $\Theta(n) \text{ if } c = 1$.
-\item $\Theta(c^n) \text{ if } c > 1$.
-\end{enumerate}
-
-The moral: in big-$\Theta$ terms, the sum of a geometric series is simply the
-first term if the series is
-strictly decreasing, the last term if the series is strictly increasing,
-or the number of terms if the
-series is unchanging.
-
-\paragraph{Solution:}
-$g(n)$ can be rewritten as the geometric series:
-$\frac{1-c^{n+1}}{1-c}$. 
-
-\begin{align*}
-    g(n) &= 1 + c + c^2 + \dots + c^{n} \\
-    cg(n) &= c + c^2 + \dots + c^{n+1} \\
-    g(n) - cg(n) &= 1 - c^{n+1} \\
-    g(n)(1 - c) &= 1 - c^{n+1} \\
-    g(n) &= \frac{1 - c^{n+1}}{1 - c}.
-\end{align*}
-
-\begin{enumerate}[(a)]
-\item If $c < 1$, then $\lim_{n \to \infty} c^{n+1} = 0$. This
-simplifies $g(n)$ to $\frac{1}{1-c}$ which for $c < 1$ will always
-be greater than 1. Thus $g(n)$ is $\BigO{1}$. $g(n)$ is also
-$\Omega(1)$ since $\frac{1}{1-c}*k$ is a lower bound when k is sufficiently small.
-Since $\frac{1}{1-c}$ is both $\BigO{1}$ and $\Omega(1)$ it is by
-definition $\Theta(1)$.
-
-\item If $g(n)=1+1^1+1^2+\cdots+1^n$, then we can use the fact that $1^n=1$ if $n$ is an
-element of the natural numbers. This allows us to simplify the equation to
-$\sum_{i=1}^n1$ which equals n. The equation is therefore $\Theta(n)$ since it is
-the only term in the equation and is both the upper and lower bound.
-\end{enumerate}
-
-\section*{0.3(a)}
-\paragraph{Problem:}
-The Fibonacci numbers $F_0, F_1, F_2$, \ldots, are defined by the rule
-\[ F_0 = 0, F_1 = 1, F_n = F_{n - 1} + F_{n - 2}. \]
-In this problem we will confirm that this sequence grows exponentially
-fast and obtain some
-bounds on its growth.
-
-\begin{enumerate}[(a)]
-\item Use induction to prove that $F_n \geq 2^{0.5n}$ for $n \geq 6$.
-\end{enumerate}
-
-\paragraph{Solution:}
-This proof follows by mathematical induction.
-
-\subparagraph{Base cases: $n=6$, $n=7$}
-$$F_6 = F_5 + F_4 = 8$$
-$$F_7 = F_6 + F_5 = 13$$
-$$2^{0.5(6)} = 8$$ 
-$$2^{0.5(7)} \approx 11.314$$
-Since both cases hold, our base case is established.
-
-\paragraph{Inductive step:}
-
-\subparagraph{Assume:}
-$F_k \geq 2^{0.5k}$ for $6 \geq k \geq n$ \\
-
-\subparagraph{Prove:}
-$F_k+1 \geq 2^{0.5(k+1)}$
-
-\subparagraph{}
-$$F_k \geq 2^{0.5k}$$
-$$F_k + F_k-1 \geq 2^{0.5k} + 2^{0.5(k-1)}$$
-	In the above step we added to both sides the base case 
-    where $k$ is replaced by $k-1$. 
-$$F_k+1 \geq 2^{0.5k} + 2^{0.5(k-1)}$$
-	A Simplification from the definition of the Fibonacci numbers.
-$$F_k+1 \geq 2^{0.5k} + 2^{0.5k}2^{-.5}$$
-	Expansion of terms.
-$$F_k+1 \geq 2^{0.5k}(1 + 2^{-.5})$$ 
-	Factoring like terms.
-$$F_K+1 \geq 2^{0.5(k+1)}$$
-
-Here we reduce the left hand side term to $2^{0.5(k+1)}$ because
-$2^{0.5(k+1)} > 2^{0.5k}+2^{0.5k}2^{-.5}$ Thus, by the principle of
-mathematical induction we have shown that $F_n \geq 2^{0.5n}$ for $n
-\geq 6$ 
-
-\section*{2.3}
-\paragraph{Problem:}
-Section 2.2 describes a method for solving recurrence relations which is
-based on analyzing the recursion tree and deriving a formula for the
-work done at each level.  Another (closely related) method is to expand
-out the recurrence a few times, until a pattern emerges. For instance,
-let’s start with the familiar $T(n) = 2T(n/2) + \BigO{n}$. Think of
-$\BigO{n}$ as being $\leq cn$ for some constant $c$,
-so: $T(n) \leq 2T(n/2) + cn$.  By repeatedly applying this rule, we can
-bound $T(n)$ in terms of $T(n/2)$, then $T(n/4)$, then $T(n/8)$, and so
-on, at each step getting closer to the value of $T(\cdot)$ we do know,
-namely $T(1) = \BigO{1}$.
-
-\begin{align*}
-T (n) &\leq 2T (n/2) + cn \\
-&\leq 2[2T(n/4) + cn/2] + cn = 4T(n/4) + 2cn \\
-&\leq 4[2T(n/8) + cn/4] + 2cn = 8T(n/8) + 3cn \\
-&\leq 8[2T(n/16) + cn/8] + 3cn = 16T(n/16) + 4cn \\
-& \vdots
-\end{align*}
-
-A pattern is emerging\ldots the general term is 
-\[T(n) \leq 2^kT(n/2^k) + kcn.\]
-
-Plugging in $k = \log_2{n}$, we get $T(n) \leq nT(1) + cn\log_2{n} = \BigO{n\log{n}}.$
-
-\begin{enumerate}[(a)]
-\item Do the same thing for the recurrence $T(n) = 3T(n/2) + \BigO{n}$. What
-is the general $k$th term
-in this case? And what value of $k$ should be plugged in to get the
-answer?
-
-\item Now try the recurrence $T(n) = T(n - 1) + \BigO{1}$, a case which is not
-covered by the master theorem. Can you solve this too?
-\end{enumerate}
+Given two sorted arrays $a[1, ..., n]$ and $b[1, ..., n]$, given an $O(\log n)$
+algorithm to find the median of their combined $2n$ elements. (Hint: use
+divide and conquer).
 
 \paragraph{Solution:}
 
-\begin{enumerate}[(a)]
-\item $T(n) = 3T(n/2) + \BigO{n}$
-Using the master theorem to derive $a=3, b=2, d=1, (a/b)^d = (3/2)$
-
-\begin{align*}
-d &? \log_a b \\
-1 &? \log_2 3 \\
-1 &< 1.58\dots
-\end{align*}
-
-Thus
-$\BigO{n^{\log_b a}} = \BigO{n^{\log_2 1}}$
-
-\item $T(n) = T(n - 1) + \BigO{1}$
-$$\sum_{i=1}^{n - 1} T(n - 1) + c = O(1)$$
-\end{enumerate}
-
-\section*{2.4}
+\section*{2}
 \paragraph{Problem:}
-Suppose you are choosing between the following three algorithms:
-
-\begin{itemize}
-\item Algorithm $A$ solves problems by dividing them into five subproblems
-of half the size, recursively solving each subproblem, and then
-combining the solutions in linear time.
-
-\item Algorithm $B$ solves problems of size $n$ by recursively solving two
-subproblems of size $n−1$ and then combining the solutions in constant
-time.
-
-\item Algorithm $C$ solves problems of size $n$ by dividing them into nine
-subproblems of size $n/3$, recursively solving each subproblem, and then
-combining the solutions in $\BigO{n^2}$ time.
-\end{itemize}
-
-\noindent What are the running times of each of these algorithms (in
-big-$O$
-notation), and which would you choose?
-
 \paragraph{Solution:}
-\begin{enumerate}[(a)]
-\item $T(n) = 5T(n/2) + \BigO{n}$
-    From the master theorem we know that the complexity case is determined
-    by $a/b^{d}$.  Since $a/b^{d}$ is $2.5$ in algorithm A, the complexity
-    is $\BigO{n^{\log_2 5}}$
 
-\item $T(n) = 2T(n-1) + c$
-    This case does not fall under the master theorem.  In each level of
-    the	recursive tree there are $2^{i}(n-(i-1)) +c$ operations to perform.
-    Simplifying for the dominant term we find that the complexity is
-    $\BigO{2^{n}}$.
-
-\item $T(n) = 9T(n/3) + \BigO{n^2}$
-    From the master theorem we know that the complexity case is determined
-    by $a/b^{d}$.  Since $a/b^{d}$ is $1$ in algorithm $C$, the complexity is
-    $\BigO{n^{2}\log_3 n}$
-\end{enumerate}
-
-Comparing the asymptotic complexity between the three algorithms, we
-get:
-\begin{align*} 
-A &< B < C \\
-\BigO{n^{log_2 5}} &< \BigO{2^{n}} < \BigO{n^{2}log_3 n}
-\end{align*}
-Thus $A$ is the best choice.
-
-\section*{2.17}
+\section*{4}
 \paragraph{Problem:}
-
-Given a sorted array of distinct integers $A[1, \dots , n]$, you want to
-find out whether there is an index $i$ for which $A[i] = i$. Give a
-divide-and-conquer algorithm that runs in time $\BigO{\log n}$.
-
 \paragraph{Solution:}
-This can be accomplished with binary search. Pseudo code:
-\begin{verbatim}
-    search(A,min, max, i)
-        while (max >= min )
-            mid = midpoint of min and max
-            if A[mid] < i
-                min = mid + 1
-            else if A[mid] > i
-                max = mid - 1
-            else //this means that A[i] == i
-                return "found A[i] == i"
-        return "A[i] never equals i"
-\end{verbatim}
 
 \end{document}
