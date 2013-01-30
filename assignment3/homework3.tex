@@ -150,37 +150,42 @@ change.
 Part A:  Proof by counter example.
 Consider the graph:
 
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
-  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
+\begin{center}
+\begin{tikzpicture}[->,auto,node distance=3cm,thick]
+  \tikzset{every node/.style={fill=white}} 
 
-  \node[main node] (a) {a};
-  \node[main node] (b) [right of=a]{b};
-  \node[main node] (c) [right of=b]{c};
-  \node[main node] (d) [right of=c]{d};
+  \node[state] (a) {$A$};
+  \node[state] (b) [right of=a]{$B$};
+  \node[state] (c) [right of=b]{$C$};
+  \node[state] (d) [right of=c]{$D$};
  
-  \path[every node/.style={font=\sffamily\small}]
-    (a) edge node [left] {1} (b)
-        edge node [below] {4} (d)
-    (b) edge node [left] {1} (c)
-    (c) edge node [left] {1} (d);
+  \path (a) edge node [left] {$1$} (b)
+        (b) edge node [left] {$1$} (c)
+        (c) edge node [left] {$1$} (d);
+
+  \path[in=150,out=30] (a) edge node {$4$} (d);
 \end{tikzpicture}
+\end{center}
+
 In this graph the shortest path from A to D is from A to B to C to D with a weight of 3.
 Now consider the same graph, but with all of the edges having a weight increased by 1.
+\begin{center}
+\begin{tikzpicture}[->,auto,node distance=3cm,thick]
+  \tikzset{every node/.style={fill=white}} 
 
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
-  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
-
-  \node[main node] (a) {a};
-  \node[main node] (b) [right of=a]{b};
-  \node[main node] (c) [right of=b]{c};
-  \node[main node] (d) [right of=c]{d};
+  \node[state] (a) {$A$};
+  \node[state] (b) [right of=a]{$B$};
+  \node[state] (c) [right of=b]{$C$};
+  \node[state] (d) [right of=c]{$D$};
  
-  \path[every node/.style={font=\sffamily\small}]
-    (a) edge node [left] {2} (b)
-        edge node [below] {5} (d)
-    (b) edge node [left] {2} (c)
-    (c) edge node [left] {2} (d);
+  \path (a) edge node [left] {$2$} (b)
+        (b) edge node [left] {$2$} (c)
+        (c) edge node [left] {$2$} (d);
+
+  \path[in=150,out=30] (a) edge node {$5$} (d);
 \end{tikzpicture}
+\end{center}
+
 The previously shortest path now has a weight of 6, where the direct route from A to D only has a weight of 5.  Thus the shortest path has changed and the counter example is proved.  \qed
 \end{proof}
 \begin{proof}
