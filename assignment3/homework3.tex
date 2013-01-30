@@ -137,14 +137,19 @@ path compression is used.
 \section*{5.5}
 \paragraph{Problem:}
 
-Consider an undirected graph $G = (V, E)$ with nonnegative edge weights $ w_e \ge 0$. Suppose that
-you have computed a minimum spanning tree of G, and that you have also computed shortest
-paths to all nodes from a particular node $s \in V$.
-Now suppose each edge weight is increased by 1: the new weights are $w_e = w_e + 1$.
-(a) Does the minimum spanning tree change? Give an example where it changes or prove it
-cannot change.
-(b) Do the shortest paths change? Give an example where they change or prove they cannot
-change.
+Consider an undirected graph $G = (V, E)$ with nonnegative edge weights
+$ w_e \ge 0$. Suppose that you have computed a minimum spanning tree of
+G, and that you have also computed shortest paths to all nodes from a
+particular node $s \in V$.  Now suppose each edge weight is increased by
+1: the new weights are $w_e = w_e + 1$.
+
+\begin{enumerate}[(a)]
+\item Does the minimum spanning tree change? Give an example where it
+      changes or prove it cannot change.
+\item Do the shortest paths change? Give an example where they change or
+      prove they cannot change.
+\end{enumerate}
+
 \paragraph{Solution:}
 \begin{proof}
 Part A:  Proof by counter example.
@@ -167,8 +172,10 @@ Consider the graph:
 \end{tikzpicture}
 \end{center}
 
-In this graph the shortest path from A to D is from A to B to C to D with a weight of 3.
-Now consider the same graph, but with all of the edges having a weight increased by 1.
+In this graph the shortest path from A to D is from A to B to C to D
+with a weight of 3. Now consider the same graph, but with all of the
+edges having a weight increased by 1.
+
 \begin{center}
 \begin{tikzpicture}[->,auto,node distance=3cm,thick]
   \tikzset{every node/.style={fill=white}} 
@@ -186,12 +193,14 @@ Now consider the same graph, but with all of the edges having a weight increased
 \end{tikzpicture}
 \end{center}
 
-The previously shortest path now has a weight of 6, where the direct route from A to D only has a weight of 5.  Thus the shortest path has changed and the counter example is proved.  \qed
+The previously shortest path now has a weight of 6, where the direct
+route from A to D only has a weight of 5.  Thus the shortest path has
+changed and the counter example is proved.
 \end{proof}
+
 \begin{proof}
 Part B:
 \end{proof}
-
 
 
 \section*{5.7}
