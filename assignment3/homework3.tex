@@ -5,7 +5,12 @@
 \usepackage{qtree}
 \usepackage{enumerate}
 \usepackage{changepage}
-\usepackage{TikZ}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{automata}
+\usepackage{pgfplots}
+
+\usepackage[utf8]{inputenc}
 
 \title{CS325 Winter 2013: HW 3}
 \author{
@@ -31,11 +36,11 @@
 \begin{document}
 \maketitle
 
-\section{4.1}
+\section*{4.1}
 \paragraph{Problem:}
-Suppose Dijkstra’s algorithm is run on the following graph, starting at node A.
+Suppose Dijkstra\'s algorithm is run on the following graph, starting at node A.
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
-  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
+  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\bfseries}]
 
   \node[main node] (a) {a};
   \node[main node] (b) [right of=a]{b};
@@ -48,18 +53,18 @@ Suppose Dijkstra’s algorithm is run on the following graph, starting at node A
  
   \path[every node/.style={font=\sffamily\small}]
     (a) edge node [left] {1} (b)
-        edge node [down] {4} (e)
+        edge node [below] {4} (e)
         edge node {8} (f)
     (b) edge node [left] {2} (c)
-        edge node [down] {6} (f)
+        edge node [below] {6} (f)
         edge node {6} (g)
     (c) edge node [left] {1} (d)
-        edge node [down] {2} (g)
-    (d) edge node [down] {4} (h)
+        edge node [below] {2} (g)
+    (d) edge node [below] {4} (h)
         edge node {1} (g)
     (e) edge node [left] {5} (f)
     (g) edge node [right] {1} (f)
-	edge node [left] {1} (h)
+	edge node [left] {1} (h);
 \end{tikzpicture}
 (a) Draw a table showing the intermediate distance values of all the nodes at each iteration of
 the algorithm.
@@ -69,10 +74,11 @@ the algorithm.
 \begin{proof}
 \end{proof}
 
-\section{5.2}
+\section*{5.2}
 \paragraph{Problem:}
 Suppose we want to find the minimum spanning tree of the following graph.
 
+\begin{comment}
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
   thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
   \node[main node] (a) {a};
@@ -106,18 +112,19 @@ Suppose we want to find the minimum spanning tree of the following graph.
 (b) Run Kruskal’s algorithm on the same graph. Show how the disjoint-sets data structure
 looks at every intermediate stage (including the structure of the directed trees), assuming
 path compression is used.
+\end{comment}
 
 \paragraph{Solution:}
 \begin{proof}
 \end{proof}
 
 
-\section{5.5}
+\section*{5.5}
 \paragraph{Problem:}
 
-Consider an undirected graph $G = (V, E)$ with nonnegative edge weights $w_e \gte 0$. Suppose that
+Consider an undirected graph $G = (V, E)$ with nonnegative edge weights $ w_e \ge 0$. Suppose that
 you have computed a minimum spanning tree of G, and that you have also computed shortest
-paths to all nodes from a particular node $s ∈ V$.
+paths to all nodes from a particular node $s \in V$.
 Now suppose each edge weight is increased by 1: the new weights are $w_e = w_e + 1$.
 (a) Does the minimum spanning tree change? Give an example where it changes or prove it
 cannot change.
@@ -138,9 +145,9 @@ Consider the graph:
  
   \path[every node/.style={font=\sffamily\small}]
     (a) edge node [left] {1} (b)
-        edge node [down] {4} (d)
+        edge node [below] {4} (d)
     (b) edge node [left] {1} (c)
-    (c) edge node [left] {1} (d)
+    (c) edge node [left] {1} (d);
 \end{tikzpicture}
 In this graph the shortest path from A to D is from A to B to C to D with a weight of 3.
 Now consider the same graph, but with all of the edges having a weight increased by 1.
@@ -155,9 +162,9 @@ Now consider the same graph, but with all of the edges having a weight increased
  
   \path[every node/.style={font=\sffamily\small}]
     (a) edge node [left] {2} (b)
-        edge node [down] {5} (d)
+        edge node [below] {5} (d)
     (b) edge node [left] {2} (c)
-    (c) edge node [left] {2} (d)
+    (c) edge node [left] {2} (d);
 \end{tikzpicture}
 The previously shortest path now has a weight of 6, where the direct route from A to D only has a weight of 5.  Thus the shortest path has changed and the counter example is proved.  \qed
 \end{proof}
@@ -167,7 +174,7 @@ Part B:
 
 
 
-\section{5.7}
+\section*{5.7}
 \paragraph{Problem:}
 Show how to find the maximum spanning tree of a graph, that is, the spanning tree of largest
 total weight.
@@ -175,7 +182,7 @@ total weight.
 \begin{proof}
 \end{proof}
 
-\section{5}
+\section*{5}
 \paragraph{Problem:}
 Consider the Change Problem in Austria. The input to this problem is
 an integer L. The output should be the minimum cardinality collection
@@ -193,7 +200,7 @@ Proof by counter example.
 When the Shilling total is equal to 40, the optimal solution would use two 20 shilling coins, so $n=2$ where $n$ is the number of coins.  According to the greedy method of taking as many coins as possible from the highest denomination available, a shilling total of 40 would have change made with one 25 shilling coin, one 15 shilling coin, and one 5 shillingcoin making $n=3$ which is not optimal.
 \end{proof}
 
-\section{6}
+\section*{6}
 \paragraph{Problem:}
 Consider a long quiet country road with houses scatter very sparsely along
 it (We can picture the road as a long line segment). You want to place cell
