@@ -43,7 +43,7 @@ endif
 # list of messages categories to display
 LU_SHOW ?= warning #info debug debug-vars
 
-# Select GNU/BSD utils (cp, rm, mv, ...)
+# Select GNU/BSD/MACOSX utils (cp, rm, mv, ...)
 LU_UTILS ?= GNU
 
 ####[ End of configuration ]################################################
@@ -106,6 +106,9 @@ LU_RM_GNU ?= rm -f --
 LU_CP_BSD ?= cp -p
 LU_MV_BSD ?= mv
 LU_RM_BSD ?= rm -f
+LU_CP_MACOSX ?= /bin/cp -p
+LU_MV_MACOSX ?= /bin/mv
+LU_RM_MACOSX ?= /bin/rm -f
 
 lu-show=\
 $(if $(filter $(LU_SHOW),$(1)), \
@@ -144,7 +147,7 @@ lu-clean=$(if $(strip $(1)),$(RM) $(1))
 
 define lu-bug # description
   $$(warning Internal error: $(1))
-  $$(error You probably find a bug. Please, report it.)
+  $$(error You probably found a bug. Please, report it.)
 endef
 
 #########################################################################
@@ -394,6 +397,7 @@ $(eval $(call lu-setvar-global,DVIPDFM,dvipdfm))
 $(eval $(call lu-setvar-global,BIBTEX,bibtex))
 #$(eval $(call lu-setvar-global,MPOST,TEX="$(LATEX)" mpost))
 $(eval $(call lu-setvar-global,FIG2DEV,fig2dev))
+#$(eval $(call lu-setvar-global,SVG2DEV,svg2dev))
 $(eval $(call lu-setvar-global,EPSTOPDF,epstopdf))
 $(eval $(call lu-setvar-global,MAKEINDEX,makeindex))
 
@@ -411,9 +415,12 @@ define _lu_which # VARNAME progname
  $$(eval $$(call lu-setvar-global,$(1),$$(_LU_$(1)_DEFAULT)))
 endef
 
-$(eval $(call _lu_which,GENSUBFIG,gensubfig.sh))
-$(eval $(call _lu_which,FIGDEPTH,figdepth.pl))
-$(eval $(call _lu_which,LATEXFILTER,latexfilter.pl))
+$(eval $(call _lu_which,GENSUBFIG,gensubfig.py))
+$(eval $(call _lu_which,FIGDEPTH,figdepth.py))
+$(eval $(call _lu_which,GENSUBSVG,gensubfig.py))
+$(eval $(call _lu_which,SVGDEPTH,svgdepth.py))
+$(eval $(call _lu_which,SVG2DEV,svg2dev.py))
+$(eval $(call _lu_which,LATEXFILTER,latexfilter.py))
 
 # Rules to use to check if the build document (dvi or pdf) is up-to-date
 # This can be overruled per document manually and/or automatically
@@ -443,6 +450,7 @@ define lu-create-texflavor # 1:name 2:tex_prog 3:file_ext
   $(eval $(call lu-setvar-flavor,EXT,$(1),$(3)))
   $(eval $(call lu-setvar-flavor,TARGETNAME,$(1),$(4)))
   $(eval $(call lu-addtovar-flavor,CLEANFIGEXT,$(1),$(5)))
+  $(eval $(call lu-addtovar-flavor,CLEANSVGEXT,$(1),$(5)))
 endef
 
 define lu-create-dviflavor # 1:name 2:dvi_prog 3:file_ext
@@ -554,7 +562,8 @@ define _lu-do-latex # 1:master 2:flavor 3:source.tex 4:ext(.dvi/.pdf)
 	if [ "$$NO_TEXDEPENDS_FILE" = 1 ]; then \
 		echo "*************************************" ;\
 		echo "texdepends does not seems be loaded" ;\
-		echo "You probably find a bug. Please, report it."; \
+		echo "Either your (La)TeX installation is wrong or you found a bug." ;\
+		echo "If so, please, report it (with the result of shell command 'kpsepath tex')";\
 		echo "Aborting compilation" ;\
 		echo "*************************************" ;\
 		touch "$(1)$(4)_FAILED" ; \
@@ -683,6 +692,10 @@ endif
 	   $$(basename $$(wildcard $$(filter %.fig, \
 			$$(call lu-getvalues,FIGURES,$(1),$(2))))), \
 	   $$(addprefix $$(fig),$$(call lu-getvalues-flavor,CLEANFIGEXT,$(2)))))
+	$$(call lu-clean,$$(foreach svg, \
+	   $$(basename $$(wildcard $$(filter %.svg, \
+			$$(call lu-getvalues,FIGURES,$(1),$(2))))), \
+	   $$(addprefix $$(svg),$$(call lu-getvalues-flavor,CLEANSVGEXT,$(2)))))
  clean:: clean-build-fig
 	$$(call lu-clean,$$(call lu-getvalues,OUTPUTS,$(1),$(2)) \
 		$$(call lu-getvalues,BBLFILES,$(1),$(2)) \
@@ -775,10 +788,15 @@ $(foreach master, $(_LU_DEF_MASTERS), $(eval $(call lu-master-rules,$(master))))
 ##################################################################""
 # Gestion des subfigs
 
-%.subfig.mk: %.subfig
+%.subfig.mk: %.subfig %.fig
 	$(COMMON_PREFIX)$(call lu-call-prog,GENSUBFIG) \
-		-p '$$(COMMON_PREFIX)$(call lu-call-prog,FIGDEPTH) \
-		< $$< > $$@' -s $*.subfig $*.fig < $^ > $@
+		-p '$$(COMMON_PREFIX)$(call lu-call-prog,FIGDEPTH) < $$< > $$@' \
+		-s $*.subfig $*.fig < $^ > $@
+
+%.subfig.mk: %.subfig %.svg
+	$(COMMON_PREFIX)$(call lu-call-prog,GENSUBSVG) \
+		-p '$$(COMMON_PREFIX)$(call lu-call-prog,SVGDEPTH) < $$< > $$@' \
+		-s $*.subfig $*.svg < $^ > $@
 
 clean::
 	$(call lu-clean,$(FIGS2CREATE_LIST))
@@ -786,6 +804,10 @@ clean::
 	$(call lu-clean,$(FIGS2CREATE_LIST:%.fig=%.pstex_t))
 	$(call lu-clean,$(FIGS2CREATE_LIST:%.fig=%.$(_LU_PDFTEX_EXT)))
 	$(call lu-clean,$(FIGS2CREATE_LIST:%.fig=%.pdftex_t))
+	$(call lu-clean,$(FIGS2CREATE_LIST:%.svg=%.pstex))
+	$(call lu-clean,$(FIGS2CREATE_LIST:%.svg=%.pstex_t))
+	$(call lu-clean,$(FIGS2CREATE_LIST:%.svg=%.$(_LU_PDFTEX_EXT)))
+	$(call lu-clean,$(FIGS2CREATE_LIST:%.svg=%.pdftex_t))
 
 .PHONY: LU_FORCE clean distclean
 LU_FORCE:
@@ -801,16 +823,30 @@ distclean:: clean
 %.pstex: %.fig
 	$(COMMON_PREFIX)$(call lu-call-prog,FIG2DEV) -L pstex $< $@
 
+%.pstex: %.svg
+	$(COMMON_PREFIX)$(call lu-call-prog,SVG2DEV) -L pstex $< $@
+
+
 .PRECIOUS: %.pstex
 %.pstex_t: %.fig %.pstex
 	$(COMMON_PREFIX)$(call lu-call-prog,FIG2DEV) -L pstex_t -p $*.pstex $< $@
 
+%.pstex_t: %.svg %.pstex
+	$(COMMON_PREFIX)$(call lu-call-prog,SVG2DEV) -L pstex_t -p $*.pstex $< $@
+
+
 %.$(_LU_PDFTEX_EXT): %.fig
 	$(COMMON_PREFIX)$(call lu-call-prog,FIG2DEV) -L pdftex $< $@
+
+%.$(_LU_PDFTEX_EXT): %.svg
+	$(COMMON_PREFIX)$(call lu-call-prog,SVG2DEV) -L pdftex $< $@
 
 .PRECIOUS: %.$(_LU_PDFTEX_EXT)
 %.pdftex_t: %.fig %.$(_LU_PDFTEX_EXT)
 	$(COMMON_PREFIX)$(call lu-call-prog,FIG2DEV) -L pdftex_t -p $*.$(_LU_PDFTEX_EXT) $< $@
+
+%.pdftex_t: %.svg %.$(_LU_PDFTEX_EXT)
+	$(COMMON_PREFIX)$(call lu-call-prog,SVG2DEV) -L pdftex_t -p $*.$(_LU_PDFTEX_EXT) $< $@
 
 %.pdf: %.eps
 	$(COMMON_PREFIX)$(call lu-call-prog,EPSTOPDF) --filter < $< > $@
@@ -864,7 +900,7 @@ LU_rebuild_bibtopic_undefined_references:
 LU_WATCH_FILES_SAVE:
 	$(COMMON_HIDE)$(foreach file, $(sort \
 		$(call lu-getvalues,WATCHFILES,$(LU_REC_MASTER),$(LU_REC_FLAVOR))), \
-	    $(call lu-save-file,"$(file)","$(file).orig");)
+	    $(call lu-save-file,$(file),$(file).orig);)
 
 LU_WATCH_FILES_RESTORE:
 	$(COMMON_HIDE)$(foreach file, $(sort \
