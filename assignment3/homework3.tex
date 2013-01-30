@@ -5,6 +5,7 @@
 \usepackage{qtree}
 \usepackage{enumerate}
 \usepackage{changepage}
+\usepackage{TikZ}
 
 \title{CS325 Winter 2013: HW 3}
 \author{
@@ -30,169 +31,94 @@
 \begin{document}
 \maketitle
 
-\section*{1}
+\section{4.1}
 \paragraph{Problem:}
-Given two sorted arrays $a[1, ..., n]$ and $b[1, ..., n]$, given a\\
-$O(\log{n})$ algorithm to find the median of their combined $2n$ \\
-elements. (Hint: use divide and conquer).
+Suppose Dijkstra’s algorithm is run on the following graph, starting at node A.
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
+
+  \node[main node] (a) {a};
+  \node[main node] (b) [right of=a]{b};
+  \node[main node] (c) [right of=b]{c};
+  \node[main node] (d) [right of=c]{d};
+  \node[main node] (e) [below of=a]{e};
+  \node[main node] (f) [below of=b]{f};
+  \node[main node] (g) [below of=c]{g};
+  \node[main node] (h) [below of=d]{h};
+ 
+  \path[every node/.style={font=\sffamily\small}]
+    (a) edge node [left] {1} (b)
+        edge node [down] {4} (e)
+        edge node {8} (f)
+    (b) edge node [left] {2} (c)
+        edge node [down] {6} (f)
+        edge node {6} (g)
+    (c) edge node [left] {1} (d)
+        edge node [down] {2} (g)
+    (d) edge node [down] {4} (h)
+        edge node {1} (g)
+    (e) edge node [left] {5} (f)
+    (g) edge node [right] {1} (f)
+	edge node [left] {1} (h)
+\end{tikzpicture}
+(a) Draw a table showing the intermediate distance values of all the nodes at each iteration of
+the algorithm.
+(b) Show the final shortest-path tree.
 
 \paragraph{Solution:}
-\begin{verbatim}
-med_a = a[n / 2]
-med_b = b[n / 2]
-i = 4
-while (i < n)
-    if (med_a > med_b)
-        med_a = a[((i - 1) * n) / 2]
-        med_b = b[n / i]
-    else (med_a < med_b)
-        med_a = a[n / i]
-        med_b = b[((i - 1) * n) / 2]
-    i = 2 * i
-    if (i >= n)
-        median = (med_a + med_b) / 2
-        return median    
-\end{verbatim}
-
-\section*{2}
-\paragraph{Problem:}
-Prove the following statement by induction: In any full binary tree, the
-number of leaves is exactly one more than the number of internal nodes.
-Definition: A node is a leaf if it has no children; otherwise, it is an
-internal node. A full binary tree is a binary tree whose node is either
-a leaf node or an internal node with exactly two children.
-
-\paragraph{Solution:}
-\textbf{Proof by induction.}
-\subparagraph{Base case:} a full binary tree of height 1.
-
-\Tree [.I [L ] [L ] ]
-
-This tree contains two leafs and one internal node, which satisfies the
-statement $L = I+1$, and proves our base case.
-
-\subparagraph{Inductive step:}
-\indent Assume: $L_{k} = I_{k} + 1$ for $1 \le k \le n$ \\
-\indent Prove: $L_{(k + 1)} = I_{(k + 1)} + 1$ \\
-By the definition of a full binary tree we know that any internal node
-may be cut such that the remaining two branches are also full binary
-trees.  This allows us to express any full binary tree as a set of
-recursively defined full binary trees.
-
-\Tree [.$I_1$ [.$I_2$ [.L ]
-               [.L ] ]
-        [.$I_3$ [.L ]
-               [.$I_4$ [.L ]
-                      [.L ] ] ] ]
-
-In the above full binary tree, if the internal node $I_3$ was cut away
-from the tree to only be represented as in the tree below, the newly
-created tree is still a full binary tree.
-
-\Tree [.$I_3$ [.L ]
-        [.$I_4$ [.L ]
-           [.L ] ] ]
-
-Further, if the internal node $I_4$ is cut away from the tree, the newly
-created full binary tree conforms to the base case.
-
-\Tree [.$I_4$ [.L ]
-        [.L ] ]
-
-Thus, by induction, in any full binary tree, the number of leaves is
-exactly one more than the number of internal nodes. \qed
-
-\section*{3}
-\paragraph{Problem:}
-Interval scheduling. We are given a set of requests for using a
-resource.  Each request $i$ specifies a starting time $s(i)$ and an end time
-$f(i)$. The resource can only accommodate one request at a time. If two
-requests overlap in time, they are incompatible and cannot be both
-fulfilled. The goal is to identify a maximum subset of compatible
-requests. One possible greedy strategy is to select at each step the
-request that is compatible with the maximum number of the remaining
-requests. Will this greedy strategy lead to an optimal solution? If so,
-provide a proof. If not, provide a counter example.
-
-\paragraph{Solution:}
-\textbf{Proof by counter example.} \\
-In the following counter example we will demonstrate that the greedy
-choice of maximal number of remaining requests is not optimal.
-
-\begin{verbatim}
-|--1--||--2--||--3--||--4--|
-  |--5--| |--6--| |--7--|
-  |--8--|         |--9--|
-  |--10-|         |--11-|
-\end{verbatim}
-
-In this example the optimal solution consists of choosing four intervals
-numbered 1-4.  Intervals 1 and 4 have seven remaining requests.
-Intervals 2,3,5,7,8,9,10 an 11 have six remaining requests.  Interval 6
-has a total of eight remaining requests.  Because interval 6 has the
-highest number of requests remaining, it would be selected first.  This
-first choice conflicts with intervals 2 and 3.  Thus only allowing a
-solution with a total of three intervals.  Thus, proof by contradiction.
-\qed
-
-\section*{4}
-\paragraph{Problem:}
-You and your friends are taking a long hiking trip of $L$ miles, along
-which there are $n$ camping sites located at distances $x_1, x_2, \dots,
-x_n$
-respectively from the start of the trip. You can hike at most $d$ miles
-per day, by the end of which you must stop and camp for the night. You
-need make a valid trip plan that takes the minimum number of camping
-stops. The plan should specify which camping sites to use, and it is
-only valid if any two consecutive stops are no more than $d$ miles apart.
-Your friend proposed the following strategy: each time you come to a
-camp site, check whether you can make it to the next site before the end
-of the day (i.e., before finishing the $d$ miles quota for the day. We
-assume this can always be determined correctly), if so, keep hiking. If
-not, stop for the night.  This is in fact a greedy algorithm, which
-simply choose to hike as long as possible each day. Prove that this
-greedy algorithm achieves the optimal solution, i.e., it uses the minimum
-number of stops. (Hint: construct a proof that is similar to the
-interval scheduling proof, which shows that the greedy algorithm stays
-ahead.)
-
-\paragraph{Solution:}
-\begin{proof}[Proof by Induction.]
-
-Let $O$ be the set of outcomes from the algorithm that gives the optimum solution $O =
-\{j_1,\dots,j_n\}$, and $A$ be the set of outcomes of an algorithm that
-gives the stops chosen by travelling the maximum distance each day $A =
-\{i_1,\dots,i_k\}$. We will prove that A is the optimum solution by
-proving $k = n$.
-
-Assume that for $f(i_r) \le f(j_r)$ for any arbitrary positive integer
-$r$ such
-that $1 \le r < k $, where $f(\cdot)$ is the function that chooses when
-to stop.
-
-\subparagraph{Base case:}
-Let $r = 1$. Since $f(\cdot)$ chooses to stop at the campsite that
-maximizes $d$ travelled, then $i = j$ and $f(i_1) = f(j_1)$.
-
-\subparagraph{Inductive step:}
-Assume $1 \le l < r$ is true. For any $r > 1$ the inductive assumption
-implies that $f(i_{r-1}) \le f(j_{r-1})$. Thus $j_r$ is compatible with
-$i_1,\dots,i_{r-1}$, but since the algorithm selected $i_r$ over $j_r$,
-this implies that $f(i_r) \le f(j_r)$.
-
-
-
+\begin{proof}
 \end{proof}
 
-\end{document}
+\section{5.2}
+\paragraph{Problem:}
+Suppose we want to find the minimum spanning tree of the following graph.
+
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
+  \node[main node] (a) {a};
+  \node[main node] (b) [right of=a]{b};
+  \node[main node] (c) [right of=b]{c};
+  \node[main node] (d) [right of=c]{d};
+  \node[main node] (e) [below of=a]{e};
+  \node[main node] (f) [below of=b]{f};
+  \node[main node] (g) [below of=c]{g};
+  \node[main node] (h) [below of=d]{h};
+  \tikzset{LabelStyle/.style =   {draw,
+				  fill           = yellow,
+				  text           = red}}
+  \path[every node/.style={font=\sffamily\small}]
+  \draw[EdgeStyle](a) to node[LabelStyle]{1} (b);
+  \draw[EdgeStyle](a) to node[LabelStyle]{8} (f);
+  \draw[EdgeStyle](a) to node[LabelStyle]{4} (e);
+  \draw[EdgeStyle](b) to node[LabelStyle]{2} (c);
+  \draw[EdgeStyle](b) to node[LabelStyle]{6} (g);
+  \draw[EdgeStyle](b) to node[LabelStyle]{6} (f);
+  \draw[EdgeStyle](c) to node[LabelStyle]{3} (d);
+  \draw[EdgeStyle](c) to node[LabelStyle]{2} (g);
+  \draw[EdgeStyle](d) to node[LabelStyle]{1} (g);
+  \draw[EdgeStyle](d) to node[LabelStyle]{4} (h);
+  \draw[EdgeStyle](e) to node[LabelStyle]{5} (f);
+  \draw[EdgeStyle](f) to node[LabelStyle]{1} (g);
+  \draw[EdgeStyle](g) to node[LabelStyle]{1} (h);
+\end{tikzpicture}
+(a) Run Prim’s algorithm; whenever there is a choice of nodes, always use alphabetic ordering
+(e.g., start from node A). Draw a table showing the intermediate values of the cost array.
+(b) Run Kruskal’s algorithm on the same graph. Show how the disjoint-sets data structure
+looks at every intermediate stage (including the structure of the directed trees), assuming
+path compression is used.
+
+\paragraph{Solution:}
+\begin{proof}
+\end{proof}
+
 
 \section{5.5}
 \paragraph{Problem:}
 
-Consider an undirected graph G = (V, E) with nonnegative edge weights we ≥ 0. Suppose that
+Consider an undirected graph $G = (V, E)$ with nonnegative edge weights $w_e \gte 0$. Suppose that
 you have computed a minimum spanning tree of G, and that you have also computed shortest
-paths to all nodes from a particular node s ∈ V .
-Now suppose each edge weight is increased by 1: the new weights are we = we + 1.
+paths to all nodes from a particular node $s ∈ V$.
+Now suppose each edge weight is increased by 1: the new weights are $w_e = w_e + 1$.
 (a) Does the minimum spanning tree change? Give an example where it changes or prove it
 cannot change.
 (b) Do the shortest paths change? Give an example where they change or prove they cannot
@@ -205,3 +131,12 @@ Proof by induction:
 
 \end{proof}
 
+
+\section{5.7}
+\paragraph{Problem:}
+Show how to find the maximum spanning tree of a graph, that is, the spanning tree of largest
+total weight.
+\paragraph{Solution:}
+\begin{proof}
+\end{proof}
+\end{document}
