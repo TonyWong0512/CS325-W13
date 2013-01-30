@@ -125,11 +125,46 @@ cannot change.
 change.
 \paragraph{Solution:}
 \begin{proof}
-Proof by induction:
+Part A:  Proof by counter example.
+Consider the graph:
 
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
 
+  \node[main node] (a) {a};
+  \node[main node] (b) [right of=a]{b};
+  \node[main node] (c) [right of=b]{c};
+  \node[main node] (d) [right of=c]{d};
+ 
+  \path[every node/.style={font=\sffamily\small}]
+    (a) edge node [left] {1} (b)
+        edge node [down] {4} (d)
+    (b) edge node [left] {1} (c)
+    (c) edge node [left] {1} (d)
+\end{tikzpicture}
+In this graph the shortest path from A to D is from A to B to C to D with a weight of 3.
+Now consider the same graph, but with all of the edges having a weight increased by 1.
 
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
+
+  \node[main node] (a) {a};
+  \node[main node] (b) [right of=a]{b};
+  \node[main node] (c) [right of=b]{c};
+  \node[main node] (d) [right of=c]{d};
+ 
+  \path[every node/.style={font=\sffamily\small}]
+    (a) edge node [left] {2} (b)
+        edge node [down] {5} (d)
+    (b) edge node [left] {2} (c)
+    (c) edge node [left] {2} (d)
+\end{tikzpicture}
+The previously shortest path now has a weight of 6, where the direct route from A to D only has a weight of 5.  Thus the shortest path has changed and the counter example is proved.  \qed
 \end{proof}
+\begin{proof}
+Part B:
+\end{proof}
+
 
 
 \section{5.7}
@@ -138,5 +173,37 @@ Show how to find the maximum spanning tree of a graph, that is, the spanning tre
 total weight.
 \paragraph{Solution:}
 \begin{proof}
+\end{proof}
+
+\section{5}
+\paragraph{Problem:}
+Consider the Change Problem in Austria. The input to this problem is
+an integer L. The output should be the minimum cardinality collection
+of coins required to make L shillings of change (that is, you want to use
+as few coins as possible). In Austria the coins are worth 1, 5, 10, 20, 25,
+50 Shillings. Assume that you have an unlimited number of coins of each
+type. Formally prove or disprove that the greedy algorithm (that takes as
+many coins as possible from the highest denominations) correctly solves
+the Change Problem. So for example, to make change for 234 Shillings the
+greedy algorithms would take four 50 shilling coins, one 25 shilling coin,
+one 5 shilling coin, and four 1 shilling coins.
+\paragraph{Solution:}
+\begin{proof}
+Proof by counter example.
+When the Shilling total is equal to 40, the optimal solution would use two 20 shilling coins, so $n=2$ where $n$ is the number of coins.  According to the greedy method of taking as many coins as possible from the highest denomination available, a shilling total of 40 would have change made with one 25 shilling coin, one 15 shilling coin, and one 5 shillingcoin making $n=3$ which is not optimal.
+\end{proof}
+
+\section{6}
+\paragraph{Problem:}
+Consider a long quiet country road with houses scatter very sparsely along
+it (We can picture the road as a long line segment). You want to place cell
+phone base stations at certain points along the road, so that every house
+is within four miles of one of the base stations.
+Give an efficient algorithm that achieves this goal, using as few stations
+as possible. Show that the algorithm achieve the optimal solution using
+the “stay ahead” argument.
+\paragraph{Solution:}
+\begin{proof}
+
 \end{proof}
 \end{document}
