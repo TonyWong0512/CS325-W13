@@ -5,7 +5,7 @@ for line in lines:
 	elements = line.split(',')
 	count = 0
 	for i in range(len(elements)):
-		for j in range(i,len(elements)):
-			if elements[i] > elements[j]:
+		for j in range(i+1,len(elements)):
+			if i < j and elements[i] > elements[j]:
 				count+=1
-	print count
+	print (count,len(elements))
