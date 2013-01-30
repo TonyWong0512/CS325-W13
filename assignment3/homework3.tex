@@ -39,6 +39,8 @@
 \section*{4.1}
 \paragraph{Problem:}
 Suppose Dijkstra\'s algorithm is run on the following graph, starting at node A.
+
+\begin{center}
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
   thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\bfseries}]
 
@@ -52,27 +54,40 @@ Suppose Dijkstra\'s algorithm is run on the following graph, starting at node A.
   \node[main node] (h) [below of=d]{h};
  
   \path[every node/.style={font=\sffamily\small}]
-    (a) edge node [left] {1} (b)
-        edge node [below] {4} (e)
+    (a) edge node [above] {1} (b)
+        edge node [left] {4} (e)
         edge node {8} (f)
-    (b) edge node [left] {2} (c)
-        edge node [below] {6} (f)
+    (b) edge node [above] {2} (c)
+        edge node [right] {6} (f)
         edge node {6} (g)
-    (c) edge node [left] {1} (d)
-        edge node [below] {2} (g)
-    (d) edge node [below] {4} (h)
+    (c) edge node [above] {1} (d)
+        edge node [right] {2} (g)
+    (d) edge node [right] {4} (h)
         edge node {1} (g)
-    (e) edge node [left] {5} (f)
-    (g) edge node [right] {1} (f)
-	edge node [left] {1} (h);
+    (e) edge node [below] {5} (f)
+    (g) edge node [below] {1} (f)
+	edge node [below] {1} (h);
 \end{tikzpicture}
-(a) Draw a table showing the intermediate distance values of all the nodes at each iteration of
-the algorithm.
-(b) Show the final shortest-path tree.
+\end{center}
+
+\begin{enumerate}[(a)]
+    \item Draw a table showing the intermediate distance values of all
+          the nodes at each iteration of the algorithm.
+    \item Show the final shortest-path tree.
+\end{enumerate}
 
 \paragraph{Solution:}
-\begin{proof}
-\end{proof}
+\subparagraph{(a)}
+\begin{center}
+\begin{tabular}{ | c | c | c | c | }
+\hline
+Iteration & Node a  & Node b & Node c \\ \hline
+0 & 0 & $\infty$ & $\infty$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\subparagraph{(b)}
 
 \section*{5.2}
 \paragraph{Problem:}
