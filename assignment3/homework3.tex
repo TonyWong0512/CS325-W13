@@ -42,16 +42,16 @@ Suppose Dijkstra\'s algorithm is run on the following graph, starting at node A.
 
 \begin{center}
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
-  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\bfseries}]
+  thick,main node/.style={font=\sffamily\bfseries}]
 
-  \node[main node] (a) {a};
-  \node[main node] (b) [right of=a]{b};
-  \node[main node] (c) [right of=b]{c};
-  \node[main node] (d) [right of=c]{d};
-  \node[main node] (e) [below of=a]{e};
-  \node[main node] (f) [below of=b]{f};
-  \node[main node] (g) [below of=c]{g};
-  \node[main node] (h) [below of=d]{h};
+  \node[state] (a) {$A$};
+  \node[state] (b) [right of=a]{$B$};
+  \node[state] (c) [right of=b]{$C$};
+  \node[state] (d) [right of=c]{$D$};
+  \node[state] (e) [below of=a]{$E$};
+  \node[state] (f) [below of=b]{$F$};
+  \node[state] (g) [below of=c]{$G$};
+  \node[state] (h) [below of=d]{$H$};
  
   \path[every node/.style={font=\sffamily\small}]
     (a) edge node [above] {1} (b)
@@ -79,15 +79,47 @@ Suppose Dijkstra\'s algorithm is run on the following graph, starting at node A.
 \paragraph{Solution:}
 \subparagraph{(a)}
 \begin{center}
-\begin{tabular}{ | c | c | c | c | }
+\begin{tabular}{ | c | c | c | c | c | c | c | c | }
 \hline
-Iteration & Node a  & Node b & Node c \\ \hline
-0 & 0 & $\infty$ & $\infty$ \\
+& \multicolumn{7}{|c|}{Iteration} \\ \hline
+Node & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\ \hline \hline
+$A$ & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
+$B$ & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\ \hline
+$C$ & $\infty$ & 3 & 3 & 3 & 3 & 3 & 3 \\ \hline
+$D$ & $\infty$ & $\infty$ & 4 & 4 & 4 & 4 & 4\\ \hline
+$E$ & 4 & 4 & 4 & 4 & 4 & 4 & 4 \\ \hline
+$F$ & 8 & 7 & 7 & 7 & 7 & 6 & 6 \\ \hline
+$G$ & $\infty$ & 7 & 5 & 5 & 5 & 5 & 5 \\ \hline
+$H$ & $\infty$ & $\infty$ & $\infty$ & 8 & 8 & 6 & 6 \\
 \hline
 \end{tabular}
 \end{center}
 
 \subparagraph{(b)}
+
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+  thick,main node/.style={font=\sffamily\bfseries}]
+
+  \node[state] (a) {$A$};
+  \node[state] (b) [right of=a]{$B$};
+  \node[state] (c) [right of=b]{$C$};
+  \node[state] (d) [right of=c]{$D$};
+  \node[state] (e) [below of=a]{$E$};
+  \node[state] (f) [below of=b]{$F$};
+  \node[state] (g) [below of=c]{$G$};
+  \node[state] (h) [below of=d]{$H$};
+ 
+  \path[every node/.style={font=\sffamily\small}]
+    (a) edge node [above] {1} (b)
+        edge node [left] {4} (e)
+    (b) edge node [above] {2} (c)
+    (c) edge node [above] {1} (d)
+        edge node [right] {2} (g)
+    (g) edge node [below] {1} (h)
+        edge node [below] {1} (f);   
+\end{tikzpicture}
+\end{center}
 
 \section*{5.2}
 \paragraph{Problem:}
