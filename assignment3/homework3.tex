@@ -76,8 +76,10 @@ Suppose Dijkstra\'s algorithm is run on the following graph, starting at node A.
     \item Show the final shortest-path tree.
 \end{enumerate}
 
+\newpage
 \paragraph{Solution:}
 \subparagraph{(a)}
+
 \begin{center}
 \begin{tabular}{ | c | c | c | c | c | c | c | c | }
 \hline
@@ -99,7 +101,7 @@ $H$ & $\infty$ & $\infty$ & $\infty$ & 8 & 8 & 6 & 6 \\
 
 \begin{center}
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
-  thick,main node/.style={font=\sffamily\bfseries}]
+  thick]
 
   \node[state] (a) {$A$};
   \node[state] (b) [right of=a]{$B$};
@@ -112,7 +114,7 @@ $H$ & $\infty$ & $\infty$ & $\infty$ & 8 & 8 & 6 & 6 \\
  
   \path[every node/.style={font=\sffamily\small}]
     (a) edge node [above] {1} (b)
-        edge node [left] {4} (e)
+        edge node [left]  {4} (e)
     (b) edge node [above] {2} (c)
     (c) edge node [above] {1} (d)
         edge node [right] {2} (g)
@@ -125,46 +127,48 @@ $H$ & $\infty$ & $\infty$ & $\infty$ & 8 & 8 & 6 & 6 \\
 \paragraph{Problem:}
 Suppose we want to find the minimum spanning tree of the following graph.
 
-\begin{comment}
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
-  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
-  \node[main node] (a) {a};
-  \node[main node] (b) [right of=a]{b};
-  \node[main node] (c) [right of=b]{c};
-  \node[main node] (d) [right of=c]{d};
-  \node[main node] (e) [below of=a]{e};
-  \node[main node] (f) [below of=b]{f};
-  \node[main node] (g) [below of=c]{g};
-  \node[main node] (h) [below of=d]{h};
-  \tikzset{LabelStyle/.style =   {draw,
-				  fill           = yellow,
-				  text           = red}}
+\begin{center}
+\begin{tikzpicture}[-,shorten >=1pt,auto,node distance=3cm,thick]
+  \node[state] (a) {$A$};
+  \node[state] (b) [right of=a]{$B$};
+  \node[state] (c) [right of=b]{$C$};
+  \node[state] (d) [right of=c]{$D$};
+  \node[state] (e) [below of=a]{$E$};
+  \node[state] (f) [below of=b]{$F$};
+  \node[state] (g) [below of=c]{$G$};
+  \node[state] (h) [below of=d]{$H$};
+
   \path[every node/.style={font=\sffamily\small}]
-  \draw[EdgeStyle](a) to node[LabelStyle]{1} (b);
-  \draw[EdgeStyle](a) to node[LabelStyle]{8} (f);
-  \draw[EdgeStyle](a) to node[LabelStyle]{4} (e);
-  \draw[EdgeStyle](b) to node[LabelStyle]{2} (c);
-  \draw[EdgeStyle](b) to node[LabelStyle]{6} (g);
-  \draw[EdgeStyle](b) to node[LabelStyle]{6} (f);
-  \draw[EdgeStyle](c) to node[LabelStyle]{3} (d);
-  \draw[EdgeStyle](c) to node[LabelStyle]{2} (g);
-  \draw[EdgeStyle](d) to node[LabelStyle]{1} (g);
-  \draw[EdgeStyle](d) to node[LabelStyle]{4} (h);
-  \draw[EdgeStyle](e) to node[LabelStyle]{5} (f);
-  \draw[EdgeStyle](f) to node[LabelStyle]{1} (g);
-  \draw[EdgeStyle](g) to node[LabelStyle]{1} (h);
+    (a) edge node {1} (b)
+        edge node {8} (f)
+        edge node {4} (e)
+    (b) edge node {2} (c)
+        edge node {6} (g)
+        edge node {6} (f)
+    (c) edge node {3} (d)
+        edge node {2} (g)
+    (d) edge node {1} (g)
+        edge node {4} (h)
+    (e) edge node [below] {5} (f)
+    (f) edge node [below] {1} (g)
+    (g) edge node [below] {1} (h);
 \end{tikzpicture}
-(a) Run Prim’s algorithm; whenever there is a choice of nodes, always use alphabetic ordering
-(e.g., start from node A). Draw a table showing the intermediate values of the cost array.
-(b) Run Kruskal’s algorithm on the same graph. Show how the disjoint-sets data structure
-looks at every intermediate stage (including the structure of the directed trees), assuming
-path compression is used.
-\end{comment}
+\end{center}
+
+\begin{enumerate}[(a)]
+\item Run Prim’s algorithm; whenever there is a choice of nodes, always
+      use alphabetic ordering (e.g., start from node A). Draw a table showing
+      the intermediate values of the cost array.
+
+\item Run Kruskal’s algorithm on the same graph. Show how the
+      disjoint-sets data structure looks at every intermediate stage
+      (including the structure of the directed trees), assuming path
+      compression is used.
+\end{enumerate}
 
 \paragraph{Solution:}
-\begin{proof}
-\end{proof}
-
+\subparagraph{(a)}
+\subparagraph{(b)}
 
 \section*{5.5}
 \paragraph{Problem:}
