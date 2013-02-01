@@ -186,29 +186,20 @@ $A,B,C,D,E,F,G,H$ & & & & & & & & 1/$G$ \\ \hline
 \end{tabular}
 \end{center} 
 
-%\begin{center}
-%\begin{tikzpicture}[-,shorten >=1pt,auto,node distance=3cm,thick]
-%  \node[state] (a) {$A$};
-%  \node[state] (b) [right of=a]{$B$};
-%  \node[state] (c) [right of=b]{$C$};
-%  \node[state] (d) [right of=c]{$D$};
-%  \node[state] (e) [below of=a]{$E$};
-%  \node[state] (f) [below of=b]{$F$};
-%  \node[state] (g) [below of=c]{$G$};
-%  \node[state] (h) [below of=d]{$H$};
-%
-%  \path[every node/.style={font=\sffamily\small}]
-%    (a) edge node {1} (b)
-%        edge node {4} (e)
-%    (b) edge node {2} (c)
-%    (c) edge node {3} (d)
-%    (d) edge node {1} (g)
-%    (f) edge node [below] {1} (g)
-%    (g) edge node [below] {1} (h);
-%\end{tikzpicture}
-%\end{center}
-
 \subparagraph{(b)}
+
+\begin{center}
+\begin{tikzpicture}[-,shorten >=1pt,auto,node distance=2cm,thick]
+  \node[state] (a) {$A^0$};
+  \node[state] (b) [right of=a]{$B^0$};
+  \node[state] (c) [right of=b]{$C^0$};
+  \node[state] (d) [right of=c]{$D^0$};
+  \node[state] (e) [right of=d]{$E^0$};
+  \node[state] (f) [right of=e]{$F^0$};
+  \node[state] (g) [right of=f]{$G^0$};
+  \node[state] (h) [right of=g]{$H^0$};
+\end{tikzpicture}
+\end{center}
 
 \section*{5.5}
 \paragraph{Problem:}
