@@ -168,6 +168,46 @@ Suppose we want to find the minimum spanning tree of the following graph.
 
 \paragraph{Solution:}
 \subparagraph{(a)}
+
+\begin{center}
+\begin{tabular}{ | c | c | c | c | c | c | c | c | c |}
+\hline
+Set $S$ & $A$ & $B$ & $C$ & $D$ & $E$ & $F$ & $G$ & $H$ \\ \hline
+\{\} & 0/nil & $\infty$/nil & $\infty$/nil & $\infty$/nil & $\infty$/nil
+& $\infty$/nil & $\infty$/nil & $\infty$/nil \\ \hline
+$A$ & & 1/$A$ & $\infty$/nil & $\infty$/nil & 4/$A$ & 6/$B$ & 6/$B$ & $\infty$/nil \\ \hline
+$A,B$ & & & 2/$B$ & $\infty$/nil & 4/$A$ & 6/$B$ & 2/$C$ & $\infty$/nil \\ \hline
+$A,B,C$ & & & & 3/$C$ & 4/$A$ & 6/$B$ & 2/$C$ & $\infty$/nil \\ \hline
+$A,B,C,D$ & & & & & 4/$A$ & 6/$B$ & 1/$D$ & 4/$D$ \\ \hline
+$A,B,C,D,E$ & & & & & & 5/$E$ & 1/$D$ & 4/$D$ \\ \hline
+$A,B,C,D,E,F$ & & & & & & & 1/$D$ & 4/$D$ \\ \hline
+$A,B,C,D,E,F,G$ & & & & & & 1/$G$ & & 1/$G$ \\ \hline
+$A,B,C,D,E,F,G,H$ & & & & & & & & 1/$G$ \\ \hline
+\end{tabular}
+\end{center} 
+
+%\begin{center}
+%\begin{tikzpicture}[-,shorten >=1pt,auto,node distance=3cm,thick]
+%  \node[state] (a) {$A$};
+%  \node[state] (b) [right of=a]{$B$};
+%  \node[state] (c) [right of=b]{$C$};
+%  \node[state] (d) [right of=c]{$D$};
+%  \node[state] (e) [below of=a]{$E$};
+%  \node[state] (f) [below of=b]{$F$};
+%  \node[state] (g) [below of=c]{$G$};
+%  \node[state] (h) [below of=d]{$H$};
+%
+%  \path[every node/.style={font=\sffamily\small}]
+%    (a) edge node {1} (b)
+%        edge node {4} (e)
+%    (b) edge node {2} (c)
+%    (c) edge node {3} (d)
+%    (d) edge node {1} (g)
+%    (f) edge node [below] {1} (g)
+%    (g) edge node [below] {1} (h);
+%\end{tikzpicture}
+%\end{center}
+
 \subparagraph{(b)}
 
 \section*{5.5}
