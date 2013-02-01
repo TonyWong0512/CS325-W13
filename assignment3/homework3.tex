@@ -8,6 +8,7 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows}
 \usetikzlibrary{automata}
+\usepackage{subfigure}
 \usepackage{pgfplots}
 
 \usepackage[utf8]{inputenc}
@@ -201,17 +202,109 @@ $A,B,C,D,E,F,G,H$ & & & & & & & & 1/$G$ \\ \hline
 
 \subparagraph{(b)}
 
+\setlength{\belowcaptionskip}{1em}
 \begin{center}
-\begin{tikzpicture}[-,shorten >=1pt,auto,node distance=2cm,thick]
-  \node[state] (a) {$A^0$};
-  \node[state] (b) [right of=a]{$B^0$};
-  \node[state] (c) [right of=b]{$C^0$};
-  \node[state] (d) [right of=c]{$D^0$};
-  \node[state] (e) [right of=d]{$E^0$};
-  \node[state] (f) [right of=e]{$F^0$};
-  \node[state] (g) [right of=f]{$G^0$};
-  \node[state] (h) [right of=g]{$H^0$};
-\end{tikzpicture}
+\begin{figure}
+\centering
+\caption{After makeset($A$), makeset($B$),\dots,makeset($H$):}
+    \begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,thick]
+      \node[state] (a) {$A^0$};
+      \node[state] (b) [right of=a]{$B^0$};
+      \node[state] (c) [right of=b]{$C^0$};
+      \node[state] (d) [right of=c]{$D^0$};
+      \node[state] (e) [right of=d]{$E^0$};
+      \node[state] (f) [right of=e]{$F^0$};
+      \node[state] (g) [right of=f]{$G^0$};
+      \node[state] (h) [right of=g]{$H^0$};
+    \end{tikzpicture}
+\end{figure}
+
+\begin{figure}
+\centering
+\caption{After union($A$,$B$), union($G$,$F$), union($G$,$D$), union($G$,$H$):}
+    \begin{tikzpicture}[->, shorten >=1pt, auto, node distance=2cm, thick]
+        \node[state] (a) {$A^0$};
+        \node[state] (b) [above of=a]{$B^1$};
+        \node[state] (c) [right of=b]{$C^0$};
+        \node[state] (g) [right of=c]{$G^1$};
+        \node[state] (f) [below left of=g]{$F^0$};
+        \node[state] (d) [below of=g]{$D^0$};
+        \node[state] (h) [below right of=g]{$H^0$};
+        \node[state] (e) [right of=g]{$E^0$};
+
+        \path (a) edge (b)
+              (f) edge (g)
+              (d) edge (g)
+              (h) edge (g);
+    \end{tikzpicture}
+\end{figure}
+
+\begin{figure}
+\centering
+\caption{After union($C$,$B$):}
+
+    \begin{tikzpicture}[->, shorten >=1pt, auto, node distance=2cm, thick]
+        \node[state] (c) {$C^2$};
+        \node[state] (b) [below left of=c]{$B^1$};
+        \node[state] (a) [below of=b]{$A^0$};
+        \node[state] (g) [right of=c]{$G^1$};
+        \node[state] (f) [below of=c]{$F^0$};
+        \node[state] (d) [below of=g]{$D^0$};
+        \node[state] (h) [right of=d]{$H^0$};
+        \node[state] (e) [right of=g]{$E^0$};
+
+        \path (a) edge (b)
+              (b) edge (c)
+              (f) edge (g)
+              (d) edge (g)
+              (h) edge (g);
+    \end{tikzpicture}
+\end{figure}
+
+\begin{figure}
+\centering
+\caption{After union($G$,$C$):}
+    \begin{tikzpicture}[->, shorten >=1pt, auto, node distance=2cm, thick]
+        \node[state] (c) {$C^2$};
+        \node[state] (b) [below left of=c]{$B^1$};
+        \node[state] (a) [below of=b]{$A^0$};
+        \node[state] (g) [below right of=c]{$G^1$};
+        \node[state] (f) [below left of=g]{$F^0$};
+        \node[state] (d) [below of=g]{$D^0$};
+        \node[state] (h) [below right of=g]{$H^0$};
+        \node[state] (e) [right of=c]{$E^0$};
+
+        \path (a) edge (b)
+              (b) edge (c)
+              (f) edge (g)
+              (d) edge (g)
+              (h) edge (g)
+              (g) edge (c);
+    \end{tikzpicture}
+\end{figure}
+
+\begin{figure}
+\centering
+\caption{After union($E$,$A$):}
+    \begin{tikzpicture}[->, shorten >=1pt, auto, node distance=2cm, thick]
+        \node[state] (c) {$C^2$};
+        \node[state] (b) [below left of=c]{$B^1$};
+        \node[state] (a) [below of=b]{$A^0$};
+        \node[state] (g) [below right of=c]{$G^1$};
+        \node[state] (f) [below left of=g]{$F^0$};
+        \node[state] (d) [below of=g]{$D^0$};
+        \node[state] (h) [below right of=g]{$H^0$};
+        \node[state] (e) [below of=a]{$E^0$};
+
+        \path (a) edge (b)
+              (e) edge (a)
+              (b) edge (c)
+              (f) edge (g)
+              (d) edge (g)
+              (h) edge (g)
+              (g) edge (c);
+    \end{tikzpicture}
+\end{figure}
 \end{center}
 
 \section*{5.5}
