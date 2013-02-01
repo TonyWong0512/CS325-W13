@@ -39,7 +39,7 @@
 
 \section*{4.1}
 \paragraph{Problem:}
-Suppose Dijkstra\'s algorithm is run on the following graph, starting at node A.
+Suppose Dijkstra's algorithm is run on the following graph, starting at node A.
 
 \begin{center}
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
@@ -95,6 +95,10 @@ $F$ & 8 & 7 & 7 & 7 & 7 & 6 & 6 \\ \hline
 $G$ & $\infty$ & 7 & 5 & 5 & 5 & 5 & 5 \\ \hline
 $H$ & $\infty$ & $\infty$ & $\infty$ & 8 & 8 & 6 & 6 \\
 \hline
+\end{tabular}
+
+% Our tables are off, and we don't need two.
+\begin{comment}
 \begin{tabular}{ | c | c | c | c | c | c | c | c | c | c | }
 \hline
 Iteration & Node a  & Node b & Node c & Node d & Node e & Node f & Node g & Node h & Set S\\ \hline
@@ -107,8 +111,9 @@ Iteration & Node a  & Node b & Node c & Node d & Node e & Node f & Node g & Node
 6 & 0 & 1 & 3 & 4 & 4 & 6 & 5 & 6 & a,b,c,d,e,f,g\\
 7 & 0 & 1 & 3 & 4 & 4 & 6 & 5 & 6 & a,b,c,d,e,f,g,h\\
 \hline
-
 \end{tabular}
+\end{comment}
+
 \end{center}
 
 \subparagraph{(b)}
@@ -404,46 +409,64 @@ one 5 shilling coin, and four 1 shilling coins.
 \paragraph{Solution:}
 \begin{proof}
 Proof by counter example.
-When the Shilling total is equal to 40, the optimal solution would use two 20 shilling coins, so $n=2$ where $n$ is the number of coins.  According to the greedy method of taking as many coins as possible from the highest denomination available, a shilling total of 40 would have change made with one 25 shilling coin, one 15 shilling coin, and one 5 shillingcoin making $n=3$ which is not optimal.
+When the Shilling total is equal to 40, the optimal solution would use
+two 20 shilling coins, so $n=2$ where $n$ is the number of coins.
+According to the greedy method of taking as many coins as possible from
+the highest denomination available, a shilling total of 40 would have
+change made with one 25 shilling coin, one 15 shilling coin, and one 5
+shilling coin making $n=3$ which is not optimal.
 \end{proof}
 
 \section*{6}
 \paragraph{Problem:}
-Consider a long quiet country road with houses scatter very sparsely along
-it (We can picture the road as a long line segment). You want to place cell
-phone base stations at certain points along the road, so that every house
-is within four miles of one of the base stations.
-Give an efficient algorithm that achieves this goal, using as few stations
-as possible. Show that the algorithm achieve the optimal solution using
-the “stay ahead” argument.
+Consider a long quiet country road with houses scatter very sparsely
+along it (We can picture the road as a long line segment). You want to
+place cell phone base stations at certain points along the road, so that
+every house is within four miles of one of the base stations.  Give an
+efficient algorithm that achieves this goal, using as few stations as
+possible. Show that the algorithm achieve the optimal solution using the
+“stay ahead” argument.
 
 \paragraph{Solution:}
 \begin{proof}
 Approaching from the Left or from the Right,
-While:
-        At the first house that you come accross that is uncovered, add four miles and place a tower
+While: At the first house that you come across that is uncovered, add
+four miles and place a tower
 
-Let $T_g(i)$ denote the total number of houses covered by the first i base stations when approached from left to right in the greedy algorithm.
-Let $T_o(i)$ denote the total number of houses covered by the first i base stations when approached from left to right in the optimal algorithm.
-"Greedy statys ahead"
-Theorem: $T_g(i) \gte T_o(i)$
+Let $T_g(i)$ denote the total number of houses covered by the first $i$
+base stations when approached from left to right in the greedy
+algorithm.  Let $T_o(i)$ denote the total number of houses covered by
+the first $i$ base stations when approached from left to right in the
+optimal algorithm.  "Greedy stays ahead" Theorem: $T_g(i) \ge T_o(i)$
 If the theorem is true, then $T_g$ is optimal.
 
-Base case: i = 1
-$T_g(1) \gte T_o(1)$ is true because the greedy algorithm is creating maximal coverage with the first tower that is placed at mile j.  Any other tower placement would have less coverage, and therefore would be open to a counter example.
+% mbox hack forces a new line after subparagraph
+\subparagraph{Base case: $i = 1$}\mbox{}\\
+$T_g(1) \ge T_o(1)$ is true because the greedy algorithm is creating
+maximal coverage with the first tower that is placed at mile $j$.  Any
+other tower placement would have less coverage, and therefore would be
+open to a counter example.
 
-Because the only other placements of the base stations would either be to the west of j (there may be a house in between j and j+4 that didnt get covered), or east of j (the first house is not covered => optimatl is infesible)
+Because the only other placements of the base stations would either be
+to the west of $j$ (there may be a house in between $j$ and $j+4$ that
+didn't get covered), or east of $j$ (the first house is not covered
+$\implies$ optimal is infeasible)
 
-Inductive step:
-        Assume: $T_g(k) \gte T_o(k) \forall k \lte i$
-        Prove: $T_g(k+1) \gte T_o(k+1)$
+\subparagraph{Inductive step:}\mbox{}\\
+\indent \indent Assume: $T_g(k) \ge T_o(k), \forall k \le i$ \\
+\indent \indent Prove: $T_g(k+1) \ge T_o(k+1)$ \\
 
-We know $T_g(k) \gte T_o(k)$.
-The k base station of $T_g$ is placed at x, and $T_o$ is placed at y.
-We know that $x \gte y$ from the greedy statys ahead theorem.
-//this boils down to the same argument as the camping trip problem
-This means that the starting point of x is at least as far as y, and will either continually tie y or exceed y.
-By the inductive assumption we have that $x \gte y$.  Now let $x*$ be the k+1th base station of greedy.  Let $y*$ be the k+1th base station of $T_o$.  Because $x \gte y$ the only possibility is for x* to be at least as far as y*.  This means that $T_g(k+1) \gte T_o(k+1)$.  By induction, $T_g$ is optimal.
+We know $T_g(k) \ge T_o(k)$.  The $k$ base station of $T_g$ is placed at
+x, and $T_o$ is placed at $y$.  We know that $x \ge y$ from the greedy
+stays ahead theorem. 
+% this boils down to the same argument as the camping trip problem 
+This means that the starting point of $x$ is at least
+as far as $y$, and will either continually tie $y$ or exceed $y$.  By the
+inductive assumption we have that $x \ge y$.  Now let $x*$ be the $k+1$th
+base station of greedy.  Let $y*$ be the $k+1$th base station of $T_o$.
+Because $x \ge y$ the only possibility is for x* to be at least as far
+as $y$*.  This means that $T_g(k+1) \ge T_o(k+1)$.  By induction, $T_g$ is
+optimal.
 
 \end{proof}
 \end{document}
