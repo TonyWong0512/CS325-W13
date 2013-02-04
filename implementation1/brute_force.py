@@ -13,7 +13,7 @@ def brute_force(lst):
 def brute_force_helper(lst, invs):
     """ Brute force method for counting inversions """
     for i in range(0, len(lst)):
-        # i+i ensures the element is not compared against itself
+        # i+1 ensures the element is not compared against itself
         for j in range(i+1, len(lst)):
             if lst[i] > lst[j]:
                 invs.append((lst[i], lst[j]))
