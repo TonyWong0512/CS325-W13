@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 """
-Inversion Counting - Brute Force
+Inversions
 
 Count the number of elements in a list that are less than other elements
 Example: [1, 4, 2, 5, 3]
@@ -10,7 +10,11 @@ Example: [1, 4, 2, 5, 3]
 Note: This assumes the last element in the list is the total count of
 inversions
 """
-# Build a list of lists of ints
+from brute_force import brute_force as algo
+#from naive_dc import naive_dc as algo
+
+# Build a list of lists of ints, each lists last element is the number
+# of inversions in that list
 lists = [[int(x) for x in line.split(',')] for line in open('sample_results').readlines()]
 
 a1 = [1,2,3,4,5, 0]
@@ -22,23 +26,11 @@ def main():
     [lists.append(a) for a in (a1,a2,a3)]
 
     # Print inversion counts for each list
-    counts = [(inv_count(l), l[len(l)-1]) for l in lists]
+    counts = [(algo(l[:-1]), l[len(l)-1]) for l in lists]
     for i, j in counts:
-        assert i == j, "Inversion count off"
+        assert i == j, "Inversion count off: i:%d, j:%d" % (i,j)
 
     print counts
-
-
-def inv_count(lst):
-    """ Brute force method for counting inversions """
-    inv = []
-    for i in range(0, len(lst)):
-        # i+i ensures the element is not compared against itself
-        for j in range(i+1, len(lst)-1):
-            if lst[i] > lst[j]:
-                inv.append((lst[i], lst[j]))
-    return len(inv)
-        
 
 if __name__ == "__main__":
     main()

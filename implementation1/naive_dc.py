@@ -9,8 +9,6 @@ To come up with the total inversions it will recursively count the
 inversions in each subarray, and then count how many inversions happen
 between their merger (by considering each pair).
 """
-
-
 def naive_dc(lst):
     invs = []
     naive_dc_helper(lst, invs)
