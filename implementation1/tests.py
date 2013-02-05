@@ -12,10 +12,11 @@ inversions
 """
 from brute_force import brute_force as algo
 #from naive_dc import naive_dc as algo
+#from inversions_merge import merge_sort as algo
 
 # Build a list of lists of ints, each lists last element is the number
 # of inversions in that list
-lists = [[int(x) for x in line.split(',')] for line in open('sample_results').readlines()]
+lists = [[int(x) for x in line.split(',')] for line in open('test_input.txt').readlines()]
 
 a1 = [1,2,3,4,5, 0]
 a2 = [1,4,2,5,3, 3]

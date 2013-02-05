@@ -6,9 +6,9 @@ This algorithm works simply by checking all possible pairs of elements
 to count the total inversions.
 """
 def brute_force(lst):
-    invs = []
+    invs = [0]
     brute_force_helper(lst, invs)
-    return len(invs)
+    return invs[0]
 
 def brute_force_helper(lst, invs):
     """ Brute force method for counting inversions """
@@ -16,7 +16,7 @@ def brute_force_helper(lst, invs):
         # i+1 ensures the element is not compared against itself
         for j in range(i+1, len(lst)):
             if lst[i] > lst[j]:
-                invs.append((lst[i], lst[j]))
+                invs[0] += 1
     return lst
 
 #def main():
