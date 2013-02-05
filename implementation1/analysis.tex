@@ -3,7 +3,7 @@
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{enumerate}
 \usepackage{changepage}
-\usepackage{pgfplots}
+\usepackage{pgfplots, pgfplotstable}
 
 \title{CS325 Winter 2013: Implementation 1}
 \author{
@@ -57,5 +57,18 @@ verify.txt & test\_input.txt \\ \hline
 
 \section*{Extrapolation and Interpretation}
 
+\paragraph*{Brute-force:}
+\begin{tikzpicture}
+    \begin{axis} [ymode=log,xmode=log]
+        \addplot coordinates {
+        (0,0) 
+        (57.154179, 224.262953)
+        (488.316059, 897.155046)
+        (1450.166941, 5447.463036)
+        (21649.191856, 49863.325834)
+        (91092.915058, 153462.900877)
+        };
+    \end{axis}
+\end{tikzpicture}
 
 \end{document}
