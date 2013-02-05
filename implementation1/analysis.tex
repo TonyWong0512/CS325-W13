@@ -1,10 +1,46 @@
-Asymptotic Analysis of run time:
-	In algorithm 1 the problem is not branched into any subproblems.  With the nested for loops each element is compared to every other element in the input, leading to an intuitive asymptotic complexity of $O(n^2)$
-	In algorithm 2 the problem is branched into $2$ subproblems of size $n/2$ at each level.  
-	In algorithm 3 the problem is branched into $2$ subproblems of size $n/2$ at each level.  The depth of the problem is $log_2 of n$ and the width is $n^log_2 2$.  From the master theorem we know that $A/B^D$ determines the run time complexity.  Since this case is $2/2^1 = 1$, we know that the Asymptotic complexity is $O(n log n)$.
+\documentclass[12pt]{article}
 
-	Testing: verify.txt:		9670,10567,9282,9269,9675,10378,9911,9790,9580,9965
-			 test_input.txt:	249310,252709,253719,249315,247789,254833,239844,257527,241669,255628
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumerate}
+\usepackage{changepage}
+\usepackage{pgfplots}
+
+\title{CS325 Winter 2013: Implementation 1}
+\author{
+    Daniel Reichert \\
+    Trevor Bramwell
+}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Asymptotic Analysis}
+    \begin{enumerate}
+
+    \item In algorithm 1 the problem is not branched into any subproblems.
+          With the nested for loops there is a comparison made between
+          every element in the input, leading to an intuitive asymptotic
+          complexity of $O(n^2)$
+
+	\item In algorithm 2 the problem is branched into $2$ subproblems
+          for size $n/2$ at each level.
+
+    \item In algorithm 3 the problem is branched into $2$ subproblems of size
+          $n/2$ at each level.  The depth of the problem is $log_2 of n$
+          and the width is $n^log_2 2$.  From the master theorem we know
+          that $A/B^D$ determines the run time complexity.  Since this
+          case is $2/2^1 = 1$, we know that the Asymptotic complexity is
+          $O(n log n)$.
+
+    \end{enumerate}
+
+\section*{Testing}
+verify.txt:		9670,10567,9282,9269,9675,10378,9911,9790,9580,9965
+test_input.txt:	249310,252709,253719,249315,247789,254833,239844,257527,241669,255628
 
 
-	Extrapolation and interpretation:
+\section*{Extrapolation and interpretation}
+
+
+\end{document}
