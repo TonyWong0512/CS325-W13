@@ -35,7 +35,7 @@ def naive_dc_helper(lst, invs):
 
 def merge(l1, l2, invs):
     """ Count inversions in merge of two lists """
-    for lst in [(x,y) for x in l1 for y in l2]:
+    for lst in ((x,y) for x in l1 for y in l2):
         if lst[0] > lst[1]:
             invs[0] += 1
     return l1 + l2
