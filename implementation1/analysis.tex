@@ -64,18 +64,44 @@ verify.txt & test\_input.txt \\ \hline
 
 \section*{Extrapolation and Interpretation}
 
-\paragraph*{Brute-force:}
 \begin{tikzpicture}
-    \begin{axis} [ymode=log,xmode=log]
-        \addplot coordinates {
-        (0,0) 
-        (57.154179, 224.262953)
-        (488.316059, 897.155046)
-        (1450.166941, 5447.463036)
-        (21649.191856, 49863.325834)
-        (91092.915058, 153462.900877)
-        };
-    \end{axis}
+    \begin{loglogaxis} [
+        legend style={at={(0,0)}, anchor=north east},
+        grid=major,
+        height=12cm,
+        width=12cm,
+    ]
+    %\addplot coordinates {
+    %    (57.154179, 224.262953)
+    %    (488.316059, 897.155046)
+    %    (1450.166941, 5447.463036)
+    %    (21649.191856, 49863.325834)
+    %    (91092.915058, 153462.900877)};
+
+    \addplot coordinates {
+        (60.023069, 228.663921)
+        (505.338907, 936.666012)
+        (1486.296177, 5632.760048)
+        (22593.914032, 52147.319078)
+        (96452.900171, 164262.082100)};
+    \addlegendentry{Brute-force}
+
+    \addplot coordinates {
+        (127.677917, 508.983135)
+        (1223.464966, 2305.993080)
+        (3546.563864, 13964.954853)
+        (39254.812002, 92156.149149)};
+    \addlegendentry{Naive-D\&C}
+
+    \addplot coordinates {
+         (4.997969, 10.764122)
+         (17.102003, 23.066998)
+         (30.307055, 65.042973)
+         (136.113167, 203.222990)
+         (301.517010, 365.700006)};
+    \addlegendentry{Merge Sort}
+
+    \end{loglogaxis}
 \end{tikzpicture}
 
 \end{document}
