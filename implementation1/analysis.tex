@@ -70,6 +70,8 @@ verify.txt & test\_input.txt \\ \hline
         grid=major,
         height=12cm,
         width=12cm,
+        xlabel=Input Size,
+        ylabel=Runtime (milliseconds),
     ]
 
     \addplot coordinates {
@@ -110,10 +112,16 @@ verify.txt & test\_input.txt \\ \hline
 		(40000,300.2828122)
 		(50000,377.2132396)
 		};
-
     \addlegendentry{Merge Sort}
 
     \end{loglogaxis}
 \end{tikzpicture}
+
+\paragraph{Slope of Lines}
+\begin{itemize}
+    \item Brute-force: 2
+    \item Naive-D\&C: 2
+    \item Merge Sort: 1
+\end{itemize}
 
 \end{document}
