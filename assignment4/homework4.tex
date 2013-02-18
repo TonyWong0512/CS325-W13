@@ -1,0 +1,106 @@
+\documentclass[12pt]{article}
+
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{qtree}
+\usepackage{enumerate}
+\usepackage{changepage}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{automata}
+\usepackage{subfigure}
+\usepackage{pgfplots}
+
+\usepackage[utf8]{inputenc}
+
+\title{CS325 Winter 2013: HW 3}
+\author{
+    Daniel Reichert \\
+    Trevor Bramwell \\
+}
+\date{\today}
+
+\newcommand{\BigO}[1]{\ensuremath{O(#1)}}
+
+% Big O: \BigO
+% Big Omega: \Omega
+% Big Theta: \Theta
+
+% Examples:
+%
+%   $\BigO{n}$
+%   $\Omega(n\log{n})$
+%   $\Theta(\log{2n})$
+
+
+\begin{document}
+\maketitle
+\section*{1}
+\paragraph{Problem:}
+Knapsack without repetitions. Consider the following knapsack problem:
+The total weight limit W = 10 and \\
+\begin{tabular}{ l | c | r }
+    Item & Weight & Value \\ \hline
+    1 & 6 & \$30 \\
+    2 & 3 & \$14 \\
+    3 & 4 & \$16 \\
+    4 & 2 & \$9  \\ \hline
+\end{tabular} \\
+Solve this problem using the dynamic programming algorithm presented in class. Please show the two
+dimensional table L(w, j) for w = 0, 1, ..., W and j = 1, 2, 3, 4.
+
+\paragraph{Solution:}
+\begin{proof}
+
+\end{proof}
+
+\section*{2}
+\paragraph{Problem:}
+Give a dynamic programming algorithm for solving the following problem.
+Input: A list of n positive integers a1 , a2 , . . . , an and a number t.
+Goal: Decide if some subset of the ai ’s add up to t. (You can use each ai at most once.)
+The running time should be O(nt).
+Consider the subproblem L(i, s), which returns the answer of “Does a subset of a1 , ..., ai sum up to s?”.
+Below are some substeps that will help you develop your algorithm.
+a What are the two options we have regarding item i toward answering the subproblem L(i, s)?
+b For each of the option, how would it change the subproblem? More specifically, what happens to the
+target sum and what happens to the set of available integars?
+c Based on the answers to the previous two questions, write a recursive formula that expresses L(i, s)
+using the solutions to smaller subproblems.
+d Provide pseudocode for the dynamic programming algorithm that builds the solution table L(i, s) and
+returns the correct answer to the final problem.
+e Modify the pseudocode such that it will not only return the correct “yes”, “no” answer, but also return
+the exact subset if the answer is “yes”.
+
+\paragraph{Solution:}
+\begin{proof}
+
+\end{proof}
+
+\section*{3}
+\paragraph{6.2 from book:}
+You are going on a long trip. You start on the road at mile post 0. Along the way there are n
+hotels, at mile posts a1 < a2 < · · · < an , where each ai is measured from the starting point. The
+only places you are allowed to stop are at these hotels, but you can choose which of the hotels
+you stop at. You must stop at the final hotel (at distance an ), which is your destination.
+
+You’d ideally like to travel 200 miles a day, but this may not be possible (depending on the spacing
+of the hotels). If you travel x miles during a day, the penalty for that day is (200 − x)2 . You want
+to plan your trip so as to minimize the total penalty—that is, the sum, over all travel days, of the
+daily penalties.
+Give an efficient algorithm that determines the optimal sequence of hotels at which to stop.
+\paragraph{Solution:}
+\begin{proof}
+
+\end{proof}
+
+\section*{4}
+\paragraph{6.8 from book:}
+Given two strings x = x1 x2 · · · xn and y = y1 y2 · · · ym , we wish to find the length of their longest
+common substring, that is, the largest k for which there are in
+
+\paragraph{Solution:}
+\begin{proof}
+
+\end{proof}
+\end{document}
