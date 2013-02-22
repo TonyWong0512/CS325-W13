@@ -73,23 +73,32 @@ Consider the subproblem $L(i, s)$, which returns the answer of “Does a
 subset of $a_1, \dots, a_i$ sum up to $s$?”.  Below are some substeps
 that will help you develop your algorithm.  
 \begin{enumerate}
-    \item What are the two options we have regarding item i toward answering the subproblem $L(i, s)$?
+    \item What are the two options we have regarding item i toward answering the subproblem $L(i, s)$? \\
+        Either the integer is added to the subest, or it is not added to the subeset. 
 
     \item For each of the option, how would it change the subproblem? More
     specifically, what happens to the target sum and what happens to the set
-    of available integers?
+    of available integers? \\
+        If the integer is added to the subset, then it is removed from the list of positive integers being considered, and the value of the integer is subtracted from $t$.
+        If the integer is not added to the subset, then it is removed from the list of positive integers being considered. 
 
     \item Based on the answers to the previous two questions, write a
     recursive formula that expresses $L(i, s)$ using the solutions to smaller
-    subproblems.  
+    subproblems.  \\
+        $L(i, s) = max( L(i-1, s-a_i) , L(i-1, s) )$
 
     \item Provide pseudocode for the dynamic
     programming algorithm that builds the solution table $L(i, s)$ and returns
     the correct answer to the final problem.  
-
-    \item Modify the pseudocode such
-    that it will not only return the correct “yes”, “no” answer, but also
-    return the exact subset if the answer is “yes”.
+        $L[0,s] = 0 \forall S$ from $0 - t$\\
+        $L[i,0] = 0 \forall i$ from $0 - n$\\
+        $for (i) 1 ... n:$
+            $for (s) 1 ... t:$
+                $L(i,s) = max [ L(i-1,s-a_i) , L(i-1,s) ]$
+        
+    \item Modify the pseudocode such that it will not only return the correct “yes”, “no” answer, but also return the exact subset if the answer is “yes”.
+        
+        
 \end{enumerate}
 
 \paragraph{Solution:}

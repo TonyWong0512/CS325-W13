@@ -1,0 +1,10 @@
+3 algo
+1st is naive brute force, for all pair of i,j possiblities, compare all sums
+    s(i,j) + a(j+1) = s(i,j+1)
+O(n^2)
+
+divide and conquer O(n log n)
+
+3rd one is O(n)
+
+
