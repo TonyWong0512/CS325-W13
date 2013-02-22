@@ -43,7 +43,7 @@
 \section*{1}
 \paragraph{Problem:}
 Knapsack without repetitions. Consider the following knapsack problem:
-The total weight limit $W = 10$ and \\
+The total weight limit $W = 10$ and
 \begin{center}
 \begin{tabular}{ c | c | c }
     Item & Weight & Value \\ \hline
@@ -94,9 +94,9 @@ that will help you develop your algorithm.
     subproblems.  \\
         $L(i, s) = max( L(i-1, s-a_i) , L(i-1, s) )$
 
-    \item Provide pseudo code for the dynamic
-    programming algorithm that builds the solution table $L(i, s)$ and returns
-    the correct answer to the final problem.  \\
+    \item Provide pseudo code for the dynamic programming algorithm that
+    builds the solution table $L(i, s)$ and returns the correct answer to
+    the final problem.
 
     \begin{lstlisting}[mathescape]
         $L(0,s) = 0 \forall S$ from $0 - t$
@@ -152,15 +152,27 @@ to do this in time $\BigO{mn}$.
 
 \paragraph{Solution:}
 \begin{lstlisting}[mathescape]
+    # The length of S is n and T is m.
     LCS(S, T):
-        for i to n:
-            for j to m:
+        K(i,0) = 0 for 0 to n
+        K(0,j) = 0 for 0 to m
+        # m is the maximum length substring
+        m = 0
+        m_i = 0
+        for i = 1 to n:
+            for j = i to m:
                 if i > j:
                     return 0
                 if $S_i$ = $T_i$:
+                    # compute sequence
                     K(i,j) = K(i-1,j-1)+1
+                    # update max
+                    if K(i,j) > m:
+                        m = K(i,j)
+                        m_i = i
                 else
                     K(i,j) = 0
+        return S[m_i, m_i+m-1]
 \end{lstlisting}
 
 \end{document}
