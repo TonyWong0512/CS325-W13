@@ -1,6 +1,7 @@
 \documentclass[12pt]{article}
 
 \usepackage{verbatim}
+\usepackage{listings}
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{qtree}
 \usepackage{enumerate}
@@ -17,7 +18,7 @@
 
 \usepackage[utf8]{inputenc}
 
-\title{CS325 Winter 2013: HW 3}
+\title{CS325 Winter 2013: HW 4}
 \author{
     Daniel Reichert \\
     Trevor Bramwell \\
@@ -56,9 +57,15 @@ Solve this problem using the dynamic programming algorithm presented in class. P
 dimensional table $L(w, j)$ for $w = 0, 1, \dots, W$ and $j = 1, 2, 3, 4$.
 
 \paragraph{Solution:}
-\begin{proof}
-
-\end{proof}
+\begin{center}
+\begin{tabular}{ c || c | c | c | c | c | c | c | c | c | c | c }
+  $j \backslash w$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ \hline \hline
+  1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 30 & 30 & 30 & 30 \\ \hline
+  2 & 0 & 0 & 0 & 0 & 14 & 14 & 14 & 30 & 30 & 30 & 44 \\ \hline
+  3 & 0 & 0 & 0 & 0 & 14 & 16 & 16 & 30 & 30 & 30 & 46 \\ \hline
+  4 & 0 & 0 & 0 & 9 & 14 & 16 & 23 & 30 & 30 & 39 & 46 \\ \hline
+\end{tabular}
+\end{center}
 
 \section*{2}
 \paragraph{Problem:}
@@ -70,11 +77,11 @@ Give a dynamic programming algorithm for solving the following problem.
 The running time should be $\BigO{nt}$.
 
 Consider the subproblem $L(i, s)$, which returns the answer of “Does a
-subset of $a_1, \dots, a_i$ sum up to $s$?”.  Below are some substeps
+subset of $a_1, \dots, a_i$ sum up to $s$?”.  Below are some sub steps
 that will help you develop your algorithm.  
 \begin{enumerate}
-    \item What are the two options we have regarding item i toward answering the subproblem $L(i, s)$? \\
-        Either the integer is added to the subest, or it is not added to the subeset. 
+    \item What are the two options we have regarding item $i$ toward answering the subproblem $L(i, s)$? \\
+        Either the integer is added to the subset, or it is not added to the subset. 
 
     \item For each of the option, how would it change the subproblem? More
     specifically, what happens to the target sum and what happens to the set
@@ -87,25 +94,42 @@ that will help you develop your algorithm.
     subproblems.  \\
         $L(i, s) = max( L(i-1, s-a_i) , L(i-1, s) )$
 
-    \item Provide pseudocode for the dynamic
+    \item Provide pseudo code for the dynamic
     programming algorithm that builds the solution table $L(i, s)$ and returns
-    the correct answer to the final problem.  
-        $L[0,s] = 0 \forall S$ from $0 - t$\\
-        $L[i,0] = 0 \forall i$ from $0 - n$\\
+    the correct answer to the final problem.  \\
+
+    \begin{lstlisting}[mathescape]
+        $L(0,s) = 0 \forall S$ from $0 - t$
+        $L(i,0) = 0 \forall i$ from $0 - n$
         $for (i) 1 ... n:$
             $for (s) 1 ... t:$
                 $L(i,s) = max [ L(i-1,s-a_i) , L(i-1,s) ]$
+        return $L(i,S)$
+    \end{lstlisting}
         
-    \item Modify the pseudocode such that it will not only return the correct “yes”, “no” answer, but also return the exact subset if the answer is “yes”.
-        
+    \item Modify the pseudo code such that it will not only return the
+    correct “yes”, “no” answer, but also return the exact subset if the
+    answer is “yes”. \\
+
+    \begin{lstlisting}[mathescape]
+        $L(0,s) = 0 \forall S$ from $0 - t$
+        $L(i,0) = 0 \forall i$ from $0 - n$
+        $for (i) 1 ... n:$
+            $for (s) 1 ... t:$
+                $L(i,s) = max [ L(i-1,s-a_i) , L(i-1,s) ]$
+        return $L(i,S)$
+    \end{lstlisting}
+
 \end{enumerate}
 
 \section*{3}
 \paragraph{6.2 from book:}
-You are going on a long trip. You start on the road at mile post 0. Along the way there are n
-hotels, at mile posts $a_1 < a_2 < \cdots < a_n$ , where each ai is measured from the starting point. The
-only places you are allowed to stop are at these hotels, but you can choose which of the hotels
-you stop at. You must stop at the final hotel (at distance $a_n$ ), which is your destination.
+You are going on a long trip. You start on the road at mile post 0.
+Along the way there are $n$ hotels, at mile posts $a_1 < a_2 < \cdots <
+a_n$ , where each $a_i$ is measured from the starting point. The only
+places you are allowed to stop are at these hotels, but you can choose
+which of the hotels you stop at. You must stop at the final hotel (at
+distance $a_n$ ), which is your destination.
 
 You’d ideally like to travel 200 miles a day, but this may not be
 possible (depending on the spacing of the hotels). If you travel $x$ miles
@@ -116,7 +140,7 @@ efficient algorithm that determines the optimal sequence of hotels at
 which to stop.
 
 \paragraph{Solution:}
-$P(i) = min ( (200-x_j)^{2} + P(j) ) \forall 0 \lte j < i$
+$P(i) = min ( (200-x_j)^{2} + P(j) ) \forall 0 \le j < i$
 
 \section*{4}
 \paragraph{6.8 from book:}
@@ -127,7 +151,16 @@ the largest k for which there are indicies $i$ and $j$ with $x_i x_{i + 1}
 to do this in time $\BigO{mn}$.
 
 \paragraph{Solution:}
-\begin{proof}
+\begin{lstlisting}[mathescape]
+    LCS(S, T):
+        for i to n:
+            for j to m:
+                if i > j:
+                    return 0
+                if $S_i$ = $T_i$:
+                    K(i,j) = K(i-1,j-1)+1
+                else
+                    K(i,j) = 0
+\end{lstlisting}
 
-\end{proof}
 \end{document}
