@@ -80,13 +80,13 @@ Consider the subproblem $L(i, s)$, which returns the answer of “Does a
 subset of $a_1, \dots, a_i$ sum up to $s$?”.  Below are some sub steps
 that will help you develop your algorithm.  
 \begin{enumerate}
-    \item What are the two options we have regarding item $i$ toward answering the subproblem $L(i, s)$? \\
+    \item What are the two options we have regarding item $i$ toward answering the subproblem $L(i, s)$? \\\\
         Either the integer is added to the subset, or it is not added to the subset. 
 
     \item For each of the option, how would it change the subproblem? More
     specifically, what happens to the target sum and what happens to the set
-    of available integers? \\
-        If the integer is added to the subset, then it is removed from the list of positive integers being considered, and the value of the integer is subtracted from $t$.
+    of available integers? \\\\
+        If the integer is added to the subset, then it is removed from the list of positive integers being considered, and the value of the integer is subtracted from $t$.\\
         If the integer is not added to the subset, then it is removed from the list of positive integers being considered. 
 
     \item Based on the answers to the previous two questions, write a
@@ -99,7 +99,7 @@ that will help you develop your algorithm.
     the final problem.
 
     \begin{lstlisting}[mathescape]
-        $L(0,s) = 0 \forall S$ from $0 - t$
+        $L(0,s) = 0 \ \forall S$ from $0 - t$
         $L(i,0) = 0 \forall i$ from $0 - n$
         $for (i) 1 ... n:$
             $for (s) 1 ... t:$
@@ -117,6 +117,8 @@ that will help you develop your algorithm.
         $for (i) 1 ... n:$
             $for (s) 1 ... t:$
                 $L(i,s) = max [ L(i-1,s-a_i) , L(i-1,s) ]$
+                if max was $L(i-1,s-a_i)$:
+                   append $a_i$ to array being returned
         return $L(i,S)$
     \end{lstlisting}
 
