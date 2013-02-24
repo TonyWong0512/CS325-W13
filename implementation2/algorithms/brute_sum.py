@@ -1,10 +1,11 @@
 #! /usr/bin/env python
 
 def brute_sum(lst):
-    max_sum = 0
+    # Using lst[0] instead of 0 makes algo work for all Reals
+    max_sum = lst[0]
     for i in xrange(len(lst)+1):
-        sums = [0]*(len(lst)+1)
-        for j in xrange(len(lst)+1):
+        sums = [lst[0]]*(len(lst)+1)
+        for j in xrange(i+1, len(lst)+1):
             # i < j ignores bottom triangle form
             if i < j:
                 sums[j] = sum(lst[i:j-1]) + lst[j-1]
@@ -21,12 +22,14 @@ def test_algo(algo):
     l4 = [-180,885,-827,826,-274,895,638,751,-776,-666,-595,-123,590,-148,827,-599,-527,-711,557,660,54,-695,681,-80,-130,235,-445,-235,-627,795,-378,447,176,30,382,451,-33,-139,766,-731,319,488,646,-972,-750,-843,346,16,-227,774,976,-780,-447,-130,-34,-127,-112,-673,462,-381,-823,190,428,-398,-43,-619,757,-972,-376,232,-50,-748,-527,-674,913,588,822,-854,-946,689,740,-547,-861,-151,-185,789,359,-698,548,-480,864,-948,-137,-109,457,925,-744,-248,-399,230] #3360
 
     l5 = [31, -41, 59, 26, -53, 58, 97, -93, -23, 84] # 187
+    l6 = [-1, -2, -3, -4, -5] # -1
 
     assert(algo(l1) == 7)
     assert(algo(l2) == 15)
     assert(algo(l3) == 12792)
     assert(algo(l4) == 3360)
     assert(algo(l5) == 187)
+    assert(algo(l6) == -1)
 
 if __name__ == "__main__":
     test_algo(brute_sum)
