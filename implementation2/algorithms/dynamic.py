@@ -8,30 +8,25 @@ l3 = [-371,-287,978,738,-766,836,899,521,-505,31,-387,-60,396,110,4,855,927,580,
 l4 = [-180,885,-827,826,-274,895,638,751,-776,-666,-595,-123,590,-148,827,-599,-527,-711,557,660,54,-695,681,-80,-130,235,-445,-235,-627,795,-378,447,176,30,382,451,-33,-139,766,-731,319,488,646,-972,-750,-843,346,16,-227,774,976,-780,-447,-130,-34,-127,-112,-673,462,-381,-823,190,428,-398,-43,-619,757,-972,-376,232,-50,-748,-527,-674,913,588,822,-854,-946,689,740,-547,-861,-151,-185,789,359,-698,548,-480,864,-948,-137,-109,457,925,-744,-248,-399,230] #3360
 
 l5 = [31, -41, 59, 26, -53, 58, 97, -93, -23, 84] # 187
-
-def brute_sum(lst):
-    sums = []
-    for i in xrange(len(lst)+1):
-        for j in xrange(len(lst)+1):
-            if i < j:
-                sums.append((lst[i:j],sum(lst[i:j])))
-    return max((j for i, j in sums))
+l6 = [-10,-1,-2,-3,-5] # -1
 
 def dynamic(lst):
-    max_stop_now = 0
-    high_water = 0
+    cummulative = 0
+    high_water = lst[0]
+    positive = False
     for el in lst:
-        max_stop_now = max(0, max_stop_now+ el)
-        high_water = max(max_stop_now, high_water)
-    if high_water == 0:
-        print "All numbers were negative, we didn't plan for that Peter"
+        if positive is False and el > 0:
+            positive = True
+        cummulative = max(0, cummulative+ el)
+        high_water = max(cummulative, high_water)
+    if positive is False:
+        high_water = max(lst)
     return high_water
 
 def main():
-    tests = [ l1, l2 , l3, l4, l5 ]
+    tests = [ l1, l2 , l3, l4, l5, l6 ]
     for test in tests:
         print dynamic(test)
-        print brute_sum(test)
 
 if __name__ == "__main__":
     main()
