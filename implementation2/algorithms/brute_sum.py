@@ -1,16 +1,13 @@
 #! /usr/bin/env python
 
 def brute_sum(lst):
-    # Using lst[0] instead of 0 makes algo work for all Reals
     max_sum = lst[0]
-    for i in xrange(len(lst)+1):
-        sums = [lst[0]]*(len(lst)+1)
-        for j in xrange(i+1, len(lst)+1):
-            # i < j ignores bottom triangle form
-            if i < j:
-                sums[j] = sum(lst[i:j-1]) + lst[j-1]
-                if sums[j] > max_sum:
-                    max_sum = sums[j]
+    for i in xrange(len(lst)):
+        sums = 0
+        for j in xrange(i,len(lst)):
+            sums += lst[j]
+            if sums > max_sum:
+                max_sum = sums
     return max_sum
 
 def test_algo(algo):
