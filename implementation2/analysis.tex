@@ -5,7 +5,7 @@
 \usepackage{changepage}
 \usepackage{pgfplots, pgfplotstable}
 
-\title{CS325 Winter 2013: Implementation 1}
+\title{CS325 Winter 2013: Implementation 2}
 \author{
     Daniel Reichert \\
     Trevor Bramwell
@@ -15,30 +15,85 @@
 \begin{document}
 \maketitle
 
+\section*{pseudocode of algorithms}
+    \begin{enumerate}
+
+    \item Brute Force Pseudo:
+            \begin{lstlisting[mathescape]
+            brute_sum(n)
+                size = the size of n
+                max = first element in the n array
+                for i = 0 .. size+1:
+                    sums = array of size+1 with each element initialized to n[0]
+                    for j = i+1 .. size+1:
+                        if i < j:
+                            sums[j] = the sum of the elements from i to j-2 plus n[j-1]
+                            if sums[j] > max_sum:
+                                max = sums[j]
+                return max
+            \end{lstlisting}
+    \item Divide and Conquer Pseudo:
+            \begin{lstlisting[mathescape]
+            divide_conquer(n)
+                # a miracle occurs
+                return maximum contiguous subarray
+
+            \end{lstlisting}
+            
+
+    \item Dynamic Pseudo:
+            \begin{lstlisting[mathescape]
+            dynamic(n)
+                cummulative = 0
+                high_water = n[0]
+                for i = 0 .. size of n
+                    cummulative = max of (0, cummulative+n[i])
+                    high_water = max of (cummulative, high_water)
+                return high_water
+            \end{lstlisting}
+    \end{enumerate}
+
 \section*{Asymptotic Analysis}
     \begin{enumerate}
 
-    \item In algorithm 1 the problem is not branched into any subproblems.
-          With the nested for loops there is a comparison made between
-          every element in the input, leading to an intuitive asymptotic
-          complexity of $O(n^2)$
+    \item In the brute force algorithm there are no subproblems.  With the
+            nested for loops, there is a comparison made between every element
+            in the input, leading to an intutitive asymptotic complexity of 
+            $O(n^2)$
 
-	\item In algorithm 2 the problem is branched into $2$ subproblems
-          for size $n/2$ at each level.  It is similar to algorithm 3, but the
-		  counting of inversions is done inefficiently.  This is represented in
-		  the master theorem as the cost of combining the subproblems.  Because of the
-		  naive nature of the merge and count approach, the additional cost of combining
-		  ends of being the dominating term in the master theorem as it is greater than
-		  $n log n$.  Every time that two lists are merged, each element is compared to
-		  every other element.  Since there are $log_2 n$ merges that take place and
-		  each merge compares itself to every other item in the list this is a $O(n^2 log n)$ algorithm.
+	\item In the divide and conquer algorithm the problem is branched into 
+            $2$ subproblems for a size of $n/2$ at each level.  Those two
+            subproblems cover the two cases where the maximal subsequence
+            is fully contained within either half of the array.  The case
+            where the maximal subsequence is contained partially in each
+            half of the array can be analyzed in linear time.  Which leads
+            to a complexity statement of $T(n) = 2T(n/2) + O(n)$.  Per the
+            master theorem, this leads to a complexity of $O(n log n)$.
 
-    \item In algorithm 3 the problem is branched into $2$ subproblems of size
-          $n/2$ at each level.  The depth of the problem is $log_2 n$
-          and the width is $n^{log_2 2}$.  From the master theorem we know
-          that $A/B^D$ determines the run time complexity.  Since this
-          case is $2/2^1 = 1$, we know that the Asymptotic complexity is
-          $O(n log n)$.
+    \item In the dyanmic programming algorithm the problem is approached 
+            from the bottom up. Like all dynamic programming algorithms
+            the complexity can be modeled by the size of the table that is
+            created multiplied by the time it takes to fill in a cell of that
+            table.  Since the time to fill in a cell is constant and the table
+            is 1 dimensional, the run time is $c*n$ or $O(n)$   
+     \end{enumerate}
+
+\section*{Theoretical correctness}
+    \begin{enumerate}
+
+    \item In the Divide and conquer algorithm the problem is divided into two
+            halves.  The maximal subsequence can be contained in one of three
+            different cases.  The first two cases are when the maximal
+            subsequence is contained entirely in one of the two halves. The 
+            third case is when the maximal subsequence is partially in both
+            halves of the array.  Since the algorithm considers all three of
+            these cases we know that the algorithm will calculate the correct
+            maximum value.
+
+    \item In the Dynamic programming algorithm every possible case is 
+            considered in a linear fashion.  Since the maximum value of all
+            cases that have been considered is continually updated with each
+            new subsequence, we know that the maximum value will be captured.
 
     \end{enumerate}
 
@@ -123,5 +178,8 @@ verify.txt & test\_input.txt \\ \hline
     \item Naive-D\&C: 2
     \item Merge Sort: 1
 \end{itemize}
+
+The largest input size the Brute-force method could solve in an hour is
+roughly $10^7$.
 
 \end{document}
