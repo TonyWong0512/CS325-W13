@@ -11,33 +11,36 @@ first half and a prefix of the second half.
 The first two cases can be found recursively. The last case can be found
 in linear time.
 """
+from itertools import izip
+
 def divide_conquer(lst):
-    max_sum = [lst[0]]
-    divide_conquer_helper(lst, max_sum)
-    return max_sum[0]
-
-
-def divide_conquer_helper(lst, max_sum):
     if len(lst) < 2:
-        max_sum[0] = max(sum(lst), max_sum[0])
-        return lst
+        return lst[0]
 
     if len(lst) == 2:
-        max_sum[0] = max(sum(lst), max_sum[0])
-        return lst
+        return max(sum(lst), lst[0])
 
     mid = len(lst)/2
 
-    left = divide_conquer_helper(lst[0:mid], max_sum)
-    right = divide_conquer_helper(lst[mid:len(lst)], max_sum)
+    left = divide_conquer(lst[0:mid+1])
+    right = divide_conquer(lst[mid:len(lst)])
 
-    return merge(left, right, max_sum)
+    l1 = lst[0:mid]
+    l2 = lst[mid:len(lst)]
 
+    m_left = l1[len(l1)-1]
+    s = 0
+    for x in reversed(l1):
+        s += x
+        m_left = max(m_left, s)
 
-def merge(l1, l2, max_sum):
-    """ Find the max in merge of two lists """
-    max_sum[0] = max(sum(l1+l2), max_sum[0])
-    return l1 + l2
+    m_right = l2[0]
+    s = 0
+    for y in l2:
+        s += y
+        m_right = max(m_right, s)
+
+    return max(left, right, (m_left+m_right))
 
 
 def test_algo(algo):
