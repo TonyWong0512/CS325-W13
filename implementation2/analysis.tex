@@ -205,6 +205,60 @@ finaltest.txt \\ \hline
     \end{loglogaxis}
 \end{tikzpicture}
 
+\begin{tikzpicture}
+    \begin{axis} [
+        legend style={at={(0,0)}, anchor=north east},
+        grid=major,
+        height=12cm,
+        width=12cm,
+        xlabel=Input Size,
+        ylabel=Runtime (milliseconds),
+    ]
+
+    \addplot coordinates {
+        (1000, 31.681299)
+        (2000, 123.871303)
+        (3000, 278.002787)
+        (4000, 491.605067)
+        (5000, 769.529223)
+        (6000, 1110.064101)
+        (7000, 1575.928068)
+        (8000, 1946.564746)
+        (9000, 2546.082616)
+        (10000, 3065.081000)
+		};
+    \addlegendentry{Brute-force}
+
+    \addplot coordinates {
+        (1000, 3.401256)
+        (2000, 6.302953)
+        (3000, 10.644102)
+        (4000, 12.890434)
+        (5000, 17.469382)
+        (6000, 21.606874)
+        (7000, 24.507594)
+        (8000, 26.975393)
+        (9000, 31.490397)
+        (10000, 36.222196)
+		};
+    \addlegendentry{Divide \& Conquer}
+
+    \addplot coordinates {
+        (1000, 0.313878)
+        (2000, 0.626278)
+        (3000, 0.942302)
+        (4000, 1.262784)
+        (5000, 1.629019)
+        (6000, 1.877451)
+        (7000, 2.219987)
+        (8000, 2.497149)
+        (9000, 2.872205)
+        (10000, 3.120756)
+		};
+    \addlegendentry{Dynamic Programming}
+
+    \end{axis}
+\end{tikzpicture}
 \paragraph{Slope of Lines}
 \begin{itemize}
     \item Brute-force: ?
