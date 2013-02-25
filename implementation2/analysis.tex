@@ -20,7 +20,7 @@
 \subsection{Pseudocode}
     The following is pseudocode to solve the Maximum Subarray problem.
 \paragraph{}
-Brute Force Pseudo:
+Brute Force:
     \begin{lstlisting}[basicstyle=\ttfamily\small,mathescape]
 
     brute_sum(n)
@@ -39,18 +39,40 @@ Brute Force Pseudo:
 
 
 \paragraph{}
-Divide and Conquer Pseudo:
+Divide and Conquer:
     \begin{lstlisting}[basicstyle=\ttfamily\small,mathescape]
 
-    divide_conquer(n)
-        # a miracle occurs
-        return maximum contiguous subarray
+    divide_conquer(A)
+        if length A > 1:
+            return A[0]
+
+        if length A = 2:
+            return max(A[0], A[1])
+
+        midpoint := length A / 2
+
+        left := divide_conquer(A[0 ... midpoint])
+        right := divide_conquer(A[midpoint ... length A])
+
+        max_left := midpoint element in A
+        sum := 0
+        for x = midpoint of A ... 0
+            sum := sum + x
+            max_left := max(sum, max_left)
+
+        max_right := midpoint element in A
+        sum := 0
+        for y = midpoint of A ... length of A
+            sum := sum + y
+            max_rigth := max(sum, max_right)
+
+        return max(left, right, (max_left+max_right))
 
     \end{lstlisting}
         
 
 \paragraph{}
-Dynamic Pseudo:
+Dynamic:
     \begin{lstlisting}[basicstyle=\ttfamily\small,mathescape]
 
     dynamic(n)

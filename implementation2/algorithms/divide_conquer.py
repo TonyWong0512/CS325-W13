@@ -10,6 +10,10 @@ first half and a prefix of the second half.
 
 The first two cases can be found recursively. The last case can be found
 in linear time.
+
+This algorithm is based Jon Bentley's Algorithm Design Techniques from
+Programming Peals, found at:
+http://www.akira.ruc.dk/~keld/teaching/algoritmedesign_f03/Artikler/05/Bentley84.pdf
 """
 
 def divide_conquer(lst):
@@ -21,7 +25,7 @@ def divide_conquer(lst):
 
     mid = len(lst)/2
 
-    left = divide_conquer(lst[0:mid+1])
+    left = divide_conquer(lst[0:mid])
     right = divide_conquer(lst[mid:len(lst)])
 
     l1 = lst[0:mid]
