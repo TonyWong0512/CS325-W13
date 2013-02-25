@@ -11,7 +11,6 @@ first half and a prefix of the second half.
 The first two cases can be found recursively. The last case can be found
 in linear time.
 """
-from itertools import izip
 
 def divide_conquer(lst):
     if len(lst) < 2:
