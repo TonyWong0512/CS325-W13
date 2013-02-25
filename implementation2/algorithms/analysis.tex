@@ -33,6 +33,13 @@
                 return max
             \end{lstlisting}
     \item Divide and Conquer Pseudo:
+            \begin{lstlisting[mathescape]
+            divide_conquer(n)
+                # a miracle occurs
+                return maximum contiguous subarray
+
+            \end{lstlisting}
+            
 
     \item Dynamic Pseudo:
             \begin{lstlisting[mathescape]
@@ -44,28 +51,29 @@
                     high_water = max of (cummulative, high_water)
                 return high_water
             \end{lstlisting}
-
     \end{enumerate}
 
 \section*{Asymptotic Analysis}
     \begin{enumerate}
 
-    \item In algorithm 1 the problem is not branched into any subproblems.
-          With the nested for loops there is a comparison made between
-          every element in the input, leading to an intuitive asymptotic
-          complexity of $O(n^2)$
+    \item In the brute force algorithm there are no subproblems.  With the
+            nested for loops, there is a comparison made between every element
+            in the input, leading to an intutitive asymptotic complexity of 
+            $O(n^2)$
 
-	\item In algorithm 2 the problem is branched into $2$ subproblems
-          for size $n/2$ at each level.  It is similar to algorithm 3, but the
-		  counting of inversions is done inefficiently.  This is represented in
-		  the master theorem as the cost of combining the subproblems.  Because of the
-		  naive nature of the merge and count approach, the additional cost of combining
-		  ends of being the dominating term in the master theorem as it is greater than
-		  $n log n$.  Every time that two lists are merged, each element is compared to
-		  every other element.  Since there are $log_2 n$ merges that take place and
-		  each merge compares itself to every other item in the list this is a $O(n^2 log n)$ algorithm.
+	\item In the divide and conquer algorithm the problem is branched into 
+            $2$ subproblems for a size of $n/2$ at each level.  Those two
+            subproblems cover the two cases where the maximal subsequence
+            is fully contained within either half of the array.  The case
+            where the maximal subsequence is contained partially in each
+            half of the array can be analyzed in linear time.  Which leads
+            to a complexity statement of $T(n) = 2T(n/2) + O(n)$.  Per the
+            master theorem, this leads to a complexity of $O(n log n)$.
 
-    \item In algorithm 3 the problem is branched into $2$ subproblems of size
+    \item In the dyanmic programming algorithm the problem is approached 
+            from the bottom up. Since 
+             
+            In algorithm 3 the problem is branched into $2$ subproblems of size
           $n/2$ at each level.  The depth of the problem is $log_2 n$
           and the width is $n^{log_2 2}$.  From the master theorem we know
           that $A/B^D$ determines the run time complexity.  Since this
