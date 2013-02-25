@@ -1,0 +1,144 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumerate}
+\usepackage{changepage}
+\usepackage{pgfplots, pgfplotstable}
+
+\title{CS325 Winter 2013: Implementation 1}
+\author{
+    Daniel Reichert \\
+    Trevor Bramwell
+}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{pseudocode of algorithms}
+    \begin{enumerate}
+
+    \item 
+
+    \end{enumerate}
+
+\section*{Asymptotic Analysis}
+    \begin{enumerate}
+
+    \item In algorithm 1 the problem is not branched into any subproblems.
+          With the nested for loops there is a comparison made between
+          every element in the input, leading to an intuitive asymptotic
+          complexity of $O(n^2)$
+
+	\item In algorithm 2 the problem is branched into $2$ subproblems
+          for size $n/2$ at each level.  It is similar to algorithm 3, but the
+		  counting of inversions is done inefficiently.  This is represented in
+		  the master theorem as the cost of combining the subproblems.  Because of the
+		  naive nature of the merge and count approach, the additional cost of combining
+		  ends of being the dominating term in the master theorem as it is greater than
+		  $n log n$.  Every time that two lists are merged, each element is compared to
+		  every other element.  Since there are $log_2 n$ merges that take place and
+		  each merge compares itself to every other item in the list this is a $O(n^2 log n)$ algorithm.
+
+    \item In algorithm 3 the problem is branched into $2$ subproblems of size
+          $n/2$ at each level.  The depth of the problem is $log_2 n$
+          and the width is $n^{log_2 2}$.  From the master theorem we know
+          that $A/B^D$ determines the run time complexity.  Since this
+          case is $2/2^1 = 1$, we know that the Asymptotic complexity is
+          $O(n log n)$.
+
+    \end{enumerate}
+
+\section*{Theoretical correctness}
+    \begin{enumerate}
+
+    \item 
+
+    \end{enumerate}
+
+\section*{Testing}
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+verify.txt & test\_input.txt \\ \hline
+9670  & 249310 \\ \hline
+10567 & 252709 \\ \hline 
+9282  & 253719 \\ \hline 
+9269  & 249315 \\ \hline 
+9675  & 247789 \\ \hline 
+10378 & 254833 \\ \hline 
+9911  & 239844 \\ \hline 
+9790  & 257527 \\ \hline 
+9580  & 241669 \\ \hline 
+9965  & 255628 \\
+\hline
+\end{tabular}
+\end{center}
+
+\section*{Extrapolation and Interpretation}
+
+\begin{tikzpicture}
+    \begin{loglogaxis} [
+        legend style={at={(0,0)}, anchor=north east},
+        grid=major,
+        height=12cm,
+        width=12cm,
+        xlabel=Input Size,
+        ylabel=Runtime (milliseconds),
+    ]
+
+    \addplot coordinates {
+		(1000,59.2739344)
+		(2000,234.2832087)
+		(3000,525.2183437)
+		(4000,955.0010203)
+		(5000,1525.9585143)
+		(10000,5955.0528526)
+		(20000,24087.9588125)
+		(30000,55162.801957)
+		(40000,101022.8396414)
+		(50000,169974.0216493)
+		};
+    \addlegendentry{Brute-force}
+
+    \addplot coordinates {
+		(1000,128.2862187)
+		(2000,556.4429044)
+		(3000,1345.2136756)
+		(4000,2329.3997287)
+		(5000,3598.7318755)
+		(10000,13253.6118507)
+		(20000,39603.0793427)
+		(30000,90525.0232697)
+		};
+    \addlegendentry{Naive-D\&C}
+
+    \addplot coordinates {
+		(1000,4.9610378)
+		(2000,10.913396)
+		(3000,17.1679259)
+		(4000,23.4416485)
+		(5000,30.5465222)
+		(10000,65.7936095)
+		(20000,132.8696729)
+		(30000,209.5165967)
+		(40000,300.2828122)
+		(50000,377.2132396)
+		};
+    \addlegendentry{Merge Sort}
+
+    \end{loglogaxis}
+\end{tikzpicture}
+
+\paragraph{Slope of Lines}
+\begin{itemize}
+    \item Brute-force: 2
+    \item Naive-D\&C: 2
+    \item Merge Sort: 1
+\end{itemize}
+
+The largest input size the Brute-force method could solve in an hour is
+roughly $10^7$.
+
+\end{document}
