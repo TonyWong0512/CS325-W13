@@ -3,12 +3,14 @@ import time
 
 from random import randrange
 from itertools import chain
-from brute_force import brute_force
-from naive_dc import naive_dc
-from inversions_merge import merge_sort
+from brute_sum import brute_sum
+from divide_conquer import divide_conquer
+from dynamic import dynamic
+
+f = open("test_output", 'w',1)
 
 class Timer(object):
-    def __init__(self, verbose=True):
+    def __init__(self, verbose=False):
         self.verbose = verbose
 
     def __enter__(self):
@@ -21,32 +23,38 @@ class Timer(object):
         self.msecs = self.secs * 1000 #millisecs
         if self.verbose:
             print "%f" % self.msecs,
+        #return self.msecs
 
-def inversion_analysis(func):
-    print func.__name__
-    print "-----------"
+    def msecs(self):
+        return self.msecs
+
+def sum_analysis(func):
+    f.write("%s\n" % func.__name__)
+    f.write("-----------\n")
     # Input arrays of size 1k, 2k, 3k, 4k, 5k, and 10k, 20k, 30k, 40k,
     # 50k respectively
-    for i in chain(xrange(1,6),xrange(10,60,10)):
+    for i in xrange(1,11):
+        avg = []
         # For each size, generate 10 random inputs
-        print "%d:\t" % (1000*i),
         for z in xrange(10):
             lst = []
-            for j in xrange(1,1000*i):
+            r = i*1000
+            for j in xrange(1,r):
                 # Random permutations of numbers 1,...,n where n is the
                 # input size
-                lst.append(randrange(1,1000*i))
+                lst.append(randrange(-r,r))
 
             with Timer() as t:
                 func(lst)
             del lst
-        print
-    print
+            avg.append(t.msecs)
+        f.write("(%d, %f)\n" % ((1000*i), (sum(avg)/float(len(avg)))))
+    f.write('\n')
 
 def main():
-    inversion_analysis(brute_force)
-    inversion_analysis(naive_dc)
-    inversion_analysis(merge_sort)
+    sum_analysis(divide_conquer)
+    sum_analysis(dynamic)
+    sum_analysis(brute_sum)
    
 if __name__ == "__main__":
     main()
