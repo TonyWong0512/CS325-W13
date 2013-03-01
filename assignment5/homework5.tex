@@ -55,7 +55,23 @@ STOOGESORT(A[0...n-1])
         STOOGESORT(A[n-k...n-1])
         STOOGESORT(A[0...k-1])
 \end{lstlisting}
-\paragraph{Solution:}
+\paragraph{Proof By induction:}
+\begin{proof}
+Base case: $n = 2$.
+If $n=2$ and $A[0] = 2$ and $A[1] = 1$, then the algorithm if statement will evaluate
+to true.  This will cause $A[0]$ and $A[1]$ to be swapped, and the array is now
+sorted in increasing order proving our base case.
+
+Inductive Step:
+Assume Stoogesort is true for $2...K-1$.
+Prove Stoogesort is true for $K$.
+
+When stoogesort has a input greater than 2, it calls stoogesort($2K/3$).  Since
+$2K/3$ is within our Inductive Assumption, we know that stoogesort($2K/3$) is
+true.  Since stoogesort always relies on being able to successfully sort a subset
+that is within the scope of our inductive assumption, by the principal of
+mathematical inducation, stooge sort is true.
+\end{proof}
 
 \section*{2}
 \paragraph{6.17 from book:}
