@@ -58,31 +58,32 @@ STOOGESORT(A[0...n-1])
 \paragraph{Proof By induction:}
 \begin{proof}
 Base case: $n = 2$.
-If $n=2$ and $A[0] = 2$ and $A[1] = 1$, then the algorithm if statement will evaluate
-to true.  This will cause $A[0]$ and $A[1]$ to be swapped, and the array is now
-sorted in increasing order proving our base case.
-
+If $n=2$ and $A[0] = 2$ and $A[1] = 1$, then the algorithm if statement
+will evaluate to true.  This will cause $A[0]$ and $A[1]$ to be swapped,
+and the array is now sorted in increasing order proving our base case.
+\\
 Inductive Step:
 Assume Stoogesort is true for $2...K-1$.
 Prove Stoogesort is true for $K$.
-
-When stoogesort has a input greater than 2, it calls stoogesort($2K/3$).  Since
-$2K/3$ is within our Inductive Assumption, we know that stoogesort($2K/3$) is
-true.  Since stoogesort always relies on being able to successfully sort a subset
-that is within the scope of our inductive assumption, by the principal of
-mathematical inducation, stooge sort is true.
+\\
+When stoogesort has a input greater than 2, it calls stoogesort($2K/3$).
+Since $2K/3$ is within our Inductive Assumption, we know that
+stoogesort($2K/3$) is true.  Since stoogesort always relies on being
+able to successfully sort a subset that is within the scope of our
+inductive assumption, by the principal of mathematical inducation,
+stooge sort is true.
 \end{proof}
 
 \section*{2}
 \paragraph{6.17 from book:}
-Given an unlimited supply of coins of denominations $x_1 , x_2 , . . . , x_n$,
-we wish to make change for a value $v$; that is, we wish to find a set of coins
-whose total value is $v$. This might not be possible: for instance, if the
-denominations are 5 and 10 then we can make change for 15 but not for 12.
-Give an $\BigO{nv}$ dynamic-programming algorithm for the following problem.
-Input: $x_1 , . . . , x_n ; v$.
-Question: Is it possible to make change for $v$ using coins of denominations
- $x_1 , . . . , x_n$ ?
+Given an unlimited supply of coins of denominations $x_1 , x_2 , \dots ,
+x_n$, we wish to make change for a value $v$; that is, we wish to find a
+set of coins whose total value is $v$. This might not be possible: for
+instance, if the denominations are 5 and 10 then we can make change for
+15 but not for 12.  Give an $\BigO{nv}$ dynamic-programming algorithm
+for the following problem.  Input: $x_1 , \dots , x_n ; v$.  Question:
+Is it possible to make change for $v$ using coins of denominations $x_1
+, \dots , x_n$ ?
 \paragraph{Solution:}
 
 
@@ -128,22 +129,27 @@ $$\delta(-, T ) + \delta(A, A) + \delta(T, -) + \delta(-, C) + \delta(G,
 G) + \delta(C, C) + \delta(C, A)$$
 
 Give a dynamic programming algorithm that takes as input two strings
-$x[1 . . . n]$ and $y[1 . . . m]$ and a scoring matrix $\delta$, and returns
+$x[1 \dots n]$ and $y[1 \dots m]$ and a scoring matrix $\delta$, and returns
 the highest-scoring alignment. The running time should be $\BigO{mn}$.
 
 \paragraph{Solution:}
-The solution builds on the dynamic programming algorithm for edit distance.
+This solution builds on the dynamic programming algorithm for edit
+distance. Instead of finding a minimum edit, we find a maximum
+alignment score.
 \begin{lstlisting}[mathescape]
 $n$ is the length of $A$
 $m$ is the length of $B$
 $\delta$ is a scoring function of size $(|\sum| + 1) * (|\sum| + 1)$
 
 SEQ_ALIGN($A$, $B$, $\delta$):
-	score[$i$, 0] = 0, for $0,...,n$
-	score[0, $j$] = 0, for $0,...,m$
-	for $i$ from 1 to $n$:
-		for $j$ from 1 to $m$:
-			score[$i$, $j$] = max{score[$i-1$, $j$] + 1, score[$i$, $j-1$) + 1, score[$i-1$, $j-1$] + delta($A_i$, $B_j$)}
-return score[$n$, $m$]
+    score[$i$, 0] = 0, for $0,...,n$
+    score[0, $j$] = 0, for $0,...,m$
+    for $i$ from 1 to $n$:
+        for $j$ from 1 to $m$:
+            ins = score[$i-1$, $j$] + 1
+            del = score[$i$, $j-1$] + 1
+            sub = score[$i-1$, $j-1$] + $\delta$($A_i$, $B_j$)
+            score[$i$, $j$] = max{ins, del, sub}
+    return score[$n$, $m$]
 \end{lstlisting}
 \end{document}
