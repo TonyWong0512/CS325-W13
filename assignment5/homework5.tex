@@ -57,7 +57,7 @@ STOOGESORT(A[0...n-1])
 \end{lstlisting}
 \paragraph{Proof By induction:}
 \begin{proof}
-Base case: $n = 2$.
+\\Base case: $n = 2$.
 If $n=2$ and $A[0] = 2$ and $A[1] = 1$, then the algorithm if statement
 will evaluate to true.  This will cause $A[0]$ and $A[1]$ to be swapped,
 and the array is now sorted in increasing order proving our base case.
@@ -87,28 +87,13 @@ Is it possible to make change for $v$ using coins of denominations $x_1
 
 \paragraph{Solution:}
 This decision problem can be solved with the following algorithm:
-    $T(0) = 1$
-    $T(c) = max(T(c-v_1),T(c-v_2),\dots,T(c-v_i)) \forall v_i \lte c$.
+\\    $T(0) = 1$
+\\    $T(c) = max(T(c-v_1),T(c-v_2),\dots,T(c-v_i)) \forall v_i \le c$.
 
 Where the $c$ is the value we are trying to make change for, and $v_i$ is the
 value of the coin be considered.  When the recursive function cannot
 successfully reach a coin value of zero, a no is returned. Any option that does
 reach zero returns a yes.
-
-Make change for 1 up to v.
-\begin{lstlisting}[mathescape]
-MAKE_CHANGE(A, v):
-    coins[$i$] := 0 for 0 to $v$
-    for $i$ from 1 to $v$:
-        for $j$ from 1 to $A$:
-            if $i > j$:
-                min := coins[$i-j$] + 1
-                if min < coins[$i$]:
-                    coins[$i$] := min
-    if coins[$i$] != 0:
-	return True
-    return False
-\end{lstlisting}
 
 \section*{3}
 \paragraph{Problem:}
