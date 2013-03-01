@@ -85,7 +85,19 @@ for the following problem.  Input: $x_1 , \dots , x_n ; v$.  Question:
 Is it possible to make change for $v$ using coins of denominations $x_1
 , \dots , x_n$ ?
 \paragraph{Solution:}
-
+\begin{lstlisting}[mathescape]
+MAKE_CHANGE(A, v):
+    coins[$i$] := 0 for 0 to $v$
+    for $i$ from 1 to $v$:
+        for $j$ from 1 to $A$:
+            if $i > j$:
+                min := coins[$i-j$] + 1
+                if min < coins[$i$]:
+                    coins[$i$] := min
+    if coins[$i$] != 0:
+	return True
+    return False
+\end{lstlisting}
 
 \section*{3}
 \paragraph{Problem:}
