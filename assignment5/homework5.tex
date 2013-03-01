@@ -84,7 +84,9 @@ instance, if the denominations are 5 and 10 then we can make change for
 for the following problem.  Input: $x_1 , \dots , x_n ; v$.  Question:
 Is it possible to make change for $v$ using coins of denominations $x_1
 , \dots , x_n$ ?
+
 \paragraph{Solution:}
+Make change for 1 up to v.
 \begin{lstlisting}[mathescape]
 MAKE_CHANGE(A, v):
     coins[$i$] := 0 for 0 to $v$
