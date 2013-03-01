@@ -86,6 +86,15 @@ Is it possible to make change for $v$ using coins of denominations $x_1
 , \dots , x_n$ ?
 
 \paragraph{Solution:}
+This decision problem can be solved with the following algorithm:
+    $T(0) = 1$
+    $T(c) = max(T(c-v_1),T(c-v_2),\dots,T(c-v_i)) \forall v_i \lte c$.
+
+Where the $c$ is the value we are trying to make change for, and $v_i$ is the
+value of the coin be considered.  When the recursive function cannot
+successfully reach a coin value of zero, a no is returned. Any option that does
+reach zero returns a yes.
+
 Make change for 1 up to v.
 \begin{lstlisting}[mathescape]
 MAKE_CHANGE(A, v):
