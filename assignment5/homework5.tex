@@ -107,14 +107,14 @@ Sequence alignment. When a new gene is discovered, a standard approach to
 understanding its function is to look through a database of known genes and
 find close matches. The closeness of two genes is measured by the extent to 
 which they are aligned. To formalize this, think of a gene as being a long
-string over an alphabet $\sum = {A, C, G, T}$. Consider two genes (strings)
+string over an alphabet $\sum = \{A, C, G, T\}$. Consider two genes (strings)
 $x = AT GCC$ and $y = T ACGCA$. An alignment of $x$ and $y$ is a way of matching up
 these two strings by writing them in columns, for instance:
 
 \begin{center}
 \begin{tabular}{c c c c c c c}
-\_ &A &T &\_ &G &C &C \\
-T &A &\_ &C &G &C &A
+-- &A &T &-- &G &C &C \\
+T &A &-- &C &G &C &A
 \end{tabular}
 \end{center}
 
@@ -132,5 +132,18 @@ $x[1 . . . n]$ and $y[1 . . . m]$ and a scoring matrix $\delta$, and returns
 the highest-scoring alignment. The running time should be $\BigO{mn}$.
 
 \paragraph{Solution:}
+The solution builds on the dynamic programming algorithm for edit distance.
+\begin{lstlisting}[mathescape]
+$n$ is the length of $A$
+$m$ is the length of $B$
+$\delta$ is a scoring function of size $(|\sum| + 1) * (|\sum| + 1)$
 
+SEQ_ALIGN($A$, $B$, $\delta$):
+	score[$i$, 0] = 0, for $0,...,n$
+	score[0, $j$] = 0, for $0,...,m$
+	for $i$ from 1 to $n$:
+		for $j$ from 1 to $m$:
+			score[$i$, $j$] = max{score[$i-1$, $j$] + 1, score[$i$, $j-1$) + 1, score[$i-1$, $j-1$] + delta($A_i$, $B_j$)}
+return score[$n$, $m$]
+\end{lstlisting}
 \end{document}
