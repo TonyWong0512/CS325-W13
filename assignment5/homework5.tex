@@ -95,27 +95,41 @@ can turn it into a knapsack problem, and apply an algorithm for knapsack, and
 use its solution to decide the solution for the original coin change problem.
 \paragraph{Solution:}
 
+The problem in 6.17 is a coin-change problem. The coin change problem
+can be reduced to a knapsack problem. To do so, let the denominations of
+coins be the values of items to be placed in the knapsack and let the
+total value of items be equal to the weight. The weight of an individual
+element is ignored.
+
 \section*{4}
 \paragraph{6.26 from book:}
 Sequence alignment. When a new gene is discovered, a standard approach to
 understanding its function is to look through a database of known genes and
 find close matches. The closeness of two genes is measured by the extent to 
 which they are aligned. To formalize this, think of a gene as being a long
-string over an alphabet Σ = {A, C, G, T }. Consider two genes (strings)
-x = AT GCC and y = T ACGCA. An alignment of x and y is a way of matching up
+string over an alphabet $\sum = {A, C, G, T}$. Consider two genes (strings)
+$x = AT GCC$ and $y = T ACGCA$. An alignment of $x$ and $y$ is a way of matching up
 these two strings by writing them in columns, for instance:
 
-$_AT_GCC$
-$TA_CGCA$
+\begin{center}
+\begin{tabular}{c c c c c c c}
+\_ &A &T &\_ &G &C &C \\
+T &A &\_ &C &G &C &A
+\end{tabular}
+\end{center}
 
-Here the “−” indicates a “gap.” The characters of each string must appear
+Here the ``-'' indicates a ``gap.'' The characters of each string must appear
 in order, and each column must contain a character from at least one of 
-the strings. The score of an alignment is specified by a scoring matrix δ
-of size (|Σ| + 1) × (|Σ| + 1), where the extra row and column are to
+the strings. The score of an alignment is specified by a scoring matrix
+$\delta$
+of size $(|\sum| + 1) * (|\sum| + 1)$, where the extra row and column are to
 accommodate gaps. For instance the preceding alignment has the following score:
-δ(−, T ) + δ(A, A) + δ(T, −) + δ(−, C) + δ(G, G) + δ(C, C) + δ(C, A).
+$$\delta(-, T ) + \delta(A, A) + \delta(T, -) + \delta(-, C) + \delta(G,
+G) + \delta(C, C) + \delta(C, A)$$
 
-Give a dynamic programming algorithm that takes as input two strings $x[1 . . . n]$ and $y[1 . . . m]$ and a scoring matrix δ, and returns the highest-scoring alignment. The running time should be $\BigO(mn)$.
+Give a dynamic programming algorithm that takes as input two strings
+$x[1 . . . n]$ and $y[1 . . . m]$ and a scoring matrix $\delta$, and returns
+the highest-scoring alignment. The running time should be $\BigO{mn}$.
 
 \paragraph{Solution:}
 
