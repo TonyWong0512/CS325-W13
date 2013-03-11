@@ -1,0 +1,163 @@
+\documentclass[12pt]{article}
+
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{qtree}
+\usepackage{enumerate}
+\usepackage{changepage}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{automata}
+\usepackage{subfigure}
+\usepackage{pgfplots}
+
+\usepackage{enumitem}
+\setdescription{leftmargin=\parindent,labelindent=\parindent}
+\setlist[enumerate,1]{label=\alph*}
+
+\usepackage[utf8]{inputenc}
+
+\title{CS325 Winter 2013: HW 6}
+\author{
+    Daniel Reichert \\
+    Trevor Bramwell \\
+}
+\date{\today}
+
+\newcommand{\BigO}[1]{\ensuremath{O(#1)}}
+
+% Big O: \BigO
+% Big Omega: \Omega
+% Big Theta: \Theta
+
+% Examples:
+%
+%   $\BigO{n}$
+%   $\Omega(n\log{n})$
+%   $\Theta(\log{2n})$
+
+
+\begin{document}
+\maketitle
+\section*{1}
+\paragraph{Problem:}
+We will review proof by induction in this problem. Specifically, consider the
+stoogesort algorithm for sorting and use proof by induction to show that this
+algorithm correctly sorts an given array into increasing order.
+\begin{lstlisting}[mathescape]
+STOOGESORT(A[0...n-1])
+    if n = 2 and A[0] > A[1]
+        swap A[0] and A[1]
+    else if n > 2
+        k = 2n/3
+        STOOGESORT(A[0...k-1])
+        STOOGESORT(A[n-k...n-1])
+        STOOGESORT(A[0...k-1])
+\end{lstlisting}
+\paragraph{Proof By induction:}
+\begin{proof}
+\\Base case: $n = 2$.
+If $n=2$ and $A[0] = 2$ and $A[1] = 1$, then the algorithm if statement
+will evaluate to true.  This will cause $A[0]$ and $A[1]$ to be swapped,
+and the array is now sorted in increasing order proving our base case.
+\\
+Inductive Step:
+Assume Stoogesort is true for $2...K-1$.
+Prove Stoogesort is true for $K$.
+\\
+When stoogesort has a input greater than 2, it calls stoogesort($2K/3$).
+Since $2K/3$ is within our Inductive Assumption, we know that
+stoogesort($2K/3$) is true.  Since stoogesort always relies on being
+able to successfully sort a subset that is within the scope of our
+inductive assumption, by the principal of mathematical inducation,
+stooge sort is true.
+\end{proof}
+
+\section*{2}
+\paragraph{6.17 from book:}
+Given an unlimited supply of coins of denominations $x_1 , x_2 , \dots ,
+x_n$, we wish to make change for a value $v$; that is, we wish to find a
+set of coins whose total value is $v$. This might not be possible: for
+instance, if the denominations are 5 and 10 then we can make change for
+15 but not for 12.  Give an $\BigO{nv}$ dynamic-programming algorithm
+for the following problem.  Input: $x_1 , \dots , x_n ; v$.  Question:
+Is it possible to make change for $v$ using coins of denominations $x_1
+, \dots , x_n$ ?
+
+\paragraph{Solution:}
+This decision problem can be solved with the following algorithm:
+\\    $T(0) = 1$
+\\    $T(c) = max(T(c-v_1),T(c-v_2),\dots,T(c-v_i)) \forall v_i \le c$.
+
+Where the $c$ is the value we are trying to make change for, and $v_i$ is the
+value of the coin be considered.  When the recursive function cannot
+successfully reach a coin value of zero, a no is returned. Any option that does
+reach zero returns a yes.
+
+\section*{3}
+\paragraph{Problem:}
+Additional question on 6.17. Show how one can reduce the problem specified by
+6.17 into a knapsack problem (with repetition). Reducing to knapsack problem
+means that for any instance of the coin-change problem specified in 6.17, we
+can turn it into a knapsack problem, and apply an algorithm for knapsack, and
+use its solution to decide the solution for the original coin change problem.
+\paragraph{Solution:}
+
+The problem in 6.17 is a coin-change problem. The coin change problem
+can be reduced to a knapsack problem. To do so, let the denominations of
+coins be the values of items to be placed in the knapsack and let the
+total value of items be equal to the weight. The weight of an individual
+element is ignored.
+
+\section*{4}
+\paragraph{6.26 from book:}
+Sequence alignment. When a new gene is discovered, a standard approach to
+understanding its function is to look through a database of known genes and
+find close matches. The closeness of two genes is measured by the extent to 
+which they are aligned. To formalize this, think of a gene as being a long
+string over an alphabet $\sum = \{A, C, G, T\}$. Consider two genes (strings)
+$x = AT GCC$ and $y = T ACGCA$. An alignment of $x$ and $y$ is a way of matching up
+these two strings by writing them in columns, for instance:
+
+\begin{center}
+\begin{tabular}{c c c c c c c}
+-- &A &T &-- &G &C &C \\
+T &A &-- &C &G &C &A
+\end{tabular}
+\end{center}
+
+Here the ``-'' indicates a ``gap.'' The characters of each string must appear
+in order, and each column must contain a character from at least one of 
+the strings. The score of an alignment is specified by a scoring matrix
+$\delta$
+of size $(|\sum| + 1) * (|\sum| + 1)$, where the extra row and column are to
+accommodate gaps. For instance the preceding alignment has the following score:
+$$\delta(-, T ) + \delta(A, A) + \delta(T, -) + \delta(-, C) + \delta(G,
+G) + \delta(C, C) + \delta(C, A)$$
+
+Give a dynamic programming algorithm that takes as input two strings
+$x[1 \dots n]$ and $y[1 \dots m]$ and a scoring matrix $\delta$, and returns
+the highest-scoring alignment. The running time should be $\BigO{mn}$.
+
+\paragraph{Solution:}
+This solution builds on the dynamic programming algorithm for edit
+distance. Instead of finding a minimum edit, we find a maximum
+alignment score.
+\begin{lstlisting}[mathescape]
+$n$ is the length of $A$
+$m$ is the length of $B$
+$\delta$ is a scoring function of size $(|\sum| + 1) * (|\sum| + 1)$
+
+SEQ_ALIGN($A$, $B$, $\delta$):
+    score[$i$, 0] = 0, for $0,...,n$
+    score[0, $j$] = 0, for $0,...,m$
+    for $i$ from 1 to $n$:
+        for $j$ from 1 to $m$:
+            ins = score[$i-1$, $j$] + 1
+            del = score[$i$, $j-1$] + 1
+            sub = score[$i-1$, $j-1$] + $\delta$($A_i$, $B_j$)
+            score[$i$, $j$] = max{ins, del, sub}
+    return score[$n$, $m$]
+\end{lstlisting}
+\end{document}
