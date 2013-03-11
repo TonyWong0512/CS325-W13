@@ -86,7 +86,7 @@ Call this problem CLIQUE-3.
     b$ if and only if it has a clique of size $\ge |V| - b$. This proves
     the correctness of the reduction and, consequently, the
     NP-completeness of CLIQUE-3.
-\item Describe an \BigO{$(|V|4)$} algorithm for CLIQUE-3.
+\item Describe an $\BigO{|V|4}$ algorithm for CLIQUE-3.
 \end{enumerate}
 
 \paragraph{Solution:}
@@ -96,8 +96,8 @@ Call this problem CLIQUE-3.
     done in polynomial time.
 \item B) The reduction is done in the wrong order.  To prove that clique-3 is at
     least as hard as clique, clique must be reduced to clique-3.
-\item C) The statement "Now, a subset C ⊆ V is a vertex cover in G if and only
-    if the complementary set V − C is a clique in G" is incorrect.  This would
+\item C) The statement "Now, a subset C $\subseteq$ V is a vertex cover in G if and only
+    if the complementary set V - C is a clique in G" is incorrect.  This would
     be correct if independent set was used instead of clique.
 \item D) With the restriction that every vertex in our clique problem is limited
     to a degree of at most 3, we know that there cannot exist a clique that is
@@ -111,11 +111,10 @@ Call this problem CLIQUE-3.
 
 \section*{3}
 \paragraph{Problem:}
-In the HITTING SET problem, we are given a family of sets {S1 , S2 , . . . , Sn } and a budget b, and
-we wish to find a set H of size $\le b$ which intersects every $S_i$ , if such an H exists. In other words,
-we want $H \cap S_i = \oslash$ for all i.
-Show that
-HITTING SET
+In the HITTING SET problem, we are given a family of sets ${S_1, S_2 ,
+\dots , S_n }$ and a budget $b$, and we wish to find a set $H$ of size
+$\le b$ which intersects every $S_i$ , if such an $H$ exists. In other
+words, we want $H \cap S_i = \oslash$ for all $i$.  Show that HITTING SET
 is NP-complete.
 
 \paragraph{Solution:}
@@ -133,19 +132,23 @@ Proving NP-completeness by generalization. For each of the problems below, prove
 complete by showing that it is a generalization of some NP-complete problem we have seen in
 this chapter.
 \begin{enumerate}
-\item  SUBGRAPH ISOMORPHISM: Given as input two undirected graphs G and H, determine
-        whether G is a subgraph of H (that is, whether by deleting certain vertices and edges of H
-        we obtain a graph that is, up to renaming of vertices, identical to G), and if so, return the
-        corresponding mapping of V (G) into V (H).
+\item  SUBGRAPH ISOMORPHISM: Given as input two undirected graphs $G$
+        and $H$, determine whether $G$ is a subgraph of $H$ (that is, whether by
+        deleting certain vertices and edges of $H$ we obtain a graph that is, up
+        to renaming of vertices, identical to $G$), and if so, return the
+        corresponding mapping of $V(G)$ into $V(H)$.
 
 \item LONGEST PATH :
-        Given a graph G and an integer g, find in G a simple path of length g.
+        Given a graph $G$ and an integer $g$, find in $G$ a simple path
+        of length $g$.
 
-\item  DENSE SUBGRAPH: Given a graph and two integers a and b, find a set of a vertices of G
-        such that there are at least b edges between them.
+\item  DENSE SUBGRAPH: Given a graph and two integers $a$ and $b$, find
+        a set of a vertices of $G$ such that there are at least $b$ edges
+        between them.
 
-\item SPARSE SUBGRAPH: Given a graph and two integers a and b, find a set of a vertices of G
-        such that there are at most b edges between them.
+\item SPARSE SUBGRAPH: Given a graph and two integers $a$ and $b$, find
+        a set of a vertices of $G$ such that there are at most $b$ edges between
+        them.
 \end{enumerate}
 
 \paragraph{Solution:}
