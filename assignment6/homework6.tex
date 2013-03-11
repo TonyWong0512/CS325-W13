@@ -42,122 +42,68 @@
 \maketitle
 \section*{1}
 \paragraph{Problem:}
-We will review proof by induction in this problem. Specifically, consider the
-stoogesort algorithm for sorting and use proof by induction to show that this
-algorithm correctly sorts an given array into increasing order.
-\begin{lstlisting}[mathescape]
-STOOGESORT(A[0...n-1])
-    if n = 2 and A[0] > A[1]
-        swap A[0] and A[1]
-    else if n > 2
-        k = 2n/3
-        STOOGESORT(A[0...k-1])
-        STOOGESORT(A[n-k...n-1])
-        STOOGESORT(A[0...k-1])
-\end{lstlisting}
-\paragraph{Proof By induction:}
-\begin{proof}
-\\Base case: $n = 2$.
-If $n=2$ and $A[0] = 2$ and $A[1] = 1$, then the algorithm if statement
-will evaluate to true.  This will cause $A[0]$ and $A[1]$ to be swapped,
-and the array is now sorted in increasing order proving our base case.
-\\
-Inductive Step:
-Assume Stoogesort is true for $2...K-1$.
-Prove Stoogesort is true for $K$.
-\\
-When stoogesort has a input greater than 2, it calls stoogesort($2K/3$).
-Since $2K/3$ is within our Inductive Assumption, we know that
-stoogesort($2K/3$) is true.  Since stoogesort always relies on being
-able to successfully sort a subset that is within the scope of our
-inductive assumption, by the principal of mathematical inducation,
-stooge sort is true.
-\end{proof}
+Below is a definition of the graph isomorphism problem.\\
+Input: two graphs, $G1 = (V1 , E1 )$, and $G2 = (V2 , E2 )$.
+Question: Can the nodes of $G1$ be renamed s.t. $G1$ becomes $G2$ ?\\
+In other words, is there a one-to-one function $f : V1 → V2$ such that for any edge $(x, y) ∈ E1$ if only if
+$(f (x), f (y)) ∈ E2$. Show that the graph Isomorphism problem is in NP.
+
+\paragraph{Solution}
 
 \section*{2}
-\paragraph{6.17 from book:}
-Given an unlimited supply of coins of denominations $x_1 , x_2 , \dots ,
-x_n$, we wish to make change for a value $v$; that is, we wish to find a
-set of coins whose total value is $v$. This might not be possible: for
-instance, if the denominations are 5 and 10 then we can make change for
-15 but not for 12.  Give an $\BigO{nv}$ dynamic-programming algorithm
-for the following problem.  Input: $x_1 , \dots , x_n ; v$.  Question:
-Is it possible to make change for $v$ using coins of denominations $x_1
-, \dots , x_n$ ?
+\paragraph{8.4}
+Consider the CLIQUE problem restricted to graphs in which every vertex has degree at most 3.
+Call this problem CLIQUE -3.
+(a) Prove that
+CLIQUE -3
+is in NP.
+(b) What is wrong with the following proof of NP-completeness for CLIQUE -3?
+We know that the CLIQUE problem in general graphs is NP-complete, so it is enough to
+present a reduction from CLIQUE -3 to CLIQUE. Given a graph G with vertices of degree ≤ 3,
+and a parameter g, the reduction leaves the graph and the parameter unchanged: clearly
+the output of the reduction is a possible input for the CLIQUE problem. Furthermore, the
+answer to both problems is identical. This proves the correctness of the reduction and,
+therefore, the NP-completeness of CLIQUE -3.
+(c) It is true that the VERTEX COVER problem remains NP-complete even when restricted to
+graphs in which every vertex has degree at most 3. Call this problem VC -3. What is wrong
+with the following proof of NP-completeness for CLIQUE -3?
+We present a reduction from VC -3 to CLIQUE -3. Given a graph G = (V, E) with node degrees
+bounded by 3, and a parameter b, we create an instance of CLIQUE -3 by leaving the graph
+unchanged and switching the parameter to |V | − b. Now, a subset C ⊆ V is a vertex cover
+in G if and only if the complementary set V − C is a clique in G. Therefore G has a vertex
+cover of size ≤ b if and only if it has a clique of size ≥ |V | − b. This proves the correctness of
+the reduction and, consequently, the NP-completeness of CLIQUE -3.
+(d) Describe an O(|V |4 ) algorithm for CLIQUE -3.
 
 \paragraph{Solution:}
-This decision problem can be solved with the following algorithm:
-\\    $T(0) = 1$
-\\    $T(c) = max(T(c-v_1),T(c-v_2),\dots,T(c-v_i)) \forall v_i \le c$.
-
-Where the $c$ is the value we are trying to make change for, and $v_i$ is the
-value of the coin be considered.  When the recursive function cannot
-successfully reach a coin value of zero, a no is returned. Any option that does
-reach zero returns a yes.
 
 \section*{3}
 \paragraph{Problem:}
-Additional question on 6.17. Show how one can reduce the problem specified by
-6.17 into a knapsack problem (with repetition). Reducing to knapsack problem
-means that for any instance of the coin-change problem specified in 6.17, we
-can turn it into a knapsack problem, and apply an algorithm for knapsack, and
-use its solution to decide the solution for the original coin change problem.
-\paragraph{Solution:}
+In the HITTING SET problem, we are given a family of sets {S1 , S2 , . . . , Sn } and a budget b, and
+we wish to find a set H of size ≤ b which intersects every Si , if such an H exists. In other words,
+we want H ∩ Si = ∅ for all i.
+Show that
+HITTING SET
+is NP-complete.
 
-The problem in 6.17 is a coin-change problem. The coin change problem
-can be reduced to a knapsack problem. To do so, let the denominations of
-coins be the values of items to be placed in the knapsack and let the
-total value of items be equal to the weight. The weight of an individual
-element is ignored.
+\paragraph{Solution:}
 
 \section*{4}
 \paragraph{6.26 from book:}
-Sequence alignment. When a new gene is discovered, a standard approach to
-understanding its function is to look through a database of known genes and
-find close matches. The closeness of two genes is measured by the extent to 
-which they are aligned. To formalize this, think of a gene as being a long
-string over an alphabet $\sum = \{A, C, G, T\}$. Consider two genes (strings)
-$x = AT GCC$ and $y = T ACGCA$. An alignment of $x$ and $y$ is a way of matching up
-these two strings by writing them in columns, for instance:
-
-\begin{center}
-\begin{tabular}{c c c c c c c}
--- &A &T &-- &G &C &C \\
-T &A &-- &C &G &C &A
-\end{tabular}
-\end{center}
-
-Here the ``-'' indicates a ``gap.'' The characters of each string must appear
-in order, and each column must contain a character from at least one of 
-the strings. The score of an alignment is specified by a scoring matrix
-$\delta$
-of size $(|\sum| + 1) * (|\sum| + 1)$, where the extra row and column are to
-accommodate gaps. For instance the preceding alignment has the following score:
-$$\delta(-, T ) + \delta(A, A) + \delta(T, -) + \delta(-, C) + \delta(G,
-G) + \delta(C, C) + \delta(C, A)$$
-
-Give a dynamic programming algorithm that takes as input two strings
-$x[1 \dots n]$ and $y[1 \dots m]$ and a scoring matrix $\delta$, and returns
-the highest-scoring alignment. The running time should be $\BigO{mn}$.
+Proving NP-completeness by generalization. For each of the problems below, prove that it is NP-
+complete by showing that it is a generalization of some NP-complete problem we have seen in
+this chapter.
+(a) S UBGRAPH ISOMORPHISM: Given as input two undirected graphs G and H, determine
+whether G is a subgraph of H (that is, whether by deleting certain vertices and edges of H
+we obtain a graph that is, up to renaming of vertices, identical to G), and if so, return the
+corresponding mapping of V (G) into V (H).
+(b) L ONGEST
+PATH :
+Given a graph G and an integer g, find in G a simple path of length g.
+(d) D ENSE SUBGRAPH: Given a graph and two integers a and b, find a set of a vertices of G
+such that there are at least b edges between them.
+(e) S PARSE SUBGRAPH: Given a graph and two integers a and b, find a set of a vertices of G
+such that there are at most b edges between them.
 
 \paragraph{Solution:}
-This solution builds on the dynamic programming algorithm for edit
-distance. Instead of finding a minimum edit, we find a maximum
-alignment score.
-\begin{lstlisting}[mathescape]
-$n$ is the length of $A$
-$m$ is the length of $B$
-$\delta$ is a scoring function of size $(|\sum| + 1) * (|\sum| + 1)$
-
-SEQ_ALIGN($A$, $B$, $\delta$):
-    score[$i$, 0] = 0, for $0,...,n$
-    score[0, $j$] = 0, for $0,...,m$
-    for $i$ from 1 to $n$:
-        for $j$ from 1 to $m$:
-            ins = score[$i-1$, $j$] + 1
-            del = score[$i$, $j-1$] + 1
-            sub = score[$i-1$, $j-1$] + $\delta$($A_i$, $B_j$)
-            score[$i$, $j$] = max{ins, del, sub}
-    return score[$n$, $m$]
-\end{lstlisting}
 \end{document}
