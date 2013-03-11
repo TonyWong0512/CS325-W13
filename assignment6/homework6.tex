@@ -88,6 +88,24 @@ Call this problem CLIQUE-3.
 \end{enumerate}
 
 \paragraph{Solution:}
+\begin{enumerate}
+\item A) Given a clique in a graph, all that is required to prove the certificate
+    is that there exists and edge between every pair of verticies, which is easily
+    done in polynomial time.
+\item B) The reduction is done in the wrong order.  To prove that clique-3 is at
+    least as hard as clique, clique must be reduced to clique-3.
+\item C) The statement "Now, a subset C ⊆ V is a vertex cover in G if and only
+    if the complementary set V − C is a clique in G" is incorrect.  This would
+    be correct if independent set was used instead of clique.
+\item D) With the restriction that every vertex in our clique problem is limited
+    to a degree of at most 3, we know that there cannot exist a clique that is
+    larger than 4 verticies.  To assume that more than 4 verticies can exist in
+    a clique-3 graph breaks the definition of 3-clique and its requirement of
+    being fully connected to every other vertex in the graph.  Therefore, we
+    know that no solution exists for magnitudes of greater than 4.  With that
+    knowledge we can restrict our search of solutions to $O(|v|^{4})$ time.
+\end{enumerate}
+
 
 \section*{3}
 \paragraph{Problem:}
@@ -99,6 +117,13 @@ HITTING SET
 is NP-complete.
 
 \paragraph{Solution:}
+This can be thought of as a vertex-cover.  Given a graph $G=(V,E)$ we can
+describe each edge as a two element set that consists of the two vertices it
+connects.  In other words, $e_i = (u,w)$ where $e$ is an edge and $(u,w)$ are
+verticies.  This builds a family of sets from our given graph G, which allows
+us to intuitively reduce this to an NP graph problem.  With this method of
+thinking finding a vertex cover uses the same method as the hitting set problem.
+
 
 \section*{4}
 \paragraph{6.26 from book:}
@@ -122,4 +147,16 @@ this chapter.
 \end{enumerate}
 
 \paragraph{Solution:}
+\begin{enumerate}
+
+\item A) The subgraph isomorphism can be reduced to the clique problem.
+
+\item B) The longest path problem can be reduced to the rudrata path problem.
+
+\item D) The dense subgraph problem can be reduced to the clique problem.
+
+\item E) The sparse subgraph problem can be reduced to the independent set problem.
+
+\end{enumerate}
+
 \end{document}
