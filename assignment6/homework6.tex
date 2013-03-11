@@ -53,9 +53,11 @@ Below is a definition of the graph isomorphism problem.\\
 \end{description}
 
 \paragraph{Solution}
-    Reduce Isomorphism to another NP problem. Re-lable all the nodes,
-    see TSP.
-
+    To show that Graph Isomorphism (GI) is in NP we will show that 3-SAT
+reduces to GI. Each literal in 3-SAT is a node in a graph, and each
+clause is a group of nodes. Moving a clause from the last position to
+the first will create a new graph isomorphic to the original, and it
+will take NP to compare each node.
 
 \section*{2}
 \paragraph{8.4}
