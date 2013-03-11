@@ -154,13 +154,25 @@ this chapter.
 \paragraph{Solution:}
 \begin{enumerate}
 
-\item A) The subgraph isomorphism can be reduced to the clique problem.
+\item A) The subgraph isomorphism can be reduced to the clique problem.  To show
+this consider an input to clique $(G,k)$ where $G$ is a graph and $k$ is an integer.
+Let H be a graph containing k fully connected verticies.  If $H$ is a subgraph of
+$G$ then $G$ contains a clique of size $k$.
 
 \item B) The longest path problem can be reduced to the rudrata path problem.
+Consider a graph $G$ with n verticies. If $(G,n-1)$ is input to longest path then
+the path must contain n verticies and is thus a rudrata path.
 
-\item D) The dense subgraph problem can be reduced to the clique problem.
+\item D) The dense subgraph problem can be reduced to the clique problem. Given
+an input $(G,k)$ where $G$ is an undirected graph and $k$ is the number of verticies
+in the graph, we let $a=k$ and $b=k(k-1)/2$.  This assignment means that every
+vertex is fully connected, and is thus a clique.
 
-\item E) The sparse subgraph problem can be reduced to the independent set problem.
+\item E) The sparse subgraph problem can be reduced to the independent set
+problem. If we are given input to the independent set problem $(G,k)$ where
+$G$ is an undirected graph and $k$ is the number of verticies.  We can assign
+$a=k$ and $b=0$ which means there are no edges if we give the input $(G,a,b)$
+to the sparse subgraph problem.
 
 \end{enumerate}
 
