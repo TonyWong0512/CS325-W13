@@ -13,9 +13,42 @@ does not change.
 """
 import math
 
+def dict_max(ds):
+    return max(d.iterkeys(), key=(lambda key: d[key]))
 
 # XXX Current busted. Dicts are sets and keys will get overridden
 # Will work for some small k though...
+def furthest_nodes2(nodes, k):
+    """
+    Given a set of nodes, and a k, compute k nodes with the maximum
+    distance from each other.
+
+    >>> max_points([(1,2),(3,4)], 2)
+    [(1, 2), (3, 4)]
+    >>> max_points([(0,0),(0,2),(2,2),(2,0)], 2)
+    [(0, 0), (2, 2)]
+    """
+    k_nodes = []
+    k_nodes.append(nodes[0])
+    # Compute the maximum distance between k_nodes and nodes
+    for i in range(k-1):
+        m_nodes = {}
+        # Compute diances between k_nodes and nodes
+        for node in nodes:
+            k_max = {}
+            for k_n in k_nodes:
+                k_max[node] += dist(k_n, node)
+
+            if k_max:
+                maxs = dict_max(k_max)
+
+        if m_nodes:
+            # m_nodes is not empty
+            max_node = max(m_nodes.iterkeys(), 
+                key=(lambda key: m_nodes[key]))
+            ks.append(max_node)
+    return ks
+
 def furthest_nodes(nodes, k):
     """
     Given a set of nodes, and a k, compute k nodes with the maximum
@@ -33,13 +66,13 @@ def furthest_nodes(nodes, k):
         m_nodes = {}
         for node in (n for n in nodes if n not in ks):
             # key: distance, value: node
-            m_nodes[dist(ks[i], node)] = node
+            m_nodes[node] = dist(ks[i], node)
 
         if m_nodes:
             # m_nodes is not empty
-            max_key = max(m_nodes.keys())
-            # node with maximum distance away
-            ks.append(m_nodes[max_key])
+            max_node = max(m_nodes.iterkeys(), 
+                key=(lambda key: m_nodes[key]))
+            ks.append(max_node)
     return ks
 
 def dist(v1, v2):
