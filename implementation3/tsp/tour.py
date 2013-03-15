@@ -7,14 +7,17 @@ def dist(v1,v2):
     return int(round(hypot))
 
 def nearest_neighbor(nodes,start):
-    tour = [nodes[start]]
+    tour = [nodes.pop(start)]
     while nodes:
         last = tour[-1]
-        closest = dist(last,nodes[start-1])
+        for i in range(len(nodes)): #make sure closest is initalized to non-zero
+            closest = dist(last,nodes[i])
+            if closest != 0:
+                break
         closest_node = None
         for node in nodes:
             distance = dist(last,node)
-            if distance <= closest and distance != 0:
+            if distance <= closest:
                 closest_node = node
                 closest = distance
         tour.append(closest_node)
@@ -25,8 +28,41 @@ def tour_length(tour):
     length = 0
     for i in range(len(tour)-1):
         length += dist(tour[i],tour[i+1])
+    length+= dist(tour[0],tour[-1])
     return length
 
+def build_dict_of_cities(filename):
+    f = open(filename,'r')
+    cities = {}
+    for line in f.readlines():
+        line = line.lstrip(' ')
+        items = [int(x) for x in re.split('\s+',line) if re.match('\d',x)]
+        cities[items[0]] = (items[1],items[2])
+        if items[0] == 171:
+            print "found 171"
+    f.close()
+    return cities
+
+def reverse(d): #switch keys and values
+    d1 = {}
+    for k,v in d.iteritems():
+        d1[v] = k
+    return d1
+
+def tour_output(tour,filename):
+    length = tour_length(tour)
+    cities = reverse(build_dict_of_cities(filename))
+    output = []
+    for coords in tour:
+        output.append(cities[coords])
+    output_file = re.sub("input","testoutput",filename)
+    out = "\n".join(str(x) for x in output)
+    f = open(output_file,'w')
+    f.write(str(length))
+    f.write("\n")
+    f.write(out)
+    f.close()
+    
 def two_opt(tour):
     while True:
         best = tour
@@ -70,9 +106,10 @@ def readinstance(filename):
 
 def main():
     #lists = [tuple([int(x) for x in line.split(' ')])[1:] for line in open('example-input-2.txt').readlines()]
-    lists = readinstance("example-input-3.txt")
+    filename = "example-input-2.txt"
+    lists = readinstance(filename)
     tour = nearest_neighbor(lists,0)
-    print tour_length(tour)
+    tour_output(tour,filename)
     #print tour
     two_opt(tour)
 
