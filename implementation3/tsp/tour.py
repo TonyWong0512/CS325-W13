@@ -26,9 +26,10 @@ def nearest_neighbor(nodes,start):
 
 def tour_length(tour):
     length = 0
-    for i in range(len(tour)-1):
-        length += dist(tour[i],tour[i+1])
-    length+= dist(tour[0],tour[-1]) #and dist to go to start
+    for i in range(len(tour)):
+        length += dist(tour[i],tour[i-1])
+        print length, tour[i], tour[i-1]
+    #length+= dist(tour[0],tour[-1]) #and dist to go to start
     return length
 
 def build_dict_of_cities(filename):
