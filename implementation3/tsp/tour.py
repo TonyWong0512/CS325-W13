@@ -3,17 +3,17 @@ import itertools
 import re
 
 def dist(v1,v2):
-    hypot = math.hypot(v1[0]-v2[0], v1[1]-v2[1])
-    return int(round(hypot))
+    #hypot = math.hypot(v1[0]-v2[0], v1[1]-v2[1])
+    #return int(round(hypot))
+    dx = v1[0] - v2[0]
+    dy = v1[1] - v2[1]
+    return int(round(math.sqrt(dx*dx + dy*dy)))
 
 def nearest_neighbor(nodes,start):
     tour = [nodes.pop(start)]
     while nodes:
         last = tour[-1]
-        for i in range(len(nodes)): #make sure closest is initalized to non-zero
-            closest = dist(last,nodes[i])
-            if closest != 0:
-                break
+        closest = dist(last,nodes[0])
         closest_node = None
         for node in nodes:
             distance = dist(last,node)
@@ -28,7 +28,7 @@ def tour_length(tour):
     length = 0
     for i in range(len(tour)-1):
         length += dist(tour[i],tour[i+1])
-    length+= dist(tour[0],tour[-1])
+    length+= dist(tour[0],tour[-1]) #and dist to go to start
     return length
 
 def build_dict_of_cities(filename):
@@ -38,15 +38,16 @@ def build_dict_of_cities(filename):
         line = line.lstrip(' ')
         items = [int(x) for x in re.split('\s+',line) if re.match('\d',x)]
         cities[items[0]] = (items[1],items[2])
-        if items[0] == 171:
-            print "found 171"
     f.close()
     return cities
 
 def reverse(d): #switch keys and values
     d1 = {}
     for k,v in d.iteritems():
-        d1[v] = k
+        if v not in d1:
+            d1[v] = [k]
+        else: #accomodates multiple cities at one location
+            d1[v].append(k)
     return d1
 
 def tour_output(tour,filename):
@@ -54,15 +55,19 @@ def tour_output(tour,filename):
     cities = reverse(build_dict_of_cities(filename))
     output = []
     for coords in tour:
-        output.append(cities[coords])
+        for city in cities[coords]:
+            output.append(city)
+        if len(cities[coords]) > 1: #if there are multiple values, at same coords,
+            cities[coords] = []   #clear list so they are not added twice
     output_file = re.sub("input","testoutput",filename)
+    output.sort()
     out = "\n".join(str(x) for x in output)
     f = open(output_file,'w')
     f.write(str(length))
     f.write("\n")
     f.write(out)
     f.close()
-    
+
 def two_opt(tour):
     while True:
         best = tour
@@ -106,7 +111,7 @@ def readinstance(filename):
 
 def main():
     #lists = [tuple([int(x) for x in line.split(' ')])[1:] for line in open('example-input-2.txt').readlines()]
-    filename = "example-input-2.txt"
+    filename = "example-input-1.txt"
     lists = readinstance(filename)
     tour = nearest_neighbor(lists,0)
     tour_output(tour,filename)
