@@ -1,6 +1,9 @@
 import math
 import itertools
 import re
+import pp
+
+from kmeans import kmeans_pp, associate_points
 
 def dist(v1,v2):
     #hypot = math.hypot(v1[0]-v2[0], v1[1]-v2[1])
@@ -9,7 +12,19 @@ def dist(v1,v2):
     dy = v1[1] - v2[1]
     return int(round(math.sqrt(dx*dx + dy*dy)))
 
+def wrapped_nearest_neighbor(nodes):
+    best_tour = nearest_neighbor(nodes, 0)
+    min_length = tour_length(best_tour)
+    for i in xrange(1, len(nodes)):
+        tour = nearest_neighbor(nodes, i)
+        length = tour_length(tour)
+        if length < min_length:
+            best_tour = tour
+    return best_tour
+
+
 def nearest_neighbor(nodes,start):
+    """Create a greedy tour"""
     tour = [nodes.pop(start)]
     while nodes:
         last = tour[-1]
@@ -77,17 +92,18 @@ def tour_output(tour,filename):
 
 def two_opt(tour):
     """Compute the minimum tour of a neighborhood by using 2-OPT"""
-    change = False
-    t_length = tour_length(tour)
+    min_length = tour_length(tour)
     nodes = len(tour)
-    while not change:
+    if nodes >= 4:
+        min_tour = tour
         for i in xrange(1,nodes):
             new_tour = swap_edges(tour, i, nodes)
             new_length = tour_length(new_tour)
-            if new_length > t_length:
-                t_length = new_length
-                change = True
-    return new_tour
+            if new_length < min_length:
+                min_length = new_length
+                min_tour = new_tour
+        return min_tour
+    return tour
 
 def swap_edges(tour, mid1, mid2):
     """
@@ -116,17 +132,50 @@ def readinstance(filename):
     f.close()
     return cities
 
+def parallel_two_opt_and_nearest_neighbor(cluster):
+    best_local = wrapped_nearest_neighbor(cluster)
+    return two_opt(best_local)
+
+
 def main():
     #lists = [tuple([int(x) for x in line.split(' ')])[1:] for line in open('example-input-2.txt').readlines()]
-    filename = "example-input-3.txt"
-    lists = readinstance(filename)
-    tour = nearest_neighbor(lists,0)
-    tour_output(tour,filename)
+    filename = "test-input-1.txt"
+    nodes = readinstance(filename)
+    job_server = pp.Server()
+
+    min_tour = 172808
+    foo = True
+    for i in xrange(2,len(nodes)):
+        clusters = associate_points(nodes, kmeans_pp(nodes, i))
+        c_list = []
+
+        depfuncs=(wrapped_nearest_neighbor, two_opt, dist, swap_edges, nearest_neighbor, tour_length)
+        modules=("math","itertools")
+        jobs = [job_server.submit(parallel_two_opt_and_nearest_neighbor,
+                                  (cluster,),
+                                  depfuncs,
+                                  modules) for cluster in clusters.values()]
+        tours = []
+        for job in jobs:
+            tours += job()
+            print "job %s has run" % id(job)
+
+        if tour_length(tours) < min_tour:
+            tour_output(tours, filename)
+            foo = False
+            break
+    if foo:
+        tour_output(min_tour, filename)
+    #tour_output(c_list, filename)
+    #print two_opt(clusters.values())
+    #tour = nearest_neighbor(lists,41)
+    #tour_output(tour,filename)
     #print tour
-    two_opt(tour)
+    #two_opt(tour)
 
 if __name__ == "__main__":
     #import doctest
     #doctest.testmod()
     main()
+
 
