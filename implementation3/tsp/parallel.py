@@ -47,4 +47,5 @@ depfuncs=(nearest_neighbor,kopt,dist)
 modules=("math","itertools")
 jobs = [job_server.submit(do_it_good,(cluster,),depfuncs,modules) for cluster in clusters]
 for job in jobs:
-    print "job", job(), "has run"
+    results = job()
+    print "job", results, "has run"
