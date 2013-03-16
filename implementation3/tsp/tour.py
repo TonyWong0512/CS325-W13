@@ -81,7 +81,7 @@ def two_opt(tour):
     t_length = tour_length(tour)
     nodes = len(tour)
     while not change:
-        for i in xrange(nodes):
+        for i in xrange(1,nodes):
             new_tour = swap_edges(tour, i, nodes)
             new_length = tour_length(new_tour)
             if new_length > t_length:
