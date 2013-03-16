@@ -13,9 +13,6 @@ does not change.
 """
 import math
 
-def dict_max(ds):
-    return max(ds.iterkeys(), key=(lambda key: ds[key]))
-
 def kmeans_pp(nodes, k):
     """kmeans++
 
@@ -92,7 +89,7 @@ def dist(v1, v2):
     >>> dist((0,0),(5,12))
     13.0
     """
-    return math.hypot(v1[0]-v2[0], v1[1]-v2[1])
+    return int(round(math.hypot(v1[0]-v2[0], v1[1]-v2[1])))
 
 def main():
     lists = [tuple([int(x) for x in line.split(' ')])[1:] for line in open('example-input-1.txt').readlines()]
