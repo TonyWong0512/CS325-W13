@@ -1,54 +1,49 @@
 import math
 import itertools
 
+def nearest_neighbor(nodes,start):
+    tour = [nodes.pop(start)]
+    while nodes:
+        last = tour[-1]
+        closest = dist(last,nodes[0])
+        closest_node = None
+        for node in nodes:
+            distance = dist(last,node)
+            if distance <= closest:
+                closest_node = node
+                closest = distance
+        tour.append(closest_node)
+        nodes.remove(closest_node)
+    return tour
+
 def dist(v1,v2):
-    #hypot = math.hypot(v1[0]-v2[0], v1[1]-v2[1])
-    #return int(round(hypot))
-    dx = v1[0] - v2[0]
-    dy = v1[1] - v2[1]
-    return int(round(math.sqrt(dx*dx + dy*dy)))
-
-def brute_glue(clusters):
-    all_edges = [list(itertools.chain(*cluster)) for cluster in clusters]
-    glue = []
-    for cluster in clusters:
-        valid = all_edges.remove(cluster)
-        small = dist(cluster[0],valid[0])
-        temp_glue
-        for node in cluster:
-            for node1 in valid:
-                distance = dist(node,node1)
-                if distance < small and (node,node1) not in glue:
-                    small = distance
-                    temp_glue = (node,node1)
-            glue.append((node,node1))
-
-def closest_between_two_clusters(cluster1,cluster2):
-    pass # returns two points, one in each cluster
+    hypot = math.hypot(v1[0]-v2[0], v1[1]-v2[1])
+    return int(round(hypot))
 
 def index_of_node(cluster,node):
     return(cluster.index(node))
 
-def shortest_two_edges(cluster1,cluster2,node1,node2):
-    (node1, node2) = closest_between_two_clusters(cluster1,cluster2)
-    pass # returns the four nodes, node1 -> node 2, node3 -> node4
+def edges_in_clusters(cluster1,cluster2):
+    #returns the index of some close nodes between two clusters
+    best_nodes = (cluster1[0],cluster2[0])
+    smallest = dist(best_nodes[0],best_nodes[1])
+    for edge1 in cluster1:
+        for edge2 in cluster2:
+            distance = dist(edge1,edge2)
+            if distance < smallest:
+                smallest = distance
+                best_nodes = (edge1,edge2)
+    indexes = (index_of_node(cluster1,best_nodes[0]),index_of_node(cluster2,best_nodes[1]))
+    return (indexes[0],indexes[1],indexes[0]-1,indexes[1]-1)
 
 def glue(d,centers):
     order = [[d[center]] for center in centers]
-    closest = {}
     mega = order.pop()
     for i,cluster in enumerate(order):
-        (node1,node2,node3,node4) = shortest_two_edges(cluster,mega)
+        (node1,node2,node3,node4) = edges_in_clusters(cluster,mega)
         mega = mega[:node1] + cluster[node4:0] + cluster[-1:node2] + mega[node3:]
-        '''
-            find closest edges between the appropriate nodes, one in each cluster
-            identify the two shortest edges between the four/six nodes in question
-            make those two edges happen, like magic, bitch
-        '''
+    return mega
     
-def two_opt(foo):
-    pass
-
 def center(clusters):
     center = []
     order = []
