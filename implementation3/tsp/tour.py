@@ -25,14 +25,15 @@ def nearest_neighbor(nodes,start):
     return tour
 
 def tour_length(tour):
+    """Compute the length of the given tour of a graph"""
     length = 0
     for i in range(len(tour)):
         length += dist(tour[i],tour[i-1])
-        #print length,tour[i],tour[i-1]
-    #length+= dist(tour[0],tour[-1]) #and dist to go to start
     return length
 
 def build_dict_of_cities(filename):
+    """Build a mapping of a node's label to it's points so that the
+    node label can be looked up later"""
     f = open(filename,'r')
     cities = {}
     for line in f.readlines():
@@ -44,16 +45,19 @@ def build_dict_of_cities(filename):
     #    print key, value
     return cities
 
-def reverse(d): #switch keys and values
+def reverse(d):
+    """Swap the keys and values of a dictionary d"""
     d1 = {}
     for k,v in d.iteritems():
         if v not in d1:
             d1[v] = [k]
-        else: #accomodates multiple cities at one location
+        else:
+            # Accomodate multiple cities at one location
             d1[v].append(k)
     return d1
 
 def tour_output(tour,filename):
+    """Output the tour of a graph"""
     length = tour_length(tour)
     cities = reverse(build_dict_of_cities(filename))
     output = []
@@ -72,6 +76,7 @@ def tour_output(tour,filename):
     f.close()
 
 def two_opt(tour):
+    """Compute the minimum tour of a neighborhood by using 2-OPT"""
     while True:
         best = tour
         # for all possible edge pairs in T
