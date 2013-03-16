@@ -36,11 +36,10 @@ def shortest_two_edges(cluster1,cluster2,node1,node2):
 def glue(d,centers):
     order = [[d[center]] for center in centers]
     closest = {}
+    mega = order.pop()
     for i,cluster in enumerate(order):
-        previous = order[i-1]
-        (node1,node2,node3,node4) = shortest_two_edges(cluster,previous)
-        
-        
+        (node1,node2,node3,node4) = shortest_two_edges(cluster,mega)
+        mega = mega[:node1] + cluster[node4:0] + cluster[-1:node2] + mega[node3:]
         '''
             find closest edges between the appropriate nodes, one in each cluster
             identify the two shortest edges between the four/six nodes in question
