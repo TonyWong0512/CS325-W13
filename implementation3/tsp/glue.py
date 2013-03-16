@@ -22,11 +22,25 @@ def brute_glue(clusters):
                     small = distance
                     temp_glue = (node,node1)
             glue.append((node,node1))
-        
+
+def closest_between_two_clusters(cluster1,cluster2):
+    pass # returns two points, one in each cluster
+
+def index_of_node(cluster,node):
+    return(cluster.index(node))
+
+def shortest_two_edges(cluster1,cluster2,node1,node2):
+    (node1, node2) = closest_between_two_clusters(cluster1,cluster2)
+    pass # returns the four nodes, node1 -> node 2, node3 -> node4
+
 def glue(d,centers):
     order = [[d[center]] for center in centers]
     closest = {}
-    for cluster in order:
+    for i,cluster in enumerate(order):
+        previous = order[i-1]
+        (node1,node2,node3,node4) = shortest_two_edges(cluster,previous)
+        
+        
         '''
             find closest edges between the appropriate nodes, one in each cluster
             identify the two shortest edges between the four/six nodes in question
