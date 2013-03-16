@@ -77,36 +77,28 @@ def tour_output(tour,filename):
 
 def two_opt(tour):
     """Compute the minimum tour of a neighborhood by using 2-OPT"""
-    while True:
-        best = tour
-        # for all possible edge pairs in T
-        pairs1 = itertools.combinations(tour,2)
-        #pairs2 = itertools.combinations(tour,2) 
-        edges = {}
-        '''for pair1 in pairs1:
-            if pair1 not in edges:
-                edges[pair1] = []
-            for pair2 in pairs2:
-                if ( pair1[0] != pair2[0] and
-                     pair1[0] != pair2[1] and
-                     pair1[1] != pair2[0] and
-                     pair1[1] != pair2[1] ):
-                    edges[pair1].append(pair2)
-            pairs2 = itertools.combinations(tour,2)
-            '''
+    change = False
+    t_length = tour_length(tour)
+    nodes = len(tour)
+    while not change:
+        for i in xrange(nodes):
+            new_tour = swap_edges(tour, i, nodes)
+            new_length = tour_length(new_tour)
+            if new_length > t_length:
+                t_length = new_length
+                change = True
+    return new_tour
 
-        '''for vertex in edges:
-        #   change = tour with ends points swapped
-            change = 
-            if change < best:
-                best = change
-                altered = true
-        tour = best
-        if altered is False:
-            break
-        '''
-        break
-    return tour
+def swap_edges(tour, mid1, mid2):
+    """
+    >>> swap_edges([0,1,2,3,4,5,6,7],2,6)
+    [0, 1, 5, 4, 3, 2, 6, 7]
+    """
+    a = tour[:mid1]
+    b = tour[mid1:mid2]
+    b.reverse()
+    c = tour[mid2:]
+    return a+b+c
 
 def readinstance(filename):
     # each line of input file represents a city given by three integers:
@@ -134,5 +126,7 @@ def main():
     two_opt(tour)
 
 if __name__ == "__main__":
+    #import doctest
+    #doctest.testmod()
     main()
 
