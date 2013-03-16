@@ -28,7 +28,7 @@ def tour_length(tour):
     length = 0
     for i in range(len(tour)):
         length += dist(tour[i],tour[i-1])
-        print length, tour[i], tour[i-1]
+        #print length,tour[i],tour[i-1]
     #length+= dist(tour[0],tour[-1]) #and dist to go to start
     return length
 
@@ -40,6 +40,8 @@ def build_dict_of_cities(filename):
         items = [int(x) for x in re.split('\s+',line) if re.match('\d',x)]
         cities[items[0]] = (items[1],items[2])
     f.close()
+    #for key,value in cities.iteritems():
+    #    print key, value
     return cities
 
 def reverse(d): #switch keys and values
@@ -61,27 +63,34 @@ def tour_output(tour,filename):
         if len(cities[coords]) > 1: #if there are multiple values, at same coords,
             cities[coords] = []   #clear list so they are not added twice
     output_file = re.sub("input","testoutput",filename)
-    output.sort()
     out = "\n".join(str(x) for x in output)
     f = open(output_file,'w')
     f.write(str(length))
     f.write("\n")
     f.write(out)
+    f.write("\n")
     f.close()
 
 def two_opt(tour):
     while True:
         best = tour
         # for all possible edge pairs in T
-        pairs = itertools.combinations(tour,2)
+        pairs1 = itertools.combinations(tour,2)
+        #pairs2 = itertools.combinations(tour,2) 
         edges = {}
-        for pair in pairs:
-            if pair[0] not in edges:
-                edges[pair[0]] = [pair[1]]
-            else:
-                edges[pair[0]].append(pair[1])
+        '''for pair1 in pairs1:
+            if pair1 not in edges:
+                edges[pair1] = []
+            for pair2 in pairs2:
+                if ( pair1[0] != pair2[0] and
+                     pair1[0] != pair2[1] and
+                     pair1[1] != pair2[0] and
+                     pair1[1] != pair2[1] ):
+                    edges[pair1].append(pair2)
+            pairs2 = itertools.combinations(tour,2)
+            '''
+
         '''for vertex in edges:
-            
         #   change = tour with ends points swapped
             change = 
             if change < best:
@@ -112,7 +121,7 @@ def readinstance(filename):
 
 def main():
     #lists = [tuple([int(x) for x in line.split(' ')])[1:] for line in open('example-input-2.txt').readlines()]
-    filename = "example-input-1.txt"
+    filename = "example-input-3.txt"
     lists = readinstance(filename)
     tour = nearest_neighbor(lists,0)
     tour_output(tour,filename)
