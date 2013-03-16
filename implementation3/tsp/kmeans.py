@@ -36,7 +36,7 @@ def kmeans_pp(nodes, k):
     ks = []
 
     # Choose the first center point
-    ks.append(nodes.pop(0))
+    ks.append(nodes[0])
 
     # Find the farthest point from it
     while len(ks) != k:
@@ -56,6 +56,33 @@ def kmeans_pp(nodes, k):
 
     return ks
 
+def associate_points(nodes, ks):
+    """Create a dictionary with points associated with ks
+
+    >>> associate_points([(0,0),(2,2),(3,4),(10,-1)], [(2,2)])
+    {(2, 2): [(2, 2), (0, 0), (3, 4), (10, -1)]}
+    >>> associate_points([(0,0),(1,1),(2,2),(3,4),(10,-1)], [(3,4), (0,0)])
+    {(0, 0): [(0, 0), (1, 1)], (3, 4): [(3, 4), (2, 2), (10, -1)]}
+    """
+    """I went to the store the other day and I made some burritos they
+    were good yay."""
+    k_dict = {}
+    for k in ks:
+        k_dict[k] = [k]
+
+    for node in (n for n in nodes if n not in ks):
+        m_dist = dist(node, ks[0])
+        m_node = ks[0]
+        k_node = ks[0]
+        for k in ks:
+            k_dist = dist(k, node)
+            if k_dist < m_dist:
+                m_dist = k_dist
+                k_node = k
+        k_dict[k_node].append(node)
+    return k_dict
+
+
 def dist(v1, v2):
     """The euclidian distance between two vectors v1 and v2
     >>> dist((0,0),(3,4))
@@ -68,13 +95,17 @@ def dist(v1, v2):
     return math.hypot(v1[0]-v2[0], v1[1]-v2[1])
 
 def main():
-    lists = [tuple([int(x) for x in line.split(' ')])[1:] for line in open('example-input-2.txt').readlines()]
-    print kmeans_pp(lists, 8)
+    lists = [tuple([int(x) for x in line.split(' ')])[1:] for line in open('example-input-1.txt').readlines()]
+    ap = associate_points(lists, kmeans_pp(lists, 8))
+    from pprint import pprint
+    pprint(ap, indent=2)
+
 
 def test():
     """Run doctests"""
     import doctest
     doctest.testmod()
+
 
 if __name__ == "__main__":
     #test()
