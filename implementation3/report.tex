@@ -24,12 +24,7 @@ into small enough parts such that an optimal solution is more easily found.  It
 is also a prerequisite to allowing a parallelized algorithm.  
 
 Next, for each neighborhood we ran the greedy nearest neighbor algorithm to
-produce an initial neighborhood tour which we would later optimize. However
-before optimizing it we maximized the benefit of the nearest neighbor
-algorithm. Because nearest neighbor is cheap to run, we were able to run it
-repeatedly. Each time we choose a different starting node. This allowed us to
-iterate across all possible starting nodes and pick the optimal starting node
-before moving on to any further steps.
+produce an initial neighborhood tour which we would later optimize.
 
 After acquiring the optimal tour that nearest neighbor can produce, we run
 3-opt on the tour to exhaustion. According to Johnson and McGeoch [table 10]
@@ -38,19 +33,38 @@ graph.
 
 Once 3-opt is run on the tour, it is necessary to connect each of the
 neighborhoods together in order to create a single tour of all of the cities.
-This was accomplished by repeating the nearest neighbor and 3-opt, but instead
-of running it on a subgraph of the problem, the neighborhoods were treated as a
-unit.  In order to treat them as a single unit, we found the center of each
-neighborhood by finding the average $x$ and $y$ value and considering that for
-a node.  With the order in which the neighborhoods should be glued together
-established, a method that is very similar to the swap function used in 3-opt
-is used to merge each neighborhood of nodes into a single tour.
+One at a time the neighborhoods are merged together until a complete tour of
+all cities is established.
 
+\begin{Steps in Detail}
 
 \section*{K-means}
+
 \section*{Nearest neighbor}
+
+Nearest neighbor starts at a given node and then finds the closest node to
+itself and visits it. As each node is visited is subsequently removed from the
+pool of nodes that are considered for the next node. Before further optimizing
+the tour that is found by nearest neighbor, we run the nearest neighbor process
+repeatedly. Because the nearest neighbor algorithm is cheap to run, we are able
+to find the minimal length tour that it can produce by considering every
+possible node as the starting point. 
+
 \section*{K-opt}
+
 \section*{connecting neighborhoods}
+
+The process of connecting the neighborhoods together involves figuring out what
+order the neighborhoods should be connected in. This is accomplished by
+repeating the nearest neighbor and 3-opt process, but instead of running it on
+a subgraph of the problem, the neighborhoods are treated as a unit.  In order
+to treat them as a single unit, we find the center of each neighborhood by
+finding the average $x$ and $y$ value and considering that for a node.  With
+the order in which the neighborhoods should be glued together established, a
+method that is very similar to the swap function used in 3-opt is used to merge
+each neighborhood tour into a single tour.
+
+\end{Steps in detail}
 
 http://www2.research.att.com/~dsj/papers/TSPchapter.pdf
 
