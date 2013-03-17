@@ -5,6 +5,7 @@
 \usepackage{changepage}
 \usepackage{fullpage}
 \usepackage{pgfplots, pgfplotstable}
+\usepackage{url}
 
 \title{CS325 Winter 2013: Implementation 3 Report}
 \author{
@@ -29,7 +30,7 @@ produce an initial neighborhood tour which we would later optimize.
 
 After acquiring the optimal tour that nearest neighbor can produce, we run
 2-opt on the tour to exhaustion. According to Johnson and McGeoch [table 10]
-2-opt can produce results that are within 2 percent of the optimal tour of the
+2-opt can produce results that are within 5 percent of the optimal tour of the
 graph.
 
 Once 2-opt is run on the tour, it is necessary to connect each of the
