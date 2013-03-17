@@ -4,6 +4,7 @@ import re
 import pp
 
 from kmeans import kmeans_pp, associate_points
+from glue import edges_in_clusters, glue, center_f
 
 def dist(v1,v2):
     #hypot = math.hypot(v1[0]-v2[0], v1[1]-v2[1])
@@ -81,7 +82,7 @@ def tour_output(tour,filename):
             output.append(city)
         if len(cities[coords]) > 1: #if there are multiple values, at same coords,
             cities[coords] = []   #clear list so they are not added twice
-    output_file = re.sub("input","testoutput",filename)
+    output_file = re.sub("input","output",filename)
     out = "\n".join(str(x) for x in output)
     f = open(output_file,'w')
     f.write(str(length))
@@ -137,45 +138,67 @@ def parallel_two_opt_and_nearest_neighbor(cluster):
     return two_opt(best_local)
 
 
+def poop_main():
+    filename = "test-input-3.txt"
+    nodes = readinstance(filename)
+    job_server = pp.Server(ncpus=7)
+
+    # Create clusters of k
+    k = 20
+    k_clusters = associate_points(nodes, kmeans_pp(nodes, k))
+
+    depfuncs=(wrapped_nearest_neighbor, two_opt, dist, swap_edges, nearest_neighbor, tour_length)
+    modules=("math","itertools")
+    jobs = [job_server.submit(parallel_two_opt_and_nearest_neighbor,
+                              (cluster,),
+                              depfuncs,
+                              modules) for cluster in k_clusters.values()]
+    clusters = []
+    for cluster in jobs:
+        clusters.append(cluster())
+        print "job %s has run" % id(cluster)
+
+    # Cluter Gluing
+    candr = center_f(clusters)
+
+    cluster_tour = nearest_neighbor([k for k in candr],0)
+    better = two_opt(cluster_tour)
+    tours = glue(candr,better)
+
+    tour_output(tours, filename)
+
 def main():
-    #lists = [tuple([int(x) for x in line.split(' ')])[1:] for line in open('example-input-2.txt').readlines()]
     filename = "test-input-1.txt"
     nodes = readinstance(filename)
     job_server = pp.Server()
 
-    min_tour = 172808
-    foo = True
-    for i in xrange(2,len(nodes)):
-        clusters = associate_points(nodes, kmeans_pp(nodes, i))
-        c_list = []
+    depfuncs=(wrapped_nearest_neighbor, two_opt, dist, swap_edges, nearest_neighbor, tour_length)
+    modules=("math","itertools")
+    jobs = [job_server.submit(parallel_two_opt_and_nearest_neighbor,
+                              (nodes,),
+                              depfuncs,
+                              modules)]
+    clusters = []
+    for cluster in jobs:
+        clusters.append(cluster())
+        print "job %s has run" % id(cluster)
 
-        depfuncs=(wrapped_nearest_neighbor, two_opt, dist, swap_edges, nearest_neighbor, tour_length)
-        modules=("math","itertools")
-        jobs = [job_server.submit(parallel_two_opt_and_nearest_neighbor,
-                                  (cluster,),
-                                  depfuncs,
-                                  modules) for cluster in clusters.values()]
-        tours = []
-        for job in jobs:
-            tours += job()
-            print "job %s has run" % id(job)
+    # Cluter Gluing
+    candr = center_f(clusters)
 
-        if tour_length(tours) < min_tour:
-            tour_output(tours, filename)
-            foo = False
-            break
-    if foo:
-        tour_output(min_tour, filename)
-    #tour_output(c_list, filename)
-    #print two_opt(clusters.values())
-    #tour = nearest_neighbor(lists,41)
-    #tour_output(tour,filename)
-    #print tour
-    #two_opt(tour)
+    cluster_tour = nearest_neighbor([k for k in candr],0)
+    better = two_opt(cluster_tour)
+    tours = glue(candr,better)
 
+    tour_output(tours, filename)
+
+
+
+
+    
 if __name__ == "__main__":
     #import doctest
     #doctest.testmod()
-    main()
+    poop_main()
 
 

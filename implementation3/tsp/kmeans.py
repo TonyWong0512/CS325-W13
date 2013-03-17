@@ -33,7 +33,7 @@ def kmeans_pp(nodes, k):
     ks = []
 
     # Choose the first center point
-    ks.append(nodes[0])
+    ks.append(nodes[1])
 
     # Find the farthest point from it
     while len(ks) != k:
@@ -69,7 +69,6 @@ def associate_points(nodes, ks):
 
     for node in (n for n in nodes if n not in ks):
         m_dist = dist(node, ks[0])
-        m_node = ks[0]
         k_node = ks[0]
         for k in ks:
             k_dist = dist(k, node)
@@ -83,11 +82,11 @@ def associate_points(nodes, ks):
 def dist(v1, v2):
     """The euclidian distance between two vectors v1 and v2
     >>> dist((0,0),(3,4))
-    5.0
+    5
     >>> dist((0,0),(9,40))
-    41.0
+    41
     >>> dist((0,0),(5,12))
-    13.0
+    13
     """
     return int(round(math.hypot(v1[0]-v2[0], v1[1]-v2[1])))
 
