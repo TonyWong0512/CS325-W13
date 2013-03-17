@@ -19,11 +19,13 @@
 
 \section*{Approach Overview}
 
-In our approach to the TSP we used a few different methods.  The first step is
-to run k-means to produce $k$ distinct subsets of the cities that are
-localized.  This produces neighborhoods that effectively divides the program
-into small enough parts such that an optimal solution is more easily found.  It
-is also a prerequisite to allowing a parallelized algorithm.  
+In our approach to the TSP we came up with a series of steps that allow the
+problem to be broken into smaller pieces, parallelized and optimized locally
+before being combined into a complete tour.  The first step is to run k-means
+to produce $k$ distinct subsets of the cities that are localized.  This
+produces neighborhoods that effectively divides the program into small enough
+parts such that an optimal solution is more easily found. It is also a
+prerequisite to allowing a parallelized algorithm.  
 
 Next, for each neighborhood we ran the greedy nearest neighbor algorithm to
 produce an initial neighborhood tour which we would later optimize.
