@@ -38,7 +38,15 @@ all cities is established.
 
 \begin{Steps in Detail}
 
-\section*{K-means}
+\section*{K-means++}
+
+K-means++ needs to be passed a graph and $k$, where $k$ is the number of
+clusters that will be created. It starts by choosing a node a random
+from the graph. Once a node is selected it then computes the node
+furthest from itself, then the node furthest from the first and second.
+This continues till k nodes are chosen. Then each node in the graph
+(with the exception of the nodes chosen for $k$) associates itself with
+the nearest cluster.
 
 \section*{Nearest neighbor}
 
