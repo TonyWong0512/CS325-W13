@@ -5,7 +5,7 @@
 \usepackage{changepage}
 \usepackage{pgfplots, pgfplotstable}
 
-\title{CS325 Winter 2013: Implementation 3}
+\title{CS325 Winter 2013: Implementation 3 Report}
 \author{
     Daniel Reichert \\
     Trevor Bramwell
@@ -66,7 +66,24 @@ each neighborhood tour into a single tour.
 
 \end{Steps in detail}
 
-http://www2.research.att.com/~dsj/papers/TSPchapter.pdf
+\section*{Implementation}
 
+While our approach had great promise, its complexity proved to be too much
+given our allowed time frame to implement it.  There were a small number of
+bugs and false assumptions which prevented us from using each piece in the
+solution that we submitted.
+
+The most important false assumption that we made was that each point would be
+distinct.  Because in our minds no graph that someone would want to apply a TSP
+algorithm to would have duplicate points, we did not consider that possibility
+in our algorithms.  However some of the test and example input contained
+duplicate points, and as such broke our algorithms in unexpected ways.  This
+took an inordinate amount of time to debug, and prevented us from using all of
+the functions that we had implemented all at once.
+
+There were also some bugs in our algorithms that prevented us from utilizing 
+
+
+http://www2.research.att.com/~dsj/papers/TSPchapter.pdf
 
 \end{document}
