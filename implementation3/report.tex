@@ -71,12 +71,12 @@ for the cheapest option.
 
 The process of connecting the neighborhoods together involves figuring out what
 order the neighborhoods should be connected in. This is accomplished by
-repeating the nearest neighbor and 3-opt process, but instead of running it on
+repeating the nearest neighbor and 2-opt process, but instead of running it on
 a subgraph of the problem, the neighborhoods are treated as a unit.  In order
 to treat them as a single unit, we find the center of each neighborhood by
 finding the average $x$ and $y$ value and considering that for a node.  With
 the order in which the neighborhoods should be glued together established, a
-method that is very similar to the swap function used in 3-opt is used to merge
+method that is very similar to the swap function used in 2-opt is used to merge
 each neighborhood tour into a single tour.
 
 
@@ -116,6 +116,7 @@ p424-450. 2006.\\
 \emph{Algorithms}. By Dasgupta, Papadimitriou, and Vazirani. p283-305. July 18,
 2006.  \url{http://www.cs.berkeley.edu/%7Evazirani/algorithms.html}
 
-http://en.wikipedia.org/wiki/2-opt
+\url{http://en.wikipedia.org/wiki/2-opt}
+\url{http://en.wikipedia.org/wiki/Travelling_salesman_problem}
 
 \end{document}
