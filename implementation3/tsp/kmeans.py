@@ -61,8 +61,6 @@ def associate_points(nodes, ks):
     >>> associate_points([(0,0),(1,1),(2,2),(3,4),(10,-1)], [(3,4), (0,0)])
     {(0, 0): [(0, 0), (1, 1)], (3, 4): [(3, 4), (2, 2), (10, -1)]}
     """
-    """I went to the store the other day and I made some burritos they
-    were good yay."""
     k_dict = {}
     for k in ks:
         k_dict[k] = [k]
