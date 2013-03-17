@@ -138,7 +138,7 @@ def parallel_two_opt_and_nearest_neighbor(cluster):
     return two_opt(best_local)
 
 
-def poop_main():
+def pop_main():
     filename = "test-input-3.txt"
     nodes = readinstance(filename)
     job_server = pp.Server(ncpus=7)
@@ -199,6 +199,6 @@ def main():
 if __name__ == "__main__":
     #import doctest
     #doctest.testmod()
-    poop_main()
+    pop_main()
 
 
