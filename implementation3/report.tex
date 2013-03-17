@@ -36,9 +36,9 @@ neighborhoods together in order to create a single tour of all of the cities.
 One at a time the neighborhoods are merged together until a complete tour of
 all cities is established.
 
-\begin{Steps in Detail}
+\subsection*{Steps in Detail}
 
-\section*{K-means++}
+\paragraph{K-means++}
 
 K-means++ needs to be passed a graph and $k$, where $k$ is the number of
 clusters that will be created. It starts by choosing a node a random
@@ -48,7 +48,7 @@ This continues till k nodes are chosen. Then each node in the graph
 (with the exception of the nodes chosen for $k$) associates itself with
 the nearest cluster.
 
-\section*{Nearest neighbor}
+\paragraph{Nearest neighbor}
 
 Nearest neighbor starts at a given node and then finds the closest node to
 itself and visits it. As each node is visited is subsequently removed from the
@@ -58,9 +58,9 @@ repeatedly. Because the nearest neighbor algorithm is cheap to run, we are able
 to find the minimal length tour that it can produce by considering every
 possible node as the starting point. 
 
-\section*{K-opt}
+\paragraph{K-opt}
 
-\section*{connecting neighborhoods}
+\paragraph{connecting neighborhoods}
 
 The process of connecting the neighborhoods together involves figuring out what
 order the neighborhoods should be connected in. This is accomplished by
@@ -72,7 +72,6 @@ the order in which the neighborhoods should be glued together established, a
 method that is very similar to the swap function used in 3-opt is used to merge
 each neighborhood tour into a single tour.
 
-\end{Steps in detail}
 
 \section*{Implementation}
 
